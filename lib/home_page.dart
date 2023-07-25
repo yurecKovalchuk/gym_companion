@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timer_bloc/timer_stream.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,26 +19,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            StreamBuilder<int>(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          StreamBuilder<int>(
               stream: _timerBloc.timerStream,
               initialData: 0,
               builder: (context, snapshot) {
-                return Text('${snapshot.data}',
-                  style: const TextStyle(fontSize: 24),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-           InkWell(
-             child: Text('go'),
-             onTap: (){_timerBloc.startTimer();}
-             ,
-           ),
-          ],
-        ),
+                return Column(children: [
+                  Text(
+                    '${snapshot.data}',
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        _timerBloc.isActive
+                            ? _timerBloc.stopTimer()
+                            : _timerBloc.startTimer();
+                      },
+                      child: Text(_timerBloc.isActive ? "stop" : "go"))
+                ]);
+              })
+        ]),
       ),
     );
   }
