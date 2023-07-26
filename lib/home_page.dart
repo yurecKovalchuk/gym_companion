@@ -35,11 +35,48 @@ class _HomePageState extends State<HomePage> {
                             ? _timerBloc.stopTimer()
                             : _timerBloc.startTimer();
                       },
-                      child: Text(_timerBloc.isActive ? "stop" : "go"))
+                      child: Text(_timerBloc.isActive ? "stop" : "go")),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _setTimerLimited(context);
+                    },
+                    child: const Text('enter limit'),
+                  ),
                 ]);
               })
         ]),
       ),
     );
+  }
+
+  void _setTimerLimited(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          int? enteredLimit;
+          return AlertDialog(
+            title: const Text("set timer limit"),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                enteredLimit = int.tryParse(value);
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  if (enteredLimit != null) {
+                    _timerBloc.getTimerLimit(enteredLimit!);
+                  }
+                  Navigator.pop(context);
+                },
+                child: const Text("ok"),
+              ),
+            ],
+          );
+        });
   }
 }
