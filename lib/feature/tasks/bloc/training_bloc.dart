@@ -20,5 +20,6 @@ class TrainingBloc {
   }
 }
 
-
-
+class TrainingState {
+  final List<Exercise> exercises = [];
+}
