@@ -10,9 +10,30 @@ class TrainingBloc {
 
   TrainingState state = TrainingState();
 
+  TrainingBloc() {
+    addDataList();
+  }
+
+  //TODO: temporary variable
+  void addDataList() {
+    state.exercises.addAll(getDataList());
+    _exercisesController.add(state);
+  }
+
   void addExercise(Exercise exercise) {
     state.exercises.add(exercise);
     _exercisesController.add(state);
+  }
+
+//TODO: temporary variable
+  List<Exercise> getDataList() {
+    return [
+      Exercise("Name1", 100),
+      Exercise("Nam2e1", 100),
+      Exercise("Namew1", 100),
+      Exercise("Name1w", 100),
+      Exercise("Namee1", 100),
+    ];
   }
 
   void dispose() {
