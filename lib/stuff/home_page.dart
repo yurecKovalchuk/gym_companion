@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timer_bloc/timer_stream.dart';
+import 'package:timer_bloc/stuff/timer_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TimerStream _timerBloc = TimerStream();
+  final TimerBloc _timerBloc = TimerBloc();
 
   @override
   void dispose() {
@@ -45,8 +45,26 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: const Text('enter limit'),
                   ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _timerBloc.timerPeriodic.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              titleAlignment: ListTileTitleAlignment.center,
+                              title: Text(
+                                  'Круг ${_timerBloc.timerPeriodic[index].circleNumber}'),
+                              subtitle: Text(
+                                  'Час: ${_timerBloc.timerPeriodic[index].circleTime}'),
+                            );
+                          },
+                        ),
+                      ),
+
                 ]);
-              })
+              }),
+
         ]),
       ),
     );
