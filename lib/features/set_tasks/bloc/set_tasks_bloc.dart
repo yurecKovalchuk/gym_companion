@@ -8,7 +8,7 @@ class SetTasksBloc {
 
   Stream<SetTasksState> get streamString => _streamController.stream;
 
-  final SetTasksState _state = SetTasksState();
+  final SetTasksState _state = SetTasksState("", 0);
 
   SetTasksState get state => _state;
 
