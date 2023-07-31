@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/feature/set_tasks/set_tasks.dart';
-import 'package:timer_bloc/feature/tasks/tasks.dart';
+import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
+import 'package:timer_bloc/features/tasks/tasks.dart';
 
 class TasksScreen extends StatefulWidget {
   @override

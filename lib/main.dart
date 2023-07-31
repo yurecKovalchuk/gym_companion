@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/feature/tasks/tasks.dart';
+import 'package:timer_bloc/features/tasks/tasks.dart';
 
 void main() {
   runApp(const MyApp());
