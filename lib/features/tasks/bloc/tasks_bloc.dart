@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:timer_bloc/features/tasks/tasks.dart';
+import 'package:timer_bloc/models/models.dart';
 
 class TrainingBloc {
   final StreamController<TrainingState> _exercisesController =
@@ -8,7 +9,9 @@ class TrainingBloc {
 
   Stream<TrainingState> get exercisesStream => _exercisesController.stream;
 
-  TrainingState state = TrainingState();
+  final TrainingState _state = TrainingState();
+
+  TrainingState get state => _state;
 
   TrainingBloc() {
     _addDataList();

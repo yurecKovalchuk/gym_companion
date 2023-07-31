@@ -9,19 +9,19 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final TrainingBloc trainingBloc = TrainingBloc();
+  final TrainingBloc _trainingBloc = TrainingBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: trainingBloc.exercisesStream,
+        stream: _trainingBloc.exercisesStream,
         initialData: [],
         builder: (context, snapshot) {
           return ListView.builder(
-            itemCount: trainingBloc.state!.exercises.length,
+            itemCount: _trainingBloc.state!.exercises.length,
             itemBuilder: (context, index) {
-              final exercise = trainingBloc.state!.exercises[index];
+              final exercise = _trainingBloc.state!.exercises[index];
               return ListTile(
                 title: Text("${exercise.name}"),
               );
@@ -38,7 +38,7 @@ class _TasksScreenState extends State<TasksScreen> {
             ),
           );
           if (result != null) {
-            trainingBloc.addExercise(result);
+            _trainingBloc.addExercise(result);
           }
         },
         child: const Icon(Icons.add),
@@ -48,7 +48,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   void dispose() {
-    trainingBloc.dispose();
+    _trainingBloc.dispose();
     super.dispose();
   }
 }

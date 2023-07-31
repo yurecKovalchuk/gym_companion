@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:timer_bloc/features/set_tasks/bloc/bloc.dart';
 
 class SetTasksBloc {
-  SetTasksState state = SetTasksState();
-
   final StreamController<SetTasksState> _streamController =
       StreamController<SetTasksState>();
 
   Stream<SetTasksState> get streamString => _streamController.stream;
+
+  final SetTasksState _state = SetTasksState();
+
+  SetTasksState get state => _state;
 
   void getName(String name) {
     state.exerciseName = name;
