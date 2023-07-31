@@ -30,13 +30,16 @@ class _TasksScreenState extends State<TasksScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SetTasks(trainingBloc: trainingBloc),
+              builder: (context) => SetTasks(),
             ),
           );
+          if (result != null) {
+            trainingBloc.addExercise(result);
+          }
         },
         child: const Icon(Icons.add),
       ),

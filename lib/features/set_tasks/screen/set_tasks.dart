@@ -6,10 +6,8 @@ import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
 class SetTasks extends StatelessWidget {
   SetTasks({
     super.key,
-    required this.trainingBloc,
   });
 
-  final TrainingBloc trainingBloc;
 
   SetTasksBloc setTasksBloc = SetTasksBloc();
 
@@ -41,8 +39,7 @@ class SetTasks extends StatelessWidget {
                 setTasksBloc.state.exerciseName,
                 setTasksBloc.state.exerciseTime,
               );
-              trainingBloc.addExercise(exercise);
-              Navigator.pop(context);
+              Navigator.pop(context, exercise);
             },
             child: const Text('OK'),
           ),
