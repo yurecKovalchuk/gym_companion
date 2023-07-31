@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:timer_bloc/features/tasks/tasks.dart';
+import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
 
-class SetTasks extends StatefulWidget {
+class SetTasks extends StatelessWidget {
+  SetTasks({
+    super.key,
+    required this.trainingBloc,
+  });
+
   final TrainingBloc trainingBloc;
 
-  SetTasks({required this.trainingBloc});
-
-  @override
-  _SetTasksState createState() => _SetTasksState();
-}
-
-class _SetTasksState extends State<SetTasks> {
-  String exerciseName = '';
-  int exerciseTime = 0;
+  SetTasksBloc setTasksBloc = SetTasksBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +20,7 @@ class _SetTasksState extends State<SetTasks> {
         children: [
           TextField(
             onChanged: (name) {
-              setState(() {
-                exerciseName = name;
-              });
+              setTasksBloc.getName(name);
             },
             decoration: const InputDecoration(
               labelText: 'Назва вправи',
@@ -33,9 +29,7 @@ class _SetTasksState extends State<SetTasks> {
           TextField(
             keyboardType: TextInputType.number,
             onChanged: (time) {
-              setState(() {
-                exerciseTime = int.tryParse(time) ?? 0;
-              });
+              setTasksBloc.getTime(time);
             },
             decoration: const InputDecoration(
               labelText: 'Час тренування',
@@ -43,8 +37,11 @@ class _SetTasksState extends State<SetTasks> {
           ),
           ElevatedButton(
             onPressed: () {
-              final exercise = Exercise(exerciseName, exerciseTime);
-              widget.trainingBloc.addExercise(exercise);
+              final exercise = Exercise(
+                setTasksBloc.state.exerciseName,
+                setTasksBloc.state.exerciseTime,
+              );
+              trainingBloc.addExercise(exercise);
               Navigator.pop(context);
             },
             child: const Text('OK'),
