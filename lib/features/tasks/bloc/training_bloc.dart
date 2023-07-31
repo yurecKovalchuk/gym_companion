@@ -11,12 +11,12 @@ class TrainingBloc {
   TrainingState state = TrainingState();
 
   TrainingBloc() {
-    addDataList();
+    _addDataList();
   }
 
   //TODO: temporary variable
-  void addDataList() {
-    state.exercises.addAll(getDataList());
+  void _addDataList() {
+    state.exercises.addAll(_getDataList());
     _exercisesController.add(state);
   }
 
@@ -26,7 +26,7 @@ class TrainingBloc {
   }
 
 //TODO: temporary variable
-  List<Exercise> getDataList() {
+  List<Exercise> _getDataList() {
     return [
       Exercise("Name1", 100),
       Exercise("Nam2e1", 100),
@@ -41,6 +41,3 @@ class TrainingBloc {
   }
 }
 
-class TrainingState {
-  final List<Exercise> exercises = [];
-}
