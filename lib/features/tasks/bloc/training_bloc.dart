@@ -11,7 +11,7 @@ class TrainingBloc {
   TrainingState state = TrainingState();
 
   TrainingBloc() {
-    _addDataList();git
+    _addDataList();
   }
 
   //TODO: temporary variable
