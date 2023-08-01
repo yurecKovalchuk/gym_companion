@@ -1,4 +1,9 @@
 class SetTasksState {
-  String exerciseName = "";
-  int exerciseTime = 0;
+  SetTasksState(
+    this.exerciseName,
+    this.exerciseTime,
+  );
+
+  String exerciseName;
+  int exerciseTime;
 }
