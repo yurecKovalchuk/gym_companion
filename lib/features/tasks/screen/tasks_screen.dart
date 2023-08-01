@@ -4,6 +4,8 @@ import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
 import 'package:timer_bloc/features/tasks/tasks.dart';
 
 class TasksScreen extends StatefulWidget {
+  const TasksScreen({super.key});
+
   @override
   _TasksScreenState createState() => _TasksScreenState();
 }
@@ -31,19 +33,23 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SetTasks(),
-            ),
-          );
-          if (result != null) {
-            _trainingBloc.addExercise(result);
-          }
+          _navigatorPush();
         },
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _navigatorPush() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SetTasks(),
+      ),
+    );
+    if (result != null) {
+      _trainingBloc.addExercise(result);
+    }
   }
 
   @override
