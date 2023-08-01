@@ -16,14 +16,14 @@ class _TasksScreenState extends State<TasksScreen> {
     return Scaffold(
       body: StreamBuilder(
         stream: _trainingBloc.exercisesStream,
-        initialData: [],
+        initialData: const [],
         builder: (context, snapshot) {
           return ListView.builder(
             itemCount: _trainingBloc.state!.exercises.length,
             itemBuilder: (context, index) {
               final exercise = _trainingBloc.state!.exercises[index];
               return ListTile(
-                title: Text("${exercise.name}"),
+                title: Text(exercise.name),
               );
             },
           );
