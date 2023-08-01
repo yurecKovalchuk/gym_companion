@@ -8,7 +8,6 @@ class SetTasks extends StatelessWidget {
     super.key,
   });
 
-
   SetTasksBloc setTasksBloc = SetTasksBloc();
 
   @override
