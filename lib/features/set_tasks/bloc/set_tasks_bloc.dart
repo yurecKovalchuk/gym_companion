@@ -6,7 +6,7 @@ class SetTasksBloc {
   final StreamController<SetTasksState> _streamController =
       StreamController<SetTasksState>();
 
-  Stream<SetTasksState> get streamString => _streamController.stream;
+  Stream<SetTasksState> get streamSetTasks => _streamController.stream;
 
   final SetTasksState _state = SetTasksState("", 0);
 

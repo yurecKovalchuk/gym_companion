@@ -4,6 +4,8 @@ import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
 import 'package:timer_bloc/features/tasks/tasks.dart';
 
 class TasksScreen extends StatefulWidget {
+  const TasksScreen({super.key});
+
   @override
   _TasksScreenState createState() => _TasksScreenState();
 }
@@ -16,14 +18,14 @@ class _TasksScreenState extends State<TasksScreen> {
     return Scaffold(
       body: StreamBuilder(
         stream: _trainingBloc.exercisesStream,
-        initialData: [],
+        initialData: const [],
         builder: (context, snapshot) {
           return ListView.builder(
             itemCount: _trainingBloc.state!.exercises.length,
             itemBuilder: (context, index) {
               final exercise = _trainingBloc.state!.exercises[index];
               return ListTile(
-                title: Text("${exercise.name}"),
+                title: Text(exercise.name),
               );
             },
           );
@@ -31,19 +33,23 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SetTasks(),
-            ),
-          );
-          if (result != null) {
-            _trainingBloc.addExercise(result);
-          }
+          _navigatorPush();
         },
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _navigatorPush() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SetTasks(),
+      ),
+    );
+    if (result != null) {
+      _trainingBloc.addExercise(result);
+    }
   }
 
   @override
