@@ -5,5 +5,5 @@ class SetTasksState {
   );
 
   String exerciseName;
-  int exerciseTime;
+  List<int> exerciseTime;
 }
