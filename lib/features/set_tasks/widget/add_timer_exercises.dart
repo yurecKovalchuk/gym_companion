@@ -37,7 +37,7 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
               final title = _textEditingController.text;
               Navigator.pop(context, title);
             });},
-          child: Text('add'),
+          child: const Text('add'),
         ),
       ],
     );

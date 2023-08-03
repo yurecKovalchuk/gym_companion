@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                             ? _timerBloc.stopTimer()
                             : _timerBloc.startTimer();
                       },
-                      child: Text(_timerBloc.isActive ? "stop" : "go")),
+                      child: Text(_timerBloc.isActive ? 'stop' : 'go')),
                   const SizedBox(
                     height: 15,
                   ),
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         builder: (builder) {
           int? enteredLimit;
           return AlertDialog(
-            title: const Text("set timer limit"),
+            title: const Text('set timer limit'),
             content: TextField(
               keyboardType: TextInputType.number,
               onChanged: (value) {
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   }
                   Navigator.pop(context);
                 },
-                child: const Text("ok"),
+                child: const Text('ok'),
               ),
             ],
           );
