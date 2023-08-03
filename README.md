@@ -9,7 +9,6 @@ A new Flutter project.
 - Time Setting: Define the time for each exercise and rest between exercises.
 - User-friendly Interface: The app has a simple and intuitive interface, making it easy to add exercises and customize workout parameters.
 
-
 ## How to Use
 
 1. Open the Timer Bloc app.

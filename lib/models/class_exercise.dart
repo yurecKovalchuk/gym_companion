@@ -5,5 +5,5 @@ class Exercise {
   );
 
   String name;
-  int time;
+  List<int> time;
 }
