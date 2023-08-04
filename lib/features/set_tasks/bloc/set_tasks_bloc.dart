@@ -8,7 +8,10 @@ class SetTasksBloc {
 
   Stream<SetTasksState> get streamSetTasks => _streamController.stream;
 
-  final SetTasksState _state = SetTasksState('', []);
+  final SetTasksState _state = SetTasksState(
+    '',
+    [],
+  );
 
   SetTasksState get state => _state;
 
@@ -19,9 +22,10 @@ class SetTasksBloc {
     _streamController.sink.add(state);
   }
 
-  void getTime(String time) {
+  void getExercisesTime(String time, TimerType timerType) {
     value = int.tryParse(time)!.toInt();
-    state.exerciseTime.add(value);
+    final timerEntry = TimerEntry(value, timerType);
+    state.timerTime.add(timerEntry);
     _streamController.sink.add(state);
   }
 

@@ -12,31 +12,57 @@ class AddTimerExercises extends StatefulWidget {
 class _AddTimerExercisesState extends State<AddTimerExercises> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  SetTasksBloc setTasksBloc = SetTasksBloc();
-
-  @override
-  void initState() {
-    setTasksBloc;
-    super.initState();
-  }
+  TimerType selectedType = TimerType.Exercise;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Set timer'),
-      content: TextField(
-        controller: _textEditingController,
-        decoration: const InputDecoration(
-          labelText: 'time',
+      content: Column(children: [
+        TextField(
+          keyboardType: TextInputType.number,
+          controller: _textEditingController,
+          decoration: const InputDecoration(
+            labelText: 'time',
+          ),
         ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Radio<TimerType>(
+              value: TimerType.Exercise,
+              groupValue: selectedType,
+              onChanged: (value) {
+                setState(() {
+                  selectedType = value!;
+                });
+              },
+            ),
+            const Text('Exercise'),
+            Radio<TimerType>(
+              value: TimerType.Rest,
+              groupValue: selectedType,
+              onChanged: (value) {
+                setState(() {
+                  selectedType = value!;
+                });
+              },
+            ),
+            const Text('Rest'),
+          ],
+        ),
+      ]),
       actions: [
         TextButton(
           onPressed: () {
             setState(() {
-              final title = _textEditingController.text;
-              Navigator.pop(context, title);
-            });},
+              final timer = _textEditingController.text;
+              Navigator.pop(context, {
+                'timer': timer,
+                'type': selectedType,
+              });
+            });
+          },
           child: const Text('add'),
         ),
       ],

@@ -14,12 +14,6 @@ class _SetTasksState extends State<SetTasks> {
   SetTasksBloc setTasksBloc = SetTasksBloc();
 
   @override
-  void initState() {
-    setTasksBloc;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
@@ -37,11 +31,11 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: setTasksBloc.state.exerciseTime.length,
+                itemCount: setTasksBloc.state.timerTime.length,
                 itemBuilder: (context, index) {
-                  final timer = setTasksBloc.state.exerciseTime[index];
+                  final timer = setTasksBloc.state.timerTime[index];
                   return ListTile(
-                    title: Text(timer.toString()),
+                    title: Text(timer.value.toString()),
                   );
                 },
               ),
@@ -49,7 +43,7 @@ class _SetTasksState extends State<SetTasks> {
                 onPressed: () {
                   final exercise = Exercise(
                     setTasksBloc.state.exerciseName,
-                    setTasksBloc.state.exerciseTime,
+                    setTasksBloc.state.timerTime.cast<int>(),
                   );
                   Navigator.pop(context, exercise);
                 },
@@ -74,7 +68,9 @@ class _SetTasksState extends State<SetTasks> {
       },
     );
     if (result != null) {
-      setTasksBloc.getTime(result);
+      final time = result['timer'];
+      final type = result['type'];
+      setTasksBloc.getExercisesTime(time, type);
     }
   }
 }
