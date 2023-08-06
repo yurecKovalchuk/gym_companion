@@ -9,14 +9,16 @@ class SetTasksState {
 }
 
 class TimerEntry {
+  TimerEntry(
+    this.value,
+    this.type,
+  );
+
   int value;
   TimerType type;
-
-  TimerEntry(this.value, this.type);
 }
 
 enum TimerType {
   Exercise,
   Rest,
 }
-
