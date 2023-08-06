@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
 
 class SetTasks extends StatefulWidget {
-  const SetTasks({super.key});
+  const SetTasks({
+    super.key,
+  });
 
   @override
   State<SetTasks> createState() => _SetTasksState();
 }
 
 class _SetTasksState extends State<SetTasks> {
-  SetTasksBloc setTasksBloc = SetTasksBloc();
+  SetTasksBloc _setTasksBloc = SetTasksBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: setTasksBloc.streamSetTasks,
+        stream: _setTasksBloc.streamSetTasks,
         builder: (context, snapshot) {
           return Column(
             children: [
               TextField(
                 onChanged: (name) {
-                  setTasksBloc.setExercisesName(name);
+                  _setTasksBloc.setExercisesName(name);
                 },
                 decoration: const InputDecoration(
                   labelText: 'Назва вправи',
@@ -30,9 +32,9 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: setTasksBloc.state.time.length,
+                itemCount: _setTasksBloc.state.exercise.approaches.length,
                 itemBuilder: (context, index) {
-                  final timer = setTasksBloc.state.time[index];
+                  final timer = _setTasksBloc.state.exercise.approaches[index];
                   return ListTile(
                     title: Text(timer.value.toString()),
                   );
@@ -40,7 +42,7 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, setTasksBloc.exercise);
+                  Navigator.pop(context, _setTasksBloc.state.exercise);
                 },
                 child: const Text('OK'),
               ),
@@ -65,7 +67,10 @@ class _SetTasksState extends State<SetTasks> {
     if (result != null) {
       final time = result['timer'];
       final type = result['type'];
-      setTasksBloc.setExercisesTime(time, type);
+      _setTasksBloc.setExercisesTime(
+        time,
+        type,
+      );
     }
   }
 }

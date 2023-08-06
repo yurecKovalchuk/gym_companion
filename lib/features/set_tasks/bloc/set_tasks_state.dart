@@ -1,22 +1,9 @@
+import 'package:timer_bloc/models/models.dart';
+
 class SetTasksState {
   SetTasksState(
-    this.exerciseName,
-    this.time,
+    this.exercise,
   );
 
-  String exerciseName;
-  List<TimerEntry> time;
+  Exercise exercise;
 }
-
-class TimerEntry {
-  int value;
-  TimerType type;
-
-  TimerEntry(this.value, this.type);
-}
-
-enum TimerType {
-  Exercise,
-  Rest,
-}
-
