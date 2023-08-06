@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
-import 'package:timer_bloc/models/models.dart';
 
 class SetTasks extends StatefulWidget {
   const SetTasks({super.key});
@@ -41,11 +40,7 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final exercise = Exercise(
-                    setTasksBloc.state.exerciseName,
-                    setTasksBloc.state.time.cast<int>(),
-                  );
-                  Navigator.pop(context, exercise);
+                  Navigator.pop(context, setTasksBloc.exercise);
                 },
                 child: const Text('OK'),
               ),
