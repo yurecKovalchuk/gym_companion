@@ -7,15 +7,16 @@ class Exercise {
   );
 
   String name;
-  List<SetTimer> time;
+  List<Approach> time;
 }
 
-class SetTimer {
-  SetTimer(
+class Approach {
+  Approach(
     this.value,
     this.type,
   );
 
   int value;
-  TimerType type;
+  ApproachType type;
 }
+git

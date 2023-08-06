@@ -12,7 +12,7 @@ class AddTimerExercises extends StatefulWidget {
 class _AddTimerExercisesState extends State<AddTimerExercises> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  TimerType selectedType = TimerType.exercise;
+  ApproachType selectedType = ApproachType.exercise;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Radio<TimerType>(
-              value: TimerType.exercise,
+            Radio<ApproachType>(
+              value: ApproachType.exercise,
               groupValue: selectedType,
               onChanged: (value) {
                 setState(() {
@@ -39,8 +39,8 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
               },
             ),
             const Text('Exercise'),
-            Radio<TimerType>(
-              value: TimerType.rest,
+            Radio<ApproachType>(
+              value: ApproachType.rest,
               groupValue: selectedType,
               onChanged: (value) {
                 setState(() {

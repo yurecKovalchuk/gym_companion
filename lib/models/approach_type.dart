@@ -1,4 +1,4 @@
-enum TimerType {
+enum ApproachType {
   exercise,
   rest,
 }
