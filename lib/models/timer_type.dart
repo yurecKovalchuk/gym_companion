@@ -1,0 +1,4 @@
+enum TimerType {
+  exercise,
+  rest,
+}

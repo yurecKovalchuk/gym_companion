@@ -1,3 +1,5 @@
+import 'package:timer_bloc/models/models.dart';
+
 class Exercise {
   Exercise(
     this.name,
@@ -15,15 +17,5 @@ class SetTimer {
   );
 
   int value;
-  TypeTimer type;
-}
-
-class TypeTimer {
-  TypeTimer(
-    this.Exercise,
-    this.Rest,
-  );
-
-  String Exercise;
-  String Rest;
+  TimerType type;
 }

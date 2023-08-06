@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
+import 'package:timer_bloc/models/models.dart';
 
 class AddTimerExercises extends StatefulWidget {
   const AddTimerExercises({super.key});
@@ -12,7 +12,7 @@ class AddTimerExercises extends StatefulWidget {
 class _AddTimerExercisesState extends State<AddTimerExercises> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  TimerType selectedType = TimerType.Exercise;
+  TimerType selectedType = TimerType.exercise;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Radio<TimerType>(
-              value: TimerType.Exercise,
+              value: TimerType.exercise,
               groupValue: selectedType,
               onChanged: (value) {
                 setState(() {
@@ -40,7 +40,7 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
             ),
             const Text('Exercise'),
             Radio<TimerType>(
-              value: TimerType.Rest,
+              value: TimerType.rest,
               groupValue: selectedType,
               onChanged: (value) {
                 setState(() {
