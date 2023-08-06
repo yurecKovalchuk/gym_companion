@@ -26,7 +26,7 @@ class SetTasksBloc {
   void setExercisesTime(String time, ApproachType timerType) {
     final value = int.tryParse(time)!.toInt();
     final timerEntry = Approach(value, timerType);
-    state.exercise.time.add(timerEntry);
+    state.exercise.approaches.add(timerEntry);
     _streamController.sink.add(state);
   }
 

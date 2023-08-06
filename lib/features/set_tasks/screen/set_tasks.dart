@@ -32,9 +32,9 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: _setTasksBloc.state.exercise.time.length,
+                itemCount: _setTasksBloc.state.exercise.approaches.length,
                 itemBuilder: (context, index) {
-                  final timer = _setTasksBloc.state.exercise.time[index];
+                  final timer = _setTasksBloc.state.exercise.approaches[index];
                   return ListTile(
                     title: Text(timer.value.toString()),
                   );

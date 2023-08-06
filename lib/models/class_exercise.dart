@@ -3,11 +3,11 @@ import 'package:timer_bloc/models/models.dart';
 class Exercise {
   Exercise(
     this.name,
-    this.time,
+    this.approaches,
   );
 
   String name;
-  List<Approach> time;
+  List<Approach> approaches;
 }
 
 class Approach {
@@ -19,4 +19,3 @@ class Approach {
   int value;
   ApproachType type;
 }
-git
