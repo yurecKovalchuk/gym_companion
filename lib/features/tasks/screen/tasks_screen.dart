@@ -25,7 +25,7 @@ class _TasksScreenState extends State<TasksScreen> {
             itemBuilder: (context, index) {
               final exercise = _trainingBloc.state.exercises[index];
               return ListTile(
-                title: Text(exercise.name),
+                title: Text(exercise.exerciseName),
               );
             },
           );

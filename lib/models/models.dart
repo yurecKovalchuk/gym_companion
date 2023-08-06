@@ -1,1 +1,1 @@
-export 'package:timer_bloc/models/class_exercise.dart';
+export 'package:timer_bloc/models/set_task_state.dart';

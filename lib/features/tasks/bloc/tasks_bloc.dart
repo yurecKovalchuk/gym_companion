@@ -13,7 +13,7 @@ class TrainingBloc {
 
   TrainingState get state => _state;
 
-  void addExercise(Exercise exercise) {
+  void addExercise(SetTasksState exercise) {
     state.exercises.add(exercise);
     _exercisesController.add(state);
   }

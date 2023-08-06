@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
+import 'package:timer_bloc/models/models.dart';
 
 class AddTimerExercises extends StatefulWidget {
   const AddTimerExercises({super.key});

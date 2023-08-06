@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:timer_bloc/features/set_tasks/bloc/bloc.dart';
-import 'package:timer_bloc/models/class_exercise.dart';
+import 'package:timer_bloc/models/set_task_state.dart';
 
 class SetTasksBloc {
   final StreamController<SetTasksState> _streamController =
@@ -30,9 +29,10 @@ class SetTasksBloc {
     _streamController.sink.add(state);
   }
 
-  Exercise get exercise => Exercise(
-      state.exerciseName,
-      state.time.cast());
+  SetTasksState get exercise => SetTasksState(
+        state.exerciseName,
+        state.time,
+      );
 
   void dispose() {
     _streamController.close();
