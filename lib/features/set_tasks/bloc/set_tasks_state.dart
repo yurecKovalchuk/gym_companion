@@ -1,12 +1,11 @@
 class SetTasksState {
   SetTasksState(
     this.exerciseName,
-    this.timerTime,
+    this.time,
   );
 
   String exerciseName;
-  List<TimerEntry> timerTime;
-
+  List<TimerEntry> time;
 }
 
 class TimerEntry {

@@ -23,7 +23,7 @@ class _SetTasksState extends State<SetTasks> {
             children: [
               TextField(
                 onChanged: (name) {
-                  setTasksBloc.getName(name);
+                  setTasksBloc.setExercisesName(name);
                 },
                 decoration: const InputDecoration(
                   labelText: 'Назва вправи',
@@ -31,9 +31,9 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: setTasksBloc.state.timerTime.length,
+                itemCount: setTasksBloc.state.time.length,
                 itemBuilder: (context, index) {
-                  final timer = setTasksBloc.state.timerTime[index];
+                  final timer = setTasksBloc.state.time[index];
                   return ListTile(
                     title: Text(timer.value.toString()),
                   );
@@ -43,7 +43,7 @@ class _SetTasksState extends State<SetTasks> {
                 onPressed: () {
                   final exercise = Exercise(
                     setTasksBloc.state.exerciseName,
-                    setTasksBloc.state.timerTime.cast<int>(),
+                    setTasksBloc.state.time.cast<int>(),
                   );
                   Navigator.pop(context, exercise);
                 },
@@ -70,7 +70,7 @@ class _SetTasksState extends State<SetTasks> {
     if (result != null) {
       final time = result['timer'];
       final type = result['type'];
-      setTasksBloc.getExercisesTime(time, type);
+      setTasksBloc.setExercisesTime(time, type);
     }
   }
 }

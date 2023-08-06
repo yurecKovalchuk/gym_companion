@@ -17,15 +17,15 @@ class SetTasksBloc {
 
   int value = 0;
 
-  void getName(String name) {
+  void setExercisesName(String name) {
     state.exerciseName = name;
     _streamController.sink.add(state);
   }
 
-  void getExercisesTime(String time, TimerType timerType) {
+  void setExercisesTime(String time, TimerType timerType) {
     value = int.tryParse(time)!.toInt();
     final timerEntry = TimerEntry(value, timerType);
-    state.timerTime.add(timerEntry);
+    state.time.add(timerEntry);
     _streamController.sink.add(state);
   }
 
