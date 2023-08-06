@@ -22,4 +22,3 @@ class TrainingBloc {
     _exercisesController.close();
   }
 }
-

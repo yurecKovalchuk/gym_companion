@@ -1,9 +1,22 @@
 class SetTasksState {
   SetTasksState(
     this.exerciseName,
-    this.exerciseTime,
+    this.time,
   );
 
   String exerciseName;
-  List<int> exerciseTime;
+  List<TimerEntry> time;
 }
+
+class TimerEntry {
+  int value;
+  TimerType type;
+
+  TimerEntry(this.value, this.type);
+}
+
+enum TimerType {
+  Exercise,
+  Rest,
+}
+

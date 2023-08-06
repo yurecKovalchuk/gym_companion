@@ -21,9 +21,9 @@ class _TasksScreenState extends State<TasksScreen> {
         initialData: const [],
         builder: (context, snapshot) {
           return ListView.builder(
-            itemCount: _trainingBloc.state!.exercises.length,
+            itemCount: _trainingBloc.state.exercises.length,
             itemBuilder: (context, index) {
-              final exercise = _trainingBloc.state!.exercises[index];
+              final exercise = _trainingBloc.state.exercises[index];
               return ListTile(
                 title: Text(exercise.name),
               );
@@ -44,7 +44,7 @@ class _TasksScreenState extends State<TasksScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SetTasks(),
+        builder: (context) => const SetTasks(),
       ),
     );
     if (result != null) {
