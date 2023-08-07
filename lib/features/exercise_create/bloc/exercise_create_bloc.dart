@@ -1,22 +1,22 @@
 import 'dart:async';
 
-import 'package:timer_bloc/features/set_tasks/bloc/bloc.dart';
+import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
-class SetTasksBloc {
-  final StreamController<SetTasksState> _streamController =
-      StreamController<SetTasksState>();
+class ExerciseCreateBloc {
+  final StreamController<ExerciseCreateState> _streamController =
+      StreamController<ExerciseCreateState>();
 
-  Stream<SetTasksState> get streamSetTasks => _streamController.stream;
+  Stream<ExerciseCreateState> get streamSetTasks => _streamController.stream;
 
-  final SetTasksState _state = SetTasksState(
+  final ExerciseCreateState _state = ExerciseCreateState(
     Exercise(
       '',
       [],
     ),
   );
 
-  SetTasksState get state => _state;
+  ExerciseCreateState get state => _state;
 
   void setExercisesName(String name) {
     state.exercise.name = name;

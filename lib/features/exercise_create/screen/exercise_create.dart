@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/features/set_tasks/set_tasks.dart';
+import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 
-class SetTasks extends StatefulWidget {
-  const SetTasks({
+class ExerciseCreate extends StatefulWidget {
+  const ExerciseCreate({
     super.key,
   });
 
   @override
-  State<SetTasks> createState() => _SetTasksState();
+  State<ExerciseCreate> createState() => _ExerciseCreateState();
 }
 
-class _SetTasksState extends State<SetTasks> {
-  SetTasksBloc _setTasksBloc = SetTasksBloc();
+class _ExerciseCreateState extends State<ExerciseCreate> {
+  final ExerciseCreateBloc _exerciseCreateBloc = ExerciseCreateBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: _setTasksBloc.streamSetTasks,
+        stream: _exerciseCreateBloc.streamSetTasks,
         builder: (context, snapshot) {
           return Column(
             children: [
               TextField(
                 onChanged: (name) {
-                  _setTasksBloc.setExercisesName(name);
+                  _exerciseCreateBloc.setExercisesName(name);
                 },
                 decoration: const InputDecoration(
                   labelText: 'Назва вправи',
@@ -32,9 +32,9 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: _setTasksBloc.state.exercise.approaches.length,
+                itemCount: _exerciseCreateBloc.state.exercise.approaches.length,
                 itemBuilder: (context, index) {
-                  final timer = _setTasksBloc.state.exercise.approaches[index];
+                  final timer = _exerciseCreateBloc.state.exercise.approaches[index];
                   return ListTile(
                     title: Text(timer.value.toString()),
                   );
@@ -42,7 +42,7 @@ class _SetTasksState extends State<SetTasks> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, _setTasksBloc.state.exercise);
+                  Navigator.pop(context, _exerciseCreateBloc.state.exercise);
                 },
                 child: const Text('OK'),
               ),
@@ -67,7 +67,7 @@ class _SetTasksState extends State<SetTasks> {
     if (result != null) {
       final time = result['timer'];
       final type = result['type'];
-      _setTasksBloc.setExercisesTime(
+      _exerciseCreateBloc.setExercisesTime(
         time,
         type,
       );

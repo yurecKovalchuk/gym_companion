@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:timer_bloc/features/tasks/tasks.dart';
+import 'package:timer_bloc/features/exercise/exercise.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class TrainingBloc {
