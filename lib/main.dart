@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/features/tasks/tasks.dart';
+import 'package:timer_bloc/features/exercise/exercise.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: TasksScreen());
+    return const MaterialApp(home: ExerciseScreen());
   }
 }
