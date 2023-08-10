@@ -17,38 +17,60 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
-        stream: _exerciseCreateBloc.streamSetTasks,
-        builder: (context, snapshot) {
-          return Column(
-            children: [
-              TextField(
-                onChanged: (name) {
-                  _exerciseCreateBloc.setExercisesName(name);
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Назва вправи',
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/fon.jpg'),
+          ),
+        ),
+        child: StreamBuilder(
+          stream: _exerciseCreateBloc.streamSetTasks,
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                  ],
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: _exerciseCreateBloc.state.exercise.approaches.length,
-                itemBuilder: (context, index) {
-                  final timer = _exerciseCreateBloc.state.exercise.approaches[index];
-                  return ListTile(
-                    title: Text(timer.value.toString()),
-                  );
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context, _exerciseCreateBloc.state.exercise);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  onChanged: (name) {
+                    _exerciseCreateBloc.setExercisesName(name);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Exercise Name',
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount:
+                      _exerciseCreateBloc.state.exercise.approaches.length,
+                  itemBuilder: (context, index) {
+                    final timer =
+                        _exerciseCreateBloc.state.exercise.approaches[index];
+                    return ListTile(
+                      title: Text(timer.value.toString()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, _exerciseCreateBloc.state.exercise);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(),

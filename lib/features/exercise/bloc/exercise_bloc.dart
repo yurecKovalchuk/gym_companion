@@ -14,8 +14,10 @@ class TrainingBloc {
   TrainingState get state => _state;
 
   void addExercise(Exercise exercise) {
-    state.exercises.add(exercise);
-    _exercisesController.add(state);
+    if (exercise.name.isNotEmpty) {
+      state.exercises.add(exercise);
+      _exercisesController.add(state);
+    }
   }
 
   void dispose() {
