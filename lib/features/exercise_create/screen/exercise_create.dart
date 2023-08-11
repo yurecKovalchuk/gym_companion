@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
+import 'package:timer_bloc/models/models.dart';
+import 'package:timer_bloc/style/style.dart';
 
 class ExerciseCreate extends StatefulWidget {
   const ExerciseCreate({
@@ -18,11 +20,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/assets/fon.jpg'),
-          ),
-        ),
+        decoration: MainBackgroundDecoration.backgroundDecoration,
         child: StreamBuilder(
           stream: _exerciseCreateBloc.streamSetTasks,
           builder: (context, snapshot) {
@@ -46,7 +44,11 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                     _exerciseCreateBloc.setExercisesName(name);
                   },
                   decoration: const InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     labelText: 'Exercise Name',
+                    labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
                 ListView.builder(
@@ -57,11 +59,20 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                     final timer =
                         _exerciseCreateBloc.state.exercise.approaches[index];
                     return ListTile(
-                      title: Text(timer.value.toString()),
+                      title: Text('${timer.value.toString()} - ${timer.type == ApproachType.rest
+                          ? 'Rest'
+                          : 'Exercise'}'),
                     );
                   },
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Colors.purpleAccent),
+                  ),
                   onPressed: () {
                     Navigator.pop(context, _exerciseCreateBloc.state.exercise);
                   },
@@ -73,6 +84,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purpleAccent,
         onPressed: () => _showAddTaskDialog(),
         child: const Icon(Icons.add),
       ),

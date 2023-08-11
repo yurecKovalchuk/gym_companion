@@ -28,26 +28,41 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               itemCount: _trainingBloc.state.exercises.length,
               itemBuilder: (context, index) {
                 final exercise = _trainingBloc.state.exercises[index];
-                return ListTile(
-                    title: Text(exercise.name),
-                    onTap: () {
-                      _navigatorPushToPlay(index);
-                    });
+                return GestureDetector(
+                  onTap: () {
+                    _navigatorPushToPlayScreen(index);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      exercise.name,
+                      style: const TextStyle(fontSize: 22.0),
+                    ),
+                  ),
+                );
               },
             );
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purpleAccent,
         onPressed: () async {
-          _navigatorPushToCreate();
+          _navigatorPushToCreateScreen();
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _navigatorPushToCreate() async {
+  void _navigatorPushToCreateScreen() async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -59,8 +74,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     }
   }
 
-  void _navigatorPushToPlay(int index) {
-     if (_trainingBloc.state.exercises[index].approaches.isNotEmpty) {
+  void _navigatorPushToPlayScreen(int index) {
+    if (_trainingBloc.state.exercises[index].approaches.isNotEmpty) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -70,7 +85,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               ExercisePlay(exercise: _trainingBloc.state.exercises[index]),
         ),
       );
-     }
+    }
   }
 
   @override

@@ -41,12 +41,11 @@ class _ExercisePlayState extends State<ExercisePlay> {
                     ),
                   ],
                 ),
-                     Text(
-                        _exercisePlayBloc.state.exercise.name,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 30),
-                      ),
-
+                Text(
+                  _exercisePlayBloc.state.exercise.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 30),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -58,41 +57,51 @@ class _ExercisePlayState extends State<ExercisePlay> {
                       final timer =
                           _exercisePlayBloc.state.exercise.approaches[index];
                       return Container(
-                        color: _exercisePlayBloc.state.approachesIndex == index && _exercisePlayBloc.state.isActiveTimer
-                            ? (timer.type == ApproachType.rest
-                                ? Colors.green
-                                : Colors.red)
-                            : Colors.transparent,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22.0),
+                          color: _exercisePlayBloc.state.approachesIndex ==
+                                      index &&
+                                  _exercisePlayBloc.state.isActiveTimer
+                              ? (timer.type == ApproachType.rest
+                                  ? Colors.green
+                                  : Colors.red)
+                              : Colors.transparent,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
                               child: ListTile(
-                                title: Text('${timer.value}'),
-                                subtitle: Text(
+                                title: Text(
+                                  textAlign: TextAlign.center,
                                   timer.type == ApproachType.rest
                                       ? 'Rest'
                                       : 'Exercise',
                                 ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(8),
-                              child: Text(
-                                '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()}',
+                                subtitle: Text(
+                                  textAlign: TextAlign.center,
+                                  '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()} seconds',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       );
                     }),
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
                 ElevatedButton(
                     onPressed: () {
                       _exercisePlayBloc.state.isActiveTimer
                           ? _exercisePlayBloc.stopExerciseTimer()
                           : _exercisePlayBloc.startTimer();
                     },
-                    child: Text(_exercisePlayBloc.state.isActiveTimer ? 'PAUSE' : 'GO')),
+                    child: Text(_exercisePlayBloc.state.isActiveTimer
+                        ? 'PAUSE'
+                        : 'GO')),
               ],
             );
           },
