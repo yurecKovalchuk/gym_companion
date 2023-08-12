@@ -1,4 +1,4 @@
-# timer_bloc
+# gym_companion
 
 A new Flutter project.
 
@@ -11,7 +11,7 @@ A new Flutter project.
 
 ## How to Use
 
-1. Open the Timer Bloc app.
+1. Open the Gym Companion app.
 2. Add exercises you want to perform during your workouts.
 3. Set the number of repetitions and time for each exercise and rest between exercises.
 4. Press the "Start" button to begin your workout.
@@ -22,6 +22,6 @@ A new Flutter project.
 
 This project is distributed under the MIT License. For more information, please see the `LICENSE` file.
 
-Thank you for choosing Timer Bloc for your fitness training. We wish you success and great achievements in your fitness journey!
+Thank you for choosing Gym Companion for your fitness training. We wish you success and great achievements in your fitness journey!
 documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
