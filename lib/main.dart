@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:timer_bloc/features/exercise/exercise.dart';
+import 'package:timer_bloc/features/exercises/exercises.dart';
 
 void main() {
   runApp(const MyApp());
