@@ -6,13 +6,13 @@ import 'package:timer_bloc/models/models.dart';
 class ExercisePlayBloc {
   ExercisePlayBloc(Exercise exercise)
       : _state = ExercisePlayState(
-            exercise: exercise,
-            approachesIndex: 0,
-            exercise.approaches[0].value,
-            approachesLeftTime:
-                exercise.approaches.map((e) => e.value).toList(),
-            false,
-            0);
+          exercise: exercise,
+          approachesIndex: 0,
+          exercise.approaches[0].value,
+          approachesLeftTime: exercise.approaches.map((e) => e.value).toList(),
+          false,
+          0,
+        );
 
   final ExercisePlayState _state;
 
@@ -24,35 +24,53 @@ class ExercisePlayBloc {
   ExercisePlayState get state => _state;
 
   Timer? _timer;
-  Timer? _timerSlot;
+  Timer? _approachTimer;
 
-  void startTimer() {
-    state.isActiveTimer = true;
-    _canselTimer();
-    _canselSlotTimer();
+  void playExercise() {
+    state.isActiveExercise = true;
+    _canselPlayTimer();
+    _canselApproachTimer();
 
-    _playSlotTimer(state.approachesIndex);
+    _playApproachTimer(state.approachesIndex);
 
     _timer = Timer.periodic(
-      Duration(
-          seconds: state.slotLeftTime == 0
-              ? state.exercise.approaches[state.approachesIndex].value
-              : state.slotLeftTime),
+      _manageApproachSeconds(),
       (timer) {
-        if (state.approachesIndex < state.exercise.approaches.length - 1) {
-          state.approachesIndex++;
-          startTimer();
-          state.slotLeftTime = 0;
-        } else {
-          _resetApproachesLeftTime();
-          _canselSlotTimer();
-          _canselTimer();
-          state.isActiveTimer = false;
-        }
+        final approachesCount = state.exercise.approaches.length - 1;
+        final isApproachAvailable = state.approachesIndex < approachesCount;
+
+        isApproachAvailable ? _switchCurrentApproach() : _stopPlayExercise();
       },
     );
     _streamController.sink.add(state);
   }
+
+  void stopExerciseTimer() {
+    _canselApproachTimer();
+    _canselPlayTimer();
+    state.isActiveExercise = false;
+    state.approachLeftTime = state.approachesLeftTime[state.approachesIndex];
+    _streamController.sink.add(state);
+  }
+
+  void _stopPlayExercise() {
+    _resetApproachesLeftTime();
+    _canselApproachTimer();
+    _canselPlayTimer();
+    state.isActiveExercise = false;
+  }
+
+  void _switchCurrentApproach() {
+    state.approachesIndex++;
+    playExercise();
+    state.approachLeftTime = 0;
+  }
+
+  Duration _manageApproachSeconds() => Duration(
+        seconds: state.approachLeftTime == 0
+            ? state.exercise.approaches[state.approachesIndex].value
+            : state.approachLeftTime,
+      );
 
   void _resetApproachesLeftTime() {
     state.approachesIndex = 0;
@@ -62,41 +80,33 @@ class ExercisePlayBloc {
     );
   }
 
-  void _playSlotTimer(int approachesIndex) {
-    _timerSlot = Timer.periodic(
+  void _playApproachTimer(int approachesIndex) {
+    _approachTimer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
         if (state.approachesLeftTime[approachesIndex] > 0) {
           state.approachesLeftTime[approachesIndex]--;
         } else {
-          _canselSlotTimer();
+          _canselApproachTimer();
         }
         _streamController.sink.add(state);
       },
     );
   }
 
-  void _canselSlotTimer() {
-    _timerSlot?.cancel();
-    _timerSlot = null;
+  void _canselApproachTimer() {
+    _approachTimer?.cancel();
+    _approachTimer = null;
   }
 
-  void _canselTimer() {
+  void _canselPlayTimer() {
     _timer?.cancel();
     _timer = null;
   }
 
-  void stopExerciseTimer() {
-    _canselSlotTimer();
-    _canselTimer();
-    state.isActiveTimer = false;
-    state.slotLeftTime = state.approachesLeftTime[state.approachesIndex];
-    _streamController.sink.add(state);
-  }
-
   void dispose() {
-    _canselSlotTimer();
-    _canselTimer();
+    _canselApproachTimer();
+    _canselPlayTimer();
     _streamController.close();
   }
 }

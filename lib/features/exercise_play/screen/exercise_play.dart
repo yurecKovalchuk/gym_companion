@@ -34,65 +34,65 @@ class _ExercisePlayState extends State<ExercisePlay> {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => Navigator.pop(context),
                       icon: const Icon(Icons.arrow_back),
                     ),
                   ],
                 ),
-                     Text(
-                        _exercisePlayBloc.state.exercise.name,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 30),
-                      ),
-
+                Text(
+                  _exercisePlayBloc.state.exercise.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 30),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
                 ListView.builder(
-                    shrinkWrap: true,
-                    itemCount:
-                        _exercisePlayBloc.state.exercise.approaches.length,
-                    itemBuilder: (context, index) {
-                      final timer =
-                          _exercisePlayBloc.state.exercise.approaches[index];
-                      return Container(
-                        color: _exercisePlayBloc.state.approachesIndex == index && _exercisePlayBloc.state.isActiveTimer
-                            ? (timer.type == ApproachType.rest
-                                ? Colors.green
-                                : Colors.red)
-                            : Colors.transparent,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ListTile(
-                                title: Text('${timer.value}'),
-                                subtitle: Text(
-                                  timer.type == ApproachType.rest
-                                      ? 'Rest'
-                                      : 'Exercise',
+                  shrinkWrap: true,
+                  itemCount: _exercisePlayBloc.state.exercise.approaches.length,
+                  itemBuilder: (context, index) {
+                    final timer =
+                        _exercisePlayBloc.state.exercise.approaches[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(22.0),
+                        color: _generateSlotColorByState(index, timer),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              title: Text(
+                                textAlign: TextAlign.center,
+                                timer.type == ApproachType.rest
+                                    ? 'Rest'
+                                    : 'Exercise',
+                              ),
+                              subtitle: Text(
+                                textAlign: TextAlign.center,
+                                '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()} seconds',
+                                style: const TextStyle(
+                                  fontSize: 18,
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(8),
-                              child: Text(
-                                '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()}',
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                const SizedBox(height: 15,),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
                 ElevatedButton(
-                    onPressed: () {
-                      _exercisePlayBloc.state.isActiveTimer
-                          ? _exercisePlayBloc.stopExerciseTimer()
-                          : _exercisePlayBloc.startTimer();
-                    },
-                    child: Text(_exercisePlayBloc.state.isActiveTimer ? 'PAUSE' : 'GO')),
+                  onPressed: () => _exercisePlayBloc.state.isActiveExercise
+                      ? _exercisePlayBloc.stopExerciseTimer()
+                      : _exercisePlayBloc.playExercise(),
+                  child: Text(
+                    _exercisePlayBloc.state.isActiveExercise ? 'PAUSE' : 'GO',
+                  ),
+                ),
               ],
             );
           },
@@ -100,6 +100,12 @@ class _ExercisePlayState extends State<ExercisePlay> {
       ),
     );
   }
+
+  Color _generateSlotColorByState(int index, Approach timer) =>
+      _exercisePlayBloc.state.approachesIndex == index &&
+              _exercisePlayBloc.state.isActiveExercise
+          ? (timer.type == ApproachType.rest ? Colors.green : Colors.red)
+          : Colors.transparent;
 
   @override
   void dispose() {

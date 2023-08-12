@@ -3,8 +3,8 @@ import 'package:timer_bloc/models/models.dart';
 class ExercisePlayState {
   ExercisePlayState(
     this.seconds,
-    this.isActiveTimer,
-    this.slotLeftTime, {
+    this.isActiveExercise,
+    this.approachLeftTime, {
     required this.exercise,
     required this.approachesIndex,
     required this.approachesLeftTime,
@@ -14,7 +14,7 @@ class ExercisePlayState {
   final List<int> approachesLeftTime;
 
   int approachesIndex;
+  int approachLeftTime;
   int seconds;
-  bool isActiveTimer;
-  int slotLeftTime;
+  bool isActiveExercise;
 }

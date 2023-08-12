@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:timer_bloc/features/exercise/exercise.dart';
 import 'package:timer_bloc/models/models.dart';
 
-class TrainingBloc {
-  final StreamController<TrainingState> _exercisesController =
-      StreamController<TrainingState>();
+class ExerciseBloc {
+  final StreamController<ExerciseState> _exercisesController =
+      StreamController<ExerciseState>();
 
-  Stream<TrainingState> get exercisesStream => _exercisesController.stream;
+  Stream<ExerciseState> get exercisesStream => _exercisesController.stream;
 
-  final TrainingState _state = TrainingState();
+  final ExerciseState _state = ExerciseState();
 
-  TrainingState get state => _state;
+  ExerciseState get state => _state;
 
   void addExercise(Exercise exercise) {
     if (exercise.name.isNotEmpty) {

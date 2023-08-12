@@ -18,40 +18,44 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Set timer'),
-      content: Column(children: [
-        TextField(
-          keyboardType: TextInputType.number,
-          controller: _textEditingController,
-          decoration: const InputDecoration(
-            labelText: 'time',
+      content: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 200),
+        child: Column(children: [
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            controller: _textEditingController,
+            decoration: const InputDecoration(
+              labelText: 'time',
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Radio<ApproachType>(
-              value: ApproachType.exercise,
-              groupValue: selectedType,
-              onChanged: (value) {
-                setState(() {
-                  selectedType = value!;
-                });
-              },
-            ),
-            const Text('Exercise'),
-            Radio<ApproachType>(
-              value: ApproachType.rest,
-              groupValue: selectedType,
-              onChanged: (value) {
-                setState(() {
-                  selectedType = value!;
-                });
-              },
-            ),
-            const Text('Rest'),
-          ],
-        ),
-      ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Radio<ApproachType>(
+                value: ApproachType.exercise,
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value!;
+                  });
+                },
+              ),
+              const Text('Exercise'),
+              Radio<ApproachType>(
+                value: ApproachType.rest,
+                groupValue: selectedType,
+                onChanged: (value) {
+                  setState(() {
+                    selectedType = value!;
+                  });
+                },
+              ),
+              const Text('Rest'),
+            ],
+          ),
+        ]),
+      ),
       actions: [
         TextButton(
           onPressed: () {
@@ -63,7 +67,12 @@ class _AddTimerExercisesState extends State<AddTimerExercises> {
               });
             });
           },
-          child: const Text('add'),
+          child: const Text(
+            'add',
+            style: TextStyle(
+              fontSize: 22,
+            ),
+          ),
         ),
       ],
     );
