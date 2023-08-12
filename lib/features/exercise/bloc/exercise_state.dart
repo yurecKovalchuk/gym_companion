@@ -1,5 +1,5 @@
 import 'package:timer_bloc/models/models.dart';
 
-class TrainingState {
+class ExerciseState {
   final List<Exercise> exercises = [];
 }

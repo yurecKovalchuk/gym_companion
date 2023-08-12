@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:timer_bloc/stuff/timer_bloc.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   final TimerBloc _timerBloc = TimerBloc();
 
   @override
@@ -45,26 +47,24 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: const Text('enter limit'),
                   ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _timerBloc.timerPeriodic.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              titleAlignment: ListTileTitleAlignment.center,
-                              title: Text(
-                                  'Круг ${_timerBloc.timerPeriodic[index].circleNumber}'),
-                              subtitle: Text(
-                                  'Час: ${_timerBloc.timerPeriodic[index].circleTime}'),
-                            );
-                          },
-                        ),
-                      ),
-
+                  Align(
+                    alignment: Alignment.center,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _timerBloc.timerPeriodic.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          titleAlignment: ListTileTitleAlignment.center,
+                          title: Text(
+                              'Круг ${_timerBloc.timerPeriodic[index].circleNumber}'),
+                          subtitle: Text(
+                              'Час: ${_timerBloc.timerPeriodic[index].circleTime}'),
+                        );
+                      },
+                    ),
+                  ),
                 ]);
               }),
-
         ]),
       ),
     );

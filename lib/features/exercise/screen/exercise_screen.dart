@@ -9,11 +9,11 @@ class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({super.key});
 
   @override
-  _ExerciseScreenState createState() => _ExerciseScreenState();
+  ExerciseScreenState createState() => ExerciseScreenState();
 }
 
-class _ExerciseScreenState extends State<ExerciseScreen> {
-  final TrainingBloc _trainingBloc = TrainingBloc();
+class ExerciseScreenState extends State<ExerciseScreen> {
+  final ExerciseBloc _exerciseBloc = ExerciseBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       body: Container(
         decoration: MainBackgroundDecoration.backgroundDecoration,
         child: StreamBuilder(
-          stream: _trainingBloc.exercisesStream,
+          stream: _exerciseBloc.exercisesStream,
           initialData: const [],
           builder: (context, snapshot) {
             return ListView.builder(
-              itemCount: _trainingBloc.state.exercises.length,
+              itemCount: _exerciseBloc.state.exercises.length,
               itemBuilder: (context, index) {
-                final exercise = _trainingBloc.state.exercises[index];
+                final exercise = _exerciseBloc.state.exercises[index];
                 return GestureDetector(
                   onTap: () {
                     _navigatorPushToPlayScreen(index);
@@ -70,19 +70,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       ),
     );
     if (result != null) {
-      _trainingBloc.addExercise(result);
+      _exerciseBloc.addExercise(result);
     }
   }
 
   void _navigatorPushToPlayScreen(int index) {
-    if (_trainingBloc.state.exercises[index].approaches.isNotEmpty) {
+    if (_exerciseBloc.state.exercises[index].approaches.isNotEmpty) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (
             context,
           ) =>
-              ExercisePlay(exercise: _trainingBloc.state.exercises[index]),
+              ExercisePlay(exercise: _exerciseBloc.state.exercises[index]),
         ),
       );
     }
@@ -90,7 +90,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   @override
   void dispose() {
-    _trainingBloc.dispose();
+    _exerciseBloc.dispose();
     super.dispose();
   }
 }
