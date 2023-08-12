@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
-import 'package:timer_bloc/features/exercise/exercise.dart';
+import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/style/style.dart';
 
@@ -13,7 +13,7 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class ExerciseScreenState extends State<ExerciseScreen> {
-  final ExerciseBloc _exerciseBloc = ExerciseBloc();
+  final ExercisesBloc _exerciseBloc = ExercisesBloc();
 
   @override
   Widget build(BuildContext context) {
