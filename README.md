@@ -1,4 +1,4 @@
-# timer_bloc
+# gym_companion
 
 A new Flutter project.
 
