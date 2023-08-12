@@ -1,0 +1,4 @@
+enum ApproachType {
+  exercise,
+  rest,
+}

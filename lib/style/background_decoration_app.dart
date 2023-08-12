@@ -8,7 +8,7 @@ class MainBackgroundDecoration {
         Colors.white10,
       ],
       begin: Alignment.topLeft,
-      end: Alignment.centerRight,
+      end: Alignment.bottomRight,
     ),
   );
 }
