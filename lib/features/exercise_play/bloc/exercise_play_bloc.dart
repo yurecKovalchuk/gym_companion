@@ -1,35 +1,30 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/models/models.dart';
 
-class ExercisePlayBloc {
+class ExercisePlayBloc extends Cubit<ExercisePlayState> {
   ExercisePlayBloc(Exercise exercise)
-      : _state = ExercisePlayState(
-          exercise: exercise,
-          approachesIndex: 0,
-          exercise.approaches[0].value,
-          approachesLeftTime: exercise.approaches.map((e) => e.value).toList(),
-          false,
-          0,
+      : super(
+          ExercisePlayState(
+            exercise: exercise,
+            approachesIndex: 0,
+            approachLeftTime: exercise.approaches[0].value,
+            approachesLeftTime:
+                exercise.approaches.map((e) => e.value).toList(),
+            isActiveExercise: false,
+          ),
         );
-
-  final ExercisePlayState _state;
-
-  final StreamController<ExercisePlayState> _streamController =
-      StreamController<ExercisePlayState>();
-
-  Stream<ExercisePlayState> get streamExercise => _streamController.stream;
-
-  ExercisePlayState get state => _state;
 
   Timer? _timer;
   Timer? _approachTimer;
 
   void playExercise() {
-    state.isActiveExercise = true;
-    _canselPlayTimer();
-    _canselApproachTimer();
+    emit(state.copyWith(isActiveExercise: true));
+    _cancelPlayTimer();
+    _cancelApproachTimer();
 
     _playApproachTimer(state.approachesIndex);
 
@@ -42,28 +37,32 @@ class ExercisePlayBloc {
         isApproachAvailable ? _switchCurrentApproach() : _stopPlayExercise();
       },
     );
-    _streamController.sink.add(state);
   }
 
   void stopExerciseTimer() {
-    _canselApproachTimer();
-    _canselPlayTimer();
-    state.isActiveExercise = false;
-    state.approachLeftTime = state.approachesLeftTime[state.approachesIndex];
-    _streamController.sink.add(state);
+    _cancelApproachTimer();
+    _cancelPlayTimer();
+    emit(state.copyWith(
+      isActiveExercise: false,
+      approachLeftTime: state.approachesLeftTime[state.approachesIndex],
+    ));
   }
 
   void _stopPlayExercise() {
     _resetApproachesLeftTime();
-    _canselApproachTimer();
-    _canselPlayTimer();
-    state.isActiveExercise = false;
+    _cancelApproachTimer();
+    _cancelPlayTimer();
+    emit(state.copyWith(isActiveExercise: false));
   }
 
   void _switchCurrentApproach() {
-    state.approachesIndex++;
+    emit(
+      state.copyWith(
+        approachesIndex: ++state.approachesIndex,
+        approachLeftTime: 0,
+      ),
+    );
     playExercise();
-    state.approachLeftTime = 0;
   }
 
   Duration _manageApproachSeconds() => Duration(
@@ -73,11 +72,12 @@ class ExercisePlayBloc {
       );
 
   void _resetApproachesLeftTime() {
-    state.approachesIndex = 0;
-    state.approachesLeftTime.clear();
-    state.approachesLeftTime.addAll(
-      state.exercise.approaches.map((e) => e.value).toList(),
-    );
+    final List<int> newApproachesLeftTime =
+        state.exercise.approaches.map((e) => e.value).toList();
+    emit(state.copyWith(
+      approachesIndex: 0,
+      approachesLeftTime: newApproachesLeftTime,
+    ));
   }
 
   void _playApproachTimer(int approachesIndex) {
@@ -85,28 +85,24 @@ class ExercisePlayBloc {
       const Duration(seconds: 1),
       (timer) {
         if (state.approachesLeftTime[approachesIndex] > 0) {
-          state.approachesLeftTime[approachesIndex]--;
+          final List<int> newApproachesLeftTime =
+              List.from(state.approachesLeftTime);
+          newApproachesLeftTime[approachesIndex]--;
+          emit(state.copyWith(approachesLeftTime: newApproachesLeftTime));
         } else {
-          _canselApproachTimer();
+          _cancelApproachTimer();
         }
-        _streamController.sink.add(state);
       },
     );
   }
 
-  void _canselApproachTimer() {
+  void _cancelApproachTimer() {
     _approachTimer?.cancel();
     _approachTimer = null;
   }
 
-  void _canselPlayTimer() {
+  void _cancelPlayTimer() {
     _timer?.cancel();
     _timer = null;
-  }
-
-  void dispose() {
-    _canselApproachTimer();
-    _canselPlayTimer();
-    _streamController.close();
   }
 }

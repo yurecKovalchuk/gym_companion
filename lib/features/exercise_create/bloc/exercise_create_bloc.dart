@@ -1,36 +1,35 @@
-import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
-class ExerciseCreateBloc {
-  final StreamController<ExerciseCreateState> _streamController =
-      StreamController<ExerciseCreateState>();
-
-  Stream<ExerciseCreateState> get streamSetTasks => _streamController.stream;
-
-  final ExerciseCreateState _state = ExerciseCreateState(
-    Exercise(
-      '',
-      [],
-    ),
-  );
-
-  ExerciseCreateState get state => _state;
+class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
+  ExerciseCreateBloc()
+      : super(
+          ExerciseCreateState(
+            exercise: Exercise(
+              name: '',
+              approaches: [],
+            ),
+          ),
+        );
 
   void setExercisesName(String name) {
-    state.exercise.name = name;
-    _streamController.sink.add(state);
+    emit(
+      state.copyWith(
+        exercise: state.exercise.copyWith(name: name),
+      ),
+    );
   }
 
   void setExercisesTime(String time, ApproachType timerType) {
-    final value = int.tryParse(time)!.toInt();
+    final value = int.tryParse(time) ?? 0;
     final timerEntry = Approach(value, timerType);
-    state.exercise.approaches.add(timerEntry);
-    _streamController.sink.add(state);
-  }
-
-  void dispose() {
-    _streamController.close();
+    final updatedExercise = state.exercise.copyWith(
+      approaches: [...state.exercise.approaches, timerEntry],
+    );
+    emit(
+      state.copyWith(exercise: updatedExercise),
+    );
   }
 }

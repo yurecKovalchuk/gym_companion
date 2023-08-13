@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:timer_bloc/features/exercise_play/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
-
 import 'package:timer_bloc/style/style.dart';
 
 class ExercisePlay extends StatefulWidget {
@@ -26,9 +27,9 @@ class _ExercisePlayState extends State<ExercisePlay> {
     return Scaffold(
       body: Container(
         decoration: MainBackgroundDecoration.backgroundDecoration,
-        child: StreamBuilder(
-          stream: _exercisePlayBloc.streamExercise,
-          builder: (context, snapshot) {
+        child: BlocBuilder(
+          bloc: _exercisePlayBloc,
+          builder: (context, state) {
             return Column(
               children: [
                 Row(
@@ -106,10 +107,4 @@ class _ExercisePlayState extends State<ExercisePlay> {
               _exercisePlayBloc.state.isActiveExercise
           ? (timer.type == ApproachType.rest ? Colors.green : Colors.red)
           : Colors.transparent;
-
-  @override
-  void dispose() {
-    _exercisePlayBloc.dispose();
-    super.dispose();
-  }
 }
