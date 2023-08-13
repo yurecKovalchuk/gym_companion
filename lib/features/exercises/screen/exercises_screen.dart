@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
@@ -20,9 +21,8 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     return Scaffold(
       body: Container(
         decoration: MainBackgroundDecoration.backgroundDecoration,
-        child: StreamBuilder(
-          stream: _exerciseBloc.exercisesStream,
-          initialData: const [],
+        child: BlocBuilder(
+          bloc: _exerciseBloc,
           builder: (context, snapshot) {
             return ListView.builder(
               itemCount: _exerciseBloc.state.exercises.length,
@@ -86,11 +86,5 @@ class ExerciseScreenState extends State<ExerciseScreen> {
         ),
       );
     }
-  }
-
-  @override
-  void dispose() {
-    _exerciseBloc.dispose();
-    super.dispose();
   }
 }
