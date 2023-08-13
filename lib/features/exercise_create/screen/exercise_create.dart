@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'package:timer_bloc/style/style.dart';
@@ -21,9 +23,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
     return Scaffold(
       body: Container(
         decoration: MainBackgroundDecoration.backgroundDecoration,
-        child: StreamBuilder(
-          stream: _exerciseCreateBloc.streamSetTasks,
-          builder: (context, snapshot) {
+        child: BlocBuilder(
+         bloc: _exerciseCreateBloc,
+          builder: (context, state) {
             return Column(
               children: [
                 Row(
@@ -51,19 +53,20 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount:
-                      _exerciseCreateBloc.state.exercise.approaches.length,
-                  itemBuilder: (context, index) {
-                    final timer =
-                        _exerciseCreateBloc.state.exercise.approaches[index];
-                    return ListTile(
-                      title: Text('${timer.value.toString()} - ${timer.type == ApproachType.rest
-                          ? 'Rest'
-                          : 'Exercise'}'),
-                    );
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    itemCount:
+                        _exerciseCreateBloc.state.exercise.approaches.length,
+                    itemBuilder: (context, index) {
+                      final timer =
+                          _exerciseCreateBloc.state.exercise.approaches[index];
+                      return ListTile(
+                        title: Text('${timer.value.toString()} - ${timer.type == ApproachType.rest
+                            ? 'Rest'
+                            : 'Exercise'}'),
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
