@@ -23,6 +23,13 @@ class _ShowModalBottomSheetSetApproachesState
       ? ApproachType.exercise
       : ApproachType.rest;
 
+  late final TextEditingController _textEditingController =
+      TextEditingController(
+    text: widget.value != null
+        ? widget.value.toString()
+        : _currentSliderValue.toString(),
+  );
+
   int _currentSliderValue = 0;
 
   @override
@@ -34,7 +41,7 @@ class _ShowModalBottomSheetSetApproachesState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -44,54 +51,48 @@ class _ShowModalBottomSheetSetApproachesState
           color: Colors.white,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Row(
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: ' Add your new ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                    color: Colors.black.withOpacity(0.5)),
+              const SizedBox(
+                height: 32,
+              ),
+              Text(
+                'Add your new',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: Colors.black.withOpacity(0.5)),
+              ),
+              RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: selectedType == ApproachType.rest
+                            ? 'Rest'
+                            : 'Exercise',
+                        style: Theme.of(context).textTheme.headlineLarge),
+                    TextSpan(
+                      text: ' of ',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Colors.black.withOpacity(0.5),
                           ),
-                          const TextSpan(
-                            text: '\n', // New line
-                          ),
-                          TextSpan(
-                              text: selectedType == ApproachType.rest
-                                  ? 'Rest'
-                                  : 'Exercise',
-                              style: Theme.of(context).textTheme.headlineLarge),
-                          TextSpan(
-                            text: ' of ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                    color: Colors.black.withOpacity(0.5)),
-                          ),
-                          TextSpan(
-                              text: _currentSliderValue.toString(),
-                              style: Theme.of(context).textTheme.headlineLarge),
-                          TextSpan(
-                            text: ' seconds ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                    color: Colors.black.withOpacity(0.5)),
-                          ),
-                        ],
-                      ),
+                    ),
+                    TextSpan(
+                      text: _currentSliderValue.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(color: Colors.black.withOpacity(0.75)),
+                    ),
+                    TextSpan(
+                      text: ' seconds',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: Colors.black.withOpacity(0.5)),
                     ),
                   ],
                 ),
@@ -105,48 +106,55 @@ class _ShowModalBottomSheetSetApproachesState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Card(
-                        color: selectedType == ApproachType.exercise
-                            ? Colors.green
-                            : Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(
-                            color: selectedType == ApproachType.exercise
-                                ? Colors.black.withOpacity(0.2)
-                                : Colors.transparent,
-                            width: 2.0,
-                          ),
-                        ),
-                        child: InkWell(
-                          onTap: selectedTypeApproachExercise,
-                          child: const SizedBox(
-                            height: 40,
-                            child: Center(
-                              child: Text('Exercise'),
+                      child: GestureDetector(
+                        onTap: selectedTypeApproachExercise,
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          elevation:
+                              selectedType == ApproachType.exercise ? 2 : 4,
+                          shadowColor: selectedType == ApproachType.exercise
+                              ? Colors.red
+                              : Colors.grey,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(0),
+                              topLeft: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
                             ),
+                          ),
+                          child: const Center(
+                            child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 16),
+                                child: Text('Exercise')),
                           ),
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Expanded(
-                      child: Card(
-                        color: selectedType == ApproachType.rest
-                            ? Colors.red
-                            : Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(
-                            color: selectedType == ApproachType.exercise
-                                ? Colors.black.withOpacity(0.2)
-                                : Colors.transparent,
-                            width: 2.0,
+                      child: GestureDetector(
+                        onTap: selectedTypeApproachRest,
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          elevation: selectedType == ApproachType.rest ? 2 : 4,
+                          shadowColor: selectedType == ApproachType.rest
+                              ? Colors.green
+                              : Colors.grey,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                              topRight: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
                           ),
-                        ),
-                        child: InkWell(
-                          onTap: selectedTypeApproachRest,
-                          child: const SizedBox(
-                            height: 40,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 16),
                             child: Center(
                               child: Text('Rest'),
                             ),
@@ -157,37 +165,41 @@ class _ShowModalBottomSheetSetApproachesState
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: ' Duration: ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(color: Colors.black.withOpacity(0.5)),
-                    ),
-                  )
-                ],
+              const SizedBox(
+                height: 24,
               ),
-              Slider(
-                value: _currentSliderValue.toDouble(),
-                max: 120,
-                divisions: 5,
-                label: _currentSliderValue.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value as int;
-                  });
-                },
+              Text(
+                'Duration: ',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Colors.black.withOpacity(0.5)),
+              ),
+              SliderTheme(
+                data: SliderThemeData(
+                  // here
+                  trackShape: CustomTrackShape(),
+                ),
+                child: Slider(
+                  value: _currentSliderValue.toDouble(),
+                  max: 120,
+                  divisions: 5,
+                  label: _currentSliderValue.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _currentSliderValue = value as int;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 30,
               ),
               SizedBox(
                 width: double.infinity,
-                height: 60,
+                height: 40,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 16.0,
-                  ),
+                  padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
@@ -230,5 +242,22 @@ class _ShowModalBottomSheetSetApproachesState
     setState(() {
       selectedType = ApproachType.exercise;
     });
+  }
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
