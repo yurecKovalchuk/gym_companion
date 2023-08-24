@@ -13,22 +13,11 @@ class ShowModalBottomSheetSetApproaches extends StatefulWidget {
   final ApproachType? type;
 
   @override
-  State<ShowModalBottomSheetSetApproaches> createState() =>
-      _ShowModalBottomSheetSetApproachesState();
+  State<ShowModalBottomSheetSetApproaches> createState() => _ShowModalBottomSheetSetApproachesState();
 }
 
-class _ShowModalBottomSheetSetApproachesState
-    extends State<ShowModalBottomSheetSetApproaches> {
-  late ApproachType selectedType = widget.type == ApproachType.exercise
-      ? ApproachType.exercise
-      : ApproachType.rest;
-
-  late final TextEditingController _textEditingController =
-      TextEditingController(
-    text: widget.value != null
-        ? widget.value.toString()
-        : _currentSliderValue.toString(),
-  );
+class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheetSetApproaches> {
+  late ApproachType selectedType = widget.type == ApproachType.exercise ? ApproachType.exercise : ApproachType.rest;
 
   int _currentSliderValue = 0;
 
@@ -61,18 +50,13 @@ class _ShowModalBottomSheetSetApproachesState
               ),
               Text(
                 'Add your new',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(color: Colors.black.withOpacity(0.5)),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black.withOpacity(0.5)),
               ),
               RichText(
                 text: TextSpan(
                   children: <TextSpan>[
                     TextSpan(
-                        text: selectedType == ApproachType.rest
-                            ? 'Rest'
-                            : 'Exercise',
+                        text: selectedType == ApproachType.rest ? 'Rest' : 'Exercise',
                         style: Theme.of(context).textTheme.headlineLarge),
                     TextSpan(
                       text: ' of ',
@@ -82,17 +66,11 @@ class _ShowModalBottomSheetSetApproachesState
                     ),
                     TextSpan(
                       text: _currentSliderValue.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(color: Colors.black.withOpacity(0.75)),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.black.withOpacity(0.75)),
                     ),
                     TextSpan(
                       text: ' seconds',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(color: Colors.black.withOpacity(0.5)),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black.withOpacity(0.5)),
                     ),
                   ],
                 ),
@@ -110,11 +88,8 @@ class _ShowModalBottomSheetSetApproachesState
                         onTap: selectedTypeApproachExercise,
                         child: Card(
                           margin: EdgeInsets.zero,
-                          elevation:
-                              selectedType == ApproachType.exercise ? 2 : 4,
-                          shadowColor: selectedType == ApproachType.exercise
-                              ? Colors.red
-                              : Colors.grey,
+                          elevation: selectedType == ApproachType.exercise ? 2 : 4,
+                          shadowColor: selectedType == ApproachType.exercise ? Colors.red : Colors.grey,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(0),
@@ -125,9 +100,7 @@ class _ShowModalBottomSheetSetApproachesState
                           ),
                           child: const Center(
                             child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 16),
-                                child: Text('Exercise')),
+                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16), child: Text('Exercise')),
                           ),
                         ),
                       ),
@@ -141,9 +114,7 @@ class _ShowModalBottomSheetSetApproachesState
                         child: Card(
                           margin: EdgeInsets.zero,
                           elevation: selectedType == ApproachType.rest ? 2 : 4,
-                          shadowColor: selectedType == ApproachType.rest
-                              ? Colors.green
-                              : Colors.grey,
+                          shadowColor: selectedType == ApproachType.rest ? Colors.green : Colors.grey,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(0),
@@ -153,8 +124,7 @@ class _ShowModalBottomSheetSetApproachesState
                             ),
                           ),
                           child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 16),
+                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                             child: Center(
                               child: Text('Rest'),
                             ),
@@ -170,10 +140,7 @@ class _ShowModalBottomSheetSetApproachesState
               ),
               Text(
                 'Duration: ',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: Colors.black.withOpacity(0.5)),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.black.withOpacity(0.5)),
               ),
               SliderTheme(
                 data: SliderThemeData(
@@ -203,9 +170,7 @@ class _ShowModalBottomSheetSetApproachesState
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(18),
-                            topRight: Radius.circular(18)),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(18), topRight: Radius.circular(18)),
                       ),
                     ),
                     onPressed: () {
@@ -218,9 +183,7 @@ class _ShowModalBottomSheetSetApproachesState
                       });
                     },
                     child: Text(
-                      widget.type == null && widget.value == null
-                          ? 'Add'
-                          : 'Update',
+                      widget.type == null && widget.value == null ? 'Add' : 'Update',
                     ),
                   ),
                 ),
