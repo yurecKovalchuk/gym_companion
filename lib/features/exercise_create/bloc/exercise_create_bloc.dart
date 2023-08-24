@@ -61,8 +61,7 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
     final updatedApproaches = List.of(state.exercise.approaches);
     updatedApproaches[index] = newApproach as Approach;
 
-    final updatedExercise =
-        state.exercise.copyWith(approaches: updatedApproaches);
+    final updatedExercise = state.exercise.copyWith(approaches: updatedApproaches);
     emit(state.copyWith(exercise: updatedExercise));
   }
 

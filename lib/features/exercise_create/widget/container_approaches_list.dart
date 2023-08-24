@@ -34,16 +34,23 @@ class ContainerApproachesList extends StatelessWidget {
         child: Column(
           children: [
             approaches.isEmpty
-                ? const Padding(
-                    padding: EdgeInsets.only(top: 220.0),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                          textAlign: TextAlign.end,
-                          'Add approaches time and type',
-                          style: TextStyle(fontSize: 18)),
+                ? Expanded(
+                  child: Center(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(text: 'No approaches yet', style: Theme.of(context).textTheme.headlineLarge),
+                        const TextSpan(text: '\n',),
+                        TextSpan(
+                          text: ' Please tab on button  and start adding approaches ',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                        ),
+                      ]),
                     ),
-                  )
+                  ),
+                )
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount: approaches.length,
@@ -73,27 +80,21 @@ class ContainerApproachesList extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 60,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: timer.type == ApproachType.rest
-                                      ? Colors.red
-                                      : Colors.green,
+                              Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
                                 ),
-                                child: Center(
-                                  child: Text(timer.type == ApproachType.rest
-                                      ? 'Rest'
-                                      : 'Exercise'),
+                                child: Container(
+                                  width: 60,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: timer.type == ApproachType.rest ? Colors.red : Colors.green,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(timer.type == ApproachType.rest ? 'Rest' : 'Exercise'),
+                                  ),
                                 ),
                               ),
                               PopupMenuButton<String>(
