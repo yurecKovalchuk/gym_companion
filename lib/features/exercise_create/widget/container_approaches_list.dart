@@ -18,65 +18,55 @@ class ContainerApproachesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
+      child: Card(
+        elevation: 4,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+            bottomLeft: Radius.circular(4),
+            bottomRight: Radius.circular(4),
+          ),
         ),
+        margin: EdgeInsets.zero,
         child: Column(
           children: [
             approaches.isEmpty
                 ? Expanded(
-                  child: Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(children: <TextSpan>[
-                        TextSpan(text: 'No approaches yet', style: Theme.of(context).textTheme.headlineLarge),
-                        const TextSpan(text: '\n',),
-                        TextSpan(
-                          text: ' Please tab on button  and start adding approaches ',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                color: Colors.black.withOpacity(0.5),
-                              ),
+                    child: Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: 'No approaches yet', style: Theme.of(context).textTheme.headlineMedium),
+                            const TextSpan(text: '\n'),
+                            TextSpan(
+                              text: 'Please, tab on button and start adding approaches',
+                              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                            ),
+                          ],
                         ),
-                      ]),
+                      ),
                     ),
-                  ),
-                )
+                  )
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount: approaches.length,
                     itemBuilder: (context, index) {
                       final timer = approaches[index];
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 88, 110, 69),
-                            borderRadius: BorderRadius.circular(22.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        child: Card(
+                          elevation: 2,
                           child: Row(
                             children: [
                               Expanded(
                                 child: ListTile(
                                   title: Text(
                                     '${timer.value.toString()} seconds',
+                                    style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ),
                               ),
