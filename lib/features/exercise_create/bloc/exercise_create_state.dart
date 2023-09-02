@@ -14,4 +14,12 @@ class ExerciseCreateState {
       exercise: exercise ?? this.exercise,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ExerciseCreateState && runtimeType == other.runtimeType && exercise == other.exercise;
+
+  @override
+  int get hashCode => exercise.hashCode;
 }

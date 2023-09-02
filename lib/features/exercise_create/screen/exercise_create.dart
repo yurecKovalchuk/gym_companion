@@ -53,7 +53,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextField(
+                TextFormField(
                   controller: _textEditingControllerName,
                   maxLength: 24,
                   onChanged: (name) {
@@ -62,31 +62,25 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                     );
                   },
                   decoration: InputDecoration(
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
+                    focusedBorder: const UnderlineInputBorder(),
                     labelText: 'Exercise Name',
-                    labelStyle: const TextStyle(color: Colors.black26),
-                    suffixIcon: state.exercise.name.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _textEditingControllerName.clear();
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.clear,
-                              color: Colors.red,
-                            ),
-                          )
-                        : null,
+                    suffixIconColor: Colors.red,
+                    suffixIcon: InkWell(
+                      child: const Icon(Icons.close),
+                      onTap: () {
+                        _exerciseCreateBloc.setExercisesName('');
+                        _textEditingControllerName.clear();
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
-                TextField(
+                TextFormField(
                   controller: _textEditingControllerDescription,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   maxLength: 164,
                   onChanged: (description) {
                     _exerciseCreateBloc.setExerciseDescription(
@@ -94,24 +88,16 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                     );
                   },
                   decoration: InputDecoration(
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
+                    focusedBorder: const UnderlineInputBorder(),
                     labelText: 'Description',
-                    labelStyle: const TextStyle(color: Colors.black26),
-                    suffixIcon: state.exercise.description.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _textEditingControllerDescription.clear();
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.clear,
-                              color: Colors.red,
-                            ),
-                          )
-                        : null,
+                    suffixIconColor: Colors.red,
+                    suffixIcon: InkWell(
+                      child: const Icon(Icons.close),
+                      onTap: () {
+                        _exerciseCreateBloc.setExerciseDescription('');
+                        _textEditingControllerDescription.clear();
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -128,12 +114,15 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                 SizedBox(
                   height: 40,
                   width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 180, 170, 103),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 4,
+                      ),
+                      onPressed: () => _showAddTaskDialog(),
+                      child: const Text('ADD APPROACH'),
                     ),
-                    child: const Text('ADD APPROACH'),
-                    onPressed: () => _showAddTaskDialog(),
                   ),
                 ),
               ],
