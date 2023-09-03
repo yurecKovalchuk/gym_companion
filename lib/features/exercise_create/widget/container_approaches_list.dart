@@ -72,18 +72,20 @@ class ContainerApproachesList extends StatelessWidget {
                               ),
                               Card(
                                 elevation: 5,
+                                color: timer.type == ApproachType.rest ? Colors.red : Colors.green,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: 60,
                                   height: 30,
-                                  decoration: BoxDecoration(
-                                    color: timer.type == ApproachType.rest ? Colors.red : Colors.green,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
                                   child: Center(
-                                    child: Text(timer.type == ApproachType.rest ? 'Rest' : 'Exercise'),
+                                    child: Text(
+                                      timer.type == ApproachType.rest ? 'Rest' : 'Exercise',
+                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                            color: Colors.white,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
