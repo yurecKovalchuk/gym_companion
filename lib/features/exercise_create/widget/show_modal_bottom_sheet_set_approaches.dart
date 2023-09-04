@@ -50,7 +50,9 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
               ),
               Text(
                 'Add your new',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black.withOpacity(0.5)),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Colors.black.withOpacity(0.5),
+                    ),
               ),
               RichText(
                 text: TextSpan(
@@ -165,26 +167,24 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
               SizedBox(
                 width: double.infinity,
                 height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(18), topRight: Radius.circular(18)),
-                      ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 180, 170, 103),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        final timer = _currentSliderValue.toString();
-                        Navigator.pop(context, {
-                          'timer': timer,
-                          'type': selectedType,
-                        });
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      final timer = _currentSliderValue.toString();
+                      Navigator.pop(context, {
+                        'timer': timer,
+                        'type': selectedType,
                       });
-                    },
-                    child: Text(
-                      widget.type == null && widget.value == null ? 'Add' : 'Update',
-                    ),
+                    });
+                  },
+                  child: Text(
+                    widget.type == null && widget.value == null ? 'Add' : 'Update',
                   ),
                 ),
               ),
