@@ -152,11 +152,11 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                 child: Slider(
                   value: _currentSliderValue.toDouble(),
                   max: 120,
-                  divisions: 5,
+                  divisions: 60,
                   label: _currentSliderValue.round().toString(),
                   onChanged: (double value) {
                     setState(() {
-                      _currentSliderValue = value as int;
+                      _currentSliderValue = value.toInt();
                     });
                   },
                 ),

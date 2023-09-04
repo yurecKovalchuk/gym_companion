@@ -51,68 +51,70 @@ class ContainerApproachesList extends StatelessWidget {
                       ),
                     ),
                   )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: approaches.length,
-                    itemBuilder: (context, index) {
-                      final timer = approaches[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                        child: Card(
-                          elevation: 2,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    '${timer.value.toString()} seconds',
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 5,
-                                color: timer.type == ApproachType.rest ? Colors.red : Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: SizedBox(
-                                  width: 60,
-                                  height: 30,
-                                  child: Center(
-                                    child: Text(
-                                      timer.type == ApproachType.rest ? 'Rest' : 'Exercise',
-                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                            color: Colors.white,
-                                          ),
+                : Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: approaches.length,
+                      itemBuilder: (context, index) {
+                        final timer = approaches[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          child: Card(
+                            elevation: 2,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ListTile(
+                                    title: Text(
+                                      '${timer.value.toString()} seconds',
+                                      style: Theme.of(context).textTheme.titleMedium,
                                     ),
                                   ),
                                 ),
-                              ),
-                              PopupMenuButton<String>(
-                                itemBuilder: (context) => [
-                                  const PopupMenuItem<String>(
-                                    value: 'edit',
-                                    child: Text('Edit'),
+                                Card(
+                                  elevation: 5,
+                                  color: timer.type == ApproachType.rest ? Colors.red : Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  const PopupMenuItem<String>(
-                                    value: 'delete',
-                                    child: Text('Delete'),
+                                  child: SizedBox(
+                                    width: 60,
+                                    height: 30,
+                                    child: Center(
+                                      child: Text(
+                                        timer.type == ApproachType.rest ? 'Rest' : 'Exercise',
+                                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                      ),
+                                    ),
                                   ),
-                                ],
-                                onSelected: (value) {
-                                  if (value == 'edit') {
-                                    onEditApproach(approaches[index]);
-                                  } else if (value == 'delete') {
-                                    onDeleteApproach(approaches[index]);
-                                  }
-                                },
-                              ),
-                            ],
+                                ),
+                                PopupMenuButton<String>(
+                                  itemBuilder: (context) => [
+                                    const PopupMenuItem<String>(
+                                      value: 'edit',
+                                      child: Text('Edit'),
+                                    ),
+                                    const PopupMenuItem<String>(
+                                      value: 'delete',
+                                      child: Text('Delete'),
+                                    ),
+                                  ],
+                                  onSelected: (value) {
+                                    if (value == 'edit') {
+                                      onEditApproach(approaches[index]);
+                                    } else if (value == 'delete') {
+                                      onDeleteApproach(approaches[index]);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
           ],
         ),
