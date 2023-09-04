@@ -28,7 +28,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 180, 170, 103),
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: <Widget>[
           TextButton(
             style: style,
