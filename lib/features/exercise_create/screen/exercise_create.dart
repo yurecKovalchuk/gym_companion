@@ -28,13 +28,11 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 180, 170, 103),
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: <Widget>[
           TextButton(
             style: style,
-            onPressed: () {
-              saveValidation();
-            },
+            onPressed: () => saveValidation(),
             child: const Text('SAVE'),
           ),
         ],
@@ -64,7 +62,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   decoration: InputDecoration(
                     focusedBorder: const UnderlineInputBorder(),
                     labelText: 'Exercise Name',
-                    suffixIconColor: Colors.red,
+                    suffixIconColor: Theme.of(context).colorScheme.primary,
                     suffixIcon: InkWell(
                       child: const Icon(Icons.close),
                       onTap: () {
@@ -90,7 +88,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   decoration: InputDecoration(
                     focusedBorder: const UnderlineInputBorder(),
                     labelText: 'Description',
-                    suffixIconColor: Colors.red,
+                    suffixIconColor: Theme.of(context).colorScheme.primary,
                     suffixIcon: InkWell(
                       child: const Icon(Icons.close),
                       onTap: () {
