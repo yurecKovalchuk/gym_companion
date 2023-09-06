@@ -26,10 +26,13 @@ class Exercise {
 
 class Approach {
   Approach(
-    this.value,
-    this.type,
-  );
+      this.value,
+      this.type,
+      ) {
+    id = DateTime.now().microsecondsSinceEpoch;
+  }
 
+  late int id;
   int value;
   ApproachType type;
 
@@ -46,11 +49,12 @@ class Approach {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Approach &&
-          runtimeType == other.runtimeType &&
-          value == other.value &&
-          type == other.type;
+          other is Approach &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              value == other.value &&
+              type == other.type;
 
   @override
-  int get hashCode => value.hashCode ^ type.hashCode;
+  int get hashCode => id.hashCode ^ value.hashCode ^ type.hashCode;
 }
