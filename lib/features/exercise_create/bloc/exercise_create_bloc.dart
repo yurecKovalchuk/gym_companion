@@ -42,11 +42,9 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
     state.exercise.approaches.removeAt(positionOfOldApproach);
     state.exercise.approaches.insert(positionOfOldApproach, newApproach);
 
-    emit(
-      state.copyWith(
-        exercise: state.exercise,
-      ),
-    );
+    emit(state.copyWith(
+      exercise: state.exercise.copyWith(approaches: [...state.exercise.approaches]),
+    ));
   }
 
   void setExerciseDescription(String description) {
@@ -55,14 +53,6 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
         exercise: state.exercise.copyWith(description: description),
       ),
     );
-  }
-
-  void editApproach(int index, Exercise newApproach) {
-    final updatedApproaches = List.of(state.exercise.approaches);
-    updatedApproaches[index] = newApproach as Approach;
-
-    final updatedExercise = state.exercise.copyWith(approaches: updatedApproaches);
-    emit(state.copyWith(exercise: updatedExercise));
   }
 
   void deleteApproach(Approach approach) {
