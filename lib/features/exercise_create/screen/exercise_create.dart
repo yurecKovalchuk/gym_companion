@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/localization/localization.dart';
+
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/models/models.dart';
 
@@ -17,11 +19,15 @@ class ExerciseCreate extends StatefulWidget {
 class _ExerciseCreateState extends State<ExerciseCreate> {
   final ExerciseCreateBloc _exerciseCreateBloc = ExerciseCreateBloc();
 
+
   final TextEditingController _textEditingControllerName = TextEditingController();
   final TextEditingController _textEditingControllerDescription = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    final AppLocalizations? appLocalizations = AppLocalizations.of(context);
+
     final ButtonStyle style = TextButton.styleFrom(
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
     );
@@ -33,7 +39,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
           TextButton(
             style: style,
             onPressed: () => saveValidation(),
-            child: const Text('SAVE'),
+            child: Text(context.l10n.saveExercise.toString(),),
           ),
         ],
       ),
@@ -61,7 +67,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   },
                   decoration: InputDecoration(
                     focusedBorder: const UnderlineInputBorder(),
-                    labelText: 'Exercise Name',
+                    labelText: context.l10n.exerciseName,
                     suffixIconColor: Theme.of(context).colorScheme.primary,
                     suffixIcon: InkWell(
                       child: const Icon(Icons.close),
@@ -87,7 +93,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   },
                   decoration: InputDecoration(
                     focusedBorder: const UnderlineInputBorder(),
-                    labelText: 'Description',
+                    labelText: context.l10n.exerciseDescription,
                     suffixIconColor: Theme.of(context).colorScheme.primary,
                     suffixIcon: InkWell(
                       child: const Icon(Icons.close),
@@ -119,7 +125,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                         elevation: 4,
                       ),
                       onPressed: () => _showAddTaskDialog(),
-                      child: const Text('ADD APPROACH'),
+                      child: Text(context.l10n.buttonAddApproach),
                     ),
                   ),
                 ),
@@ -169,14 +175,14 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Center(child: Text('Warning')),
-          content: const Text('Enter the name of the exercise and the approaches you want to perform'),
+          title: Center(child: Text(context.l10n.warningTitle),),
+          content: Text(context.l10n.warningContent),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Close'),
+              child: Text(context.l10n.textButtonClose),
             ),
           ],
         );

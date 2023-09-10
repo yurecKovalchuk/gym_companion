@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timer_bloc/localization/l10n/l10n.dart';
 
 import 'package:timer_bloc/models/models.dart';
 
@@ -38,10 +39,12 @@ class ContainerApproachesList extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: TextSpan(
                           children: <TextSpan>[
-                            TextSpan(text: 'No approaches yet', style: Theme.of(context).textTheme.headlineMedium),
+                            TextSpan(
+                                text: context.l10n.messageCardApproachesTitle,
+                                style: Theme.of(context).textTheme.headlineMedium),
                             const TextSpan(text: '\n'),
                             TextSpan(
-                              text: 'Please, tab on button and start adding approaches',
+                              text: context.l10n.messageCardApproachesContent,
                               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                                     color: Colors.black.withOpacity(0.5),
                                   ),
@@ -66,7 +69,7 @@ class ContainerApproachesList extends StatelessWidget {
                                 Expanded(
                                   child: ListTile(
                                     title: Text(
-                                      '${timer.value.toString()} seconds',
+                                      '${timer.value.toString()}  ${context.l10n.seconds}',
                                       style: Theme.of(context).textTheme.titleMedium,
                                     ),
                                   ),
@@ -82,7 +85,7 @@ class ContainerApproachesList extends StatelessWidget {
                                     height: 30,
                                     child: Center(
                                       child: Text(
-                                        timer.type == ApproachType.rest ? 'Rest' : 'Exercise',
+                                        timer.type == ApproachType.rest ? context.l10n.rest : context.l10n.exercise,
                                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                               color: Colors.white,
                                             ),
@@ -92,13 +95,13 @@ class ContainerApproachesList extends StatelessWidget {
                                 ),
                                 PopupMenuButton<String>(
                                   itemBuilder: (context) => [
-                                    const PopupMenuItem<String>(
+                                    PopupMenuItem<String>(
                                       value: 'edit',
-                                      child: Text('Edit'),
+                                      child: Text(context.l10n.popupMenuEdit),
                                     ),
-                                    const PopupMenuItem<String>(
+                                    PopupMenuItem<String>(
                                       value: 'delete',
-                                      child: Text('Delete'),
+                                      child: Text(context.l10n.popupMenuDelete),
                                     ),
                                   ],
                                   onSelected: (value) {

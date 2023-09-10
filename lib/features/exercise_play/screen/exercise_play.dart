@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/localization/localization.dart';
+
 import 'package:timer_bloc/features/exercise_play/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'package:timer_bloc/style/style.dart';
@@ -19,8 +21,7 @@ class ExercisePlay extends StatefulWidget {
 }
 
 class _ExercisePlayState extends State<ExercisePlay> {
-  late final ExercisePlayBloc _exercisePlayBloc =
-      ExercisePlayBloc(widget.exercise);
+  late final ExercisePlayBloc _exercisePlayBloc = ExercisePlayBloc(widget.exercise);
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,7 @@ class _ExercisePlayState extends State<ExercisePlay> {
                   shrinkWrap: true,
                   itemCount: _exercisePlayBloc.state.exercise.approaches.length,
                   itemBuilder: (context, index) {
-                    final timer =
-                        _exercisePlayBloc.state.exercise.approaches[index];
+                    final timer = _exercisePlayBloc.state.exercise.approaches[index];
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(22.0),
@@ -65,13 +65,11 @@ class _ExercisePlayState extends State<ExercisePlay> {
                             child: ListTile(
                               title: Text(
                                 textAlign: TextAlign.center,
-                                timer.type == ApproachType.rest
-                                    ? 'Rest'
-                                    : 'Exercise',
+                                timer.type == ApproachType.rest ? context.l10n.rest : context.l10n.exercise,
                               ),
                               subtitle: Text(
                                 textAlign: TextAlign.center,
-                                '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()} seconds',
+                                '${_exercisePlayBloc.state.approachesLeftTime[index]}/${timer.value.toString()} ${context.l10n.seconds}',
                                 style: const TextStyle(
                                   fontSize: 18,
                                 ),
@@ -91,7 +89,7 @@ class _ExercisePlayState extends State<ExercisePlay> {
                       ? _exercisePlayBloc.stopExerciseTimer()
                       : _exercisePlayBloc.playExercise(),
                   child: Text(
-                    _exercisePlayBloc.state.isActiveExercise ? 'PAUSE' : 'GO',
+                    _exercisePlayBloc.state.isActiveExercise ? context.l10n.pause : context.l10n.go,
                   ),
                 ),
               ],
@@ -103,8 +101,7 @@ class _ExercisePlayState extends State<ExercisePlay> {
   }
 
   Color _generateSlotColorByState(int index, Approach timer) =>
-      _exercisePlayBloc.state.approachesIndex == index &&
-              _exercisePlayBloc.state.isActiveExercise
+      _exercisePlayBloc.state.approachesIndex == index && _exercisePlayBloc.state.isActiveExercise
           ? (timer.type == ApproachType.rest ? Colors.green : Colors.red)
           : Colors.transparent;
 }
