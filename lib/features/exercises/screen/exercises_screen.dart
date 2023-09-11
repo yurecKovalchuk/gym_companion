@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
@@ -55,9 +56,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          _navigatorPushToCreateScreen();
-        },
+        onPressed: () => _navigatorPushToCreateScreen(),
         child: const Icon(Icons.add),
       ),
     );

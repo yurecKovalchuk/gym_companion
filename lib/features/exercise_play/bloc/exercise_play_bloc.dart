@@ -12,8 +12,7 @@ class ExercisePlayBloc extends Cubit<ExercisePlayState> {
             exercise: exercise,
             approachesIndex: 0,
             approachLeftTime: exercise.approaches[0].value,
-            approachesLeftTime:
-                exercise.approaches.map((e) => e.value).toList(),
+            approachesLeftTime: exercise.approaches.map((e) => e.value).toList(),
             isActiveExercise: false,
           ),
         );
@@ -56,12 +55,10 @@ class ExercisePlayBloc extends Cubit<ExercisePlayState> {
   }
 
   void _switchCurrentApproach() {
-    emit(
-      state.copyWith(
-        approachesIndex: ++state.approachesIndex,
-        approachLeftTime: 0,
-      ),
-    );
+    emit(state.copyWith(
+      approachesIndex: ++state.approachesIndex,
+      approachLeftTime: 0,
+    ));
     playExercise();
   }
 
@@ -72,8 +69,7 @@ class ExercisePlayBloc extends Cubit<ExercisePlayState> {
       );
 
   void _resetApproachesLeftTime() {
-    final List<int> newApproachesLeftTime =
-        state.exercise.approaches.map((e) => e.value).toList();
+    final List<int> newApproachesLeftTime = state.exercise.approaches.map((e) => e.value).toList();
     emit(state.copyWith(
       approachesIndex: 0,
       approachesLeftTime: newApproachesLeftTime,
@@ -85,8 +81,7 @@ class ExercisePlayBloc extends Cubit<ExercisePlayState> {
       const Duration(seconds: 1),
       (timer) {
         if (state.approachesLeftTime[approachesIndex] > 0) {
-          final List<int> newApproachesLeftTime =
-              List.from(state.approachesLeftTime);
+          final List<int> newApproachesLeftTime = List.from(state.approachesLeftTime);
           newApproachesLeftTime[approachesIndex]--;
           emit(state.copyWith(approachesLeftTime: newApproachesLeftTime));
         } else {

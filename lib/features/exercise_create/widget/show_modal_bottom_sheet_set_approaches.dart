@@ -173,7 +173,6 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                 height: 40,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 180, 170, 103),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(6), topRight: Radius.circular(6)),
                     ),
