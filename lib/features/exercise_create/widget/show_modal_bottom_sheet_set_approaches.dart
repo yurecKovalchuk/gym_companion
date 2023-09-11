@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:timer_bloc/localization/localization.dart';
+
 import 'package:timer_bloc/models/models.dart';
 
 class ShowModalBottomSheetSetApproaches extends StatefulWidget {
@@ -49,7 +51,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                 height: 32,
               ),
               Text(
-                'Add your new',
+                context.l10n.buttonAddApproach,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: Colors.black.withOpacity(0.5),
                     ),
@@ -58,10 +60,10 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                 text: TextSpan(
                   children: <TextSpan>[
                     TextSpan(
-                        text: selectedType == ApproachType.rest ? 'Rest' : 'Exercise',
+                        text: selectedType == ApproachType.rest ? context.l10n.rest : context.l10n.exercise,
                         style: Theme.of(context).textTheme.headlineLarge),
                     TextSpan(
-                      text: ' of ',
+                      text: ' ${context.l10n.articleOf} ',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: Colors.black.withOpacity(0.5),
                           ),
@@ -71,7 +73,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.black.withOpacity(0.75)),
                     ),
                     TextSpan(
-                      text: ' seconds',
+                      text: context.l10n.seconds,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black.withOpacity(0.5)),
                     ),
                   ],
@@ -100,9 +102,11 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                               bottomLeft: Radius.circular(8),
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16), child: Text('Exercise')),
+                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              child: Text(context.l10n.exercise),
+                            ),
                           ),
                         ),
                       ),
@@ -125,10 +129,10 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                               bottomRight: Radius.circular(8),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                             child: Center(
-                              child: Text('Rest'),
+                              child: Text(context.l10n.rest),
                             ),
                           ),
                         ),
@@ -141,7 +145,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                 height: 24,
               ),
               Text(
-                'Duration: ',
+                '${context.l10n.duration}: ',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.black.withOpacity(0.5)),
               ),
               SliderTheme(
@@ -184,7 +188,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                     });
                   },
                   child: Text(
-                    widget.type == null && widget.value == null ? 'Add' : 'Update',
+                    widget.type == null && widget.value == null ? context.l10n.add : context.l10n.update,
                   ),
                 ),
               ),

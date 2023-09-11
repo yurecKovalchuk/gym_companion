@@ -1,0 +1,23 @@
+{
+  "projectName": "Помічник для Cпортзала",
+  "saveExercise": "ЗБЕРЕГТИ",
+  "exerciseName": "Назва вправи",
+  "exerciseDescription": "Опис",
+  "buttonAddApproach": "ДОДАТИ ВПРАВУ",
+  "warningTitle": "Попередження",
+  "warningContent": "Введіть назву вправи та підходи, які ви хочете виконати",
+  "textButtonClose": "Закрити",
+  "messageCardApproachesTitle": "Записаних підходів ще немає",
+  "messageCardApproachesContent": "Будь ласка, натисніть на кнопку та почніть додавати підходи",
+  "seconds": "секунд",
+  "rest": "Відпочинок",
+  "exercise": "Вправа",
+  "popupMenuEdit": "Редагувати",
+  "popupMenuDelete": "Видалити",
+  "duration": "Тривалість",
+  "add": "Додати",
+  "update": "Оновити",
+  "pause": "Пауза",
+  "go": "Вперед",
+  "articleOf": " "
+}
