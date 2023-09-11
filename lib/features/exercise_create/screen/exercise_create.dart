@@ -26,8 +26,6 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   @override
   Widget build(BuildContext context) {
 
-    final AppLocalizations? appLocalizations = AppLocalizations.of(context);
-
     final ButtonStyle style = TextButton.styleFrom(
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
     );

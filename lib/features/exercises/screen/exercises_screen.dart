@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/localization/l10n/l10n.dart';
+
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
-import 'package:timer_bloc/style/style.dart';
 
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({super.key});
@@ -19,41 +20,41 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: MainBackgroundDecoration.backgroundDecoration,
-        child: BlocBuilder(
-          bloc: _exerciseBloc,
-          builder: (context, snapshot) {
-            return ListView.builder(
-              itemCount: _exerciseBloc.state.exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = _exerciseBloc.state.exercises[index];
-                return GestureDetector(
-                  onTap: () {
-                    _navigatorPushToPlayScreen(index);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(context.l10n.projectName),
+      ),
+      body: BlocBuilder(
+        bloc: _exerciseBloc,
+        builder: (context, snapshot) {
+          return ListView.builder(
+            itemCount: _exerciseBloc.state.exercises.length,
+            itemBuilder: (context, index) {
+              final exercise = _exerciseBloc.state.exercises[index];
+              return GestureDetector(
+                onTap: () {
+                  _navigatorPushToPlayScreen(index);
+                },
+                child: Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
                     child: Text(
-                      textAlign: TextAlign.center,
                       exercise.name,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 22.0),
                     ),
                   ),
-                );
-              },
-            );
-          },
-        ),
+                ),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.purpleAccent,
         onPressed: () async {
           _navigatorPushToCreateScreen();
         },
