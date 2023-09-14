@@ -6,9 +6,9 @@ import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExercisesBloc extends Cubit<ExercisesState> {
-  ExercisesBloc(this.dataSource) : super(ExercisesState([]));
+  ExercisesBloc(this._dataSource) : super(ExercisesState([]));
 
-  final DataSource dataSource;
+  final DataSource _dataSource;
 
   void addExercise(Exercise exercise) {
     if (exercise.name.isNotEmpty) {
@@ -16,12 +16,12 @@ class ExercisesBloc extends Cubit<ExercisesState> {
       emit(
         state.copyWith(exercises: state.exercises),
       );
-      dataSource.saveExercises(state.exercises);
+      _dataSource.saveExercises(state.exercises);
     }
   }
 
   void loadExercises() async {
-    final exercises = await dataSource.loadExercises();
+    final exercises = await _dataSource.loadExercises();
     emit(state.copyWith(exercises: exercises));
   }
 }
