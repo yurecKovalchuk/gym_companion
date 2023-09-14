@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:timer_bloc/datasourse/datasourse.dart';
+import 'package:timer_bloc/datasource/datasource.dart';
 
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
