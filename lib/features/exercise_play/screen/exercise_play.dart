@@ -21,14 +21,9 @@ class _ExercisePlayState extends State<ExercisePlay> {
   late final Exercise exercise;
 
   @override
-  void initState() {
-    exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
-    _exercisePlayBloc = ExercisePlayBloc(exercise);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
+    _exercisePlayBloc = ExercisePlayBloc(exercise);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
