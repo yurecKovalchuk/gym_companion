@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
+import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
+import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 
-import 'package:timer_bloc/features/exercises/screen/exercises_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      localizationsDelegates: [
+    return MaterialApp(
+      initialRoute: '/exerciseScreen',
+      routes: {
+        '/exerciseScreen': (context) => const ExerciseScreen(),
+        '/exerciseCreate': (context) => const ExerciseCreate(),
+        '/exercisePlay': (context) => const ExercisePlay(),
+      },
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: ExerciseScreen(),
     );
   }
 }

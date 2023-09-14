@@ -6,9 +6,8 @@ import 'package:timer_bloc/datasource/datasource.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 
-import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
-import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
+import 'package:timer_bloc/models/models.dart';
 
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({super.key});
@@ -71,28 +70,16 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _navigatorPushToCreateScreen() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ExerciseCreate(),
-      ),
-    );
-    if (result != null) {
-      _exerciseBloc.addExercise(result);
-    }
+    final result = await Navigator.pushNamed(context, '/exerciseCreate') as Exercise;
+    _exerciseBloc.addExercise(result);
   }
 
   void _navigatorPushToPlayScreen(int index) {
     if (_exerciseBloc.state.exercises[index].approaches.isNotEmpty) {
-      Navigator.push(
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(
-          builder: (
-            context,
-          ) =>
-              ExercisePlay(exercise: _exerciseBloc.state.exercises[index]),
-
-        ),
+        '/exercisePlay',
+        arguments: _exerciseBloc.state.exercises[index],
       );
     }
   }

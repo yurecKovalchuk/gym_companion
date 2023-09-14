@@ -10,17 +10,22 @@ import 'package:timer_bloc/models/models.dart';
 class ExercisePlay extends StatefulWidget {
   const ExercisePlay({
     super.key,
-    required this.exercise,
   });
-
-  final Exercise exercise;
 
   @override
   State<ExercisePlay> createState() => _ExercisePlayState();
 }
 
 class _ExercisePlayState extends State<ExercisePlay> {
-  late final ExercisePlayBloc _exercisePlayBloc = ExercisePlayBloc(widget.exercise);
+  late final ExercisePlayBloc _exercisePlayBloc;
+  late final Exercise exercise;
+
+  @override
+  void initState() {
+    exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
+    _exercisePlayBloc = ExercisePlayBloc(exercise);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
