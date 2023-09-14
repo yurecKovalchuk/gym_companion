@@ -77,7 +77,6 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     );
     if (result != null) {
       _exerciseBloc.addExercise(result);
-      _exerciseBloc.saveExercises(_exerciseBloc.state.exercises);
     }
   }
 
