@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:timer_bloc/models/models.dart';
 
-class ExerciseDataSource {
+class DataSource {
   Future<void> saveExercises(List<Exercise> exercises) async {
     final prefs = await SharedPreferences.getInstance();
     final exercisesJson = exercises.map((exercise) => exercise.toJson()).toList();

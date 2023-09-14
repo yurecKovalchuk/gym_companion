@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/datasource/datasource.dart';
+
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
@@ -16,7 +18,7 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class ExerciseScreenState extends State<ExerciseScreen> {
-  final ExercisesBloc _exerciseBloc = ExercisesBloc();
+  final ExercisesBloc _exerciseBloc = ExercisesBloc(DataSource());
 
   @override
   void initState() {
