@@ -19,6 +19,12 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   final ExercisesBloc _exerciseBloc = ExercisesBloc();
 
   @override
+  void initState() {
+    _exerciseBloc.loadExercises();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -71,6 +77,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     );
     if (result != null) {
       _exerciseBloc.addExercise(result);
+      _exerciseBloc.saveExercises(_exerciseBloc.state.exercises);
     }
   }
 
@@ -83,6 +90,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
             context,
           ) =>
               ExercisePlay(exercise: _exerciseBloc.state.exercises[index]),
+
         ),
       );
     }
