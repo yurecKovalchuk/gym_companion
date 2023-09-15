@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:timer_bloc/datasource/datasource.dart';
-
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseScreen extends StatefulWidget {
-  const ExerciseScreen({super.key});
+  const ExerciseScreen({super.key, required this.exerciseBloc});
+
+  final ExercisesBloc exerciseBloc;
 
   @override
   ExerciseScreenState createState() => ExerciseScreenState();
 }
 
 class ExerciseScreenState extends State<ExerciseScreen> {
-  final ExercisesBloc _exerciseBloc = ExercisesBloc(DataSource());
+  late final ExercisesBloc _exerciseBloc = widget.exerciseBloc;
 
   @override
   void initState() {

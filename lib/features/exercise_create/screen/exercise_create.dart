@@ -8,17 +8,17 @@ import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreate extends StatefulWidget {
-  const ExerciseCreate({
-    super.key,
+   const ExerciseCreate({
+    super.key, required this.exerciseCreateBloc
   });
+  final ExerciseCreateBloc exerciseCreateBloc;
 
   @override
   State<ExerciseCreate> createState() => _ExerciseCreateState();
 }
 
 class _ExerciseCreateState extends State<ExerciseCreate> {
-  final ExerciseCreateBloc _exerciseCreateBloc = ExerciseCreateBloc();
-
+  late final ExerciseCreateBloc _exerciseCreateBloc = widget.exerciseCreateBloc;
 
   final TextEditingController _textEditingControllerName = TextEditingController();
   final TextEditingController _textEditingControllerDescription = TextEditingController();
