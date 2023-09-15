@@ -8,9 +8,8 @@ import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreate extends StatefulWidget {
-   const ExerciseCreate({
-    super.key, required this.exerciseCreateBloc
-  });
+  const ExerciseCreate({super.key, required this.exerciseCreateBloc});
+
   final ExerciseCreateBloc exerciseCreateBloc;
 
   @override
@@ -25,7 +24,6 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
 
   @override
   Widget build(BuildContext context) {
-
     final ButtonStyle style = TextButton.styleFrom(
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
     );
@@ -37,7 +35,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
           TextButton(
             style: style,
             onPressed: () => saveValidation(),
-            child: Text(context.l10n.saveExercise.toString(),),
+            child: Text(
+              context.l10n.saveExercise.toString(),
+            ),
           ),
         ],
       ),
@@ -173,7 +173,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: Text(context.l10n.warningTitle),),
+          title: Center(
+            child: Text(context.l10n.warningTitle),
+          ),
           content: Text(context.l10n.warningContent),
           actions: <Widget>[
             TextButton(

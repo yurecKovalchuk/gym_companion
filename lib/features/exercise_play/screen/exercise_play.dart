@@ -8,9 +8,7 @@ import 'package:timer_bloc/features/exercise_play/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExercisePlay extends StatefulWidget {
-   const ExercisePlay({
-    super.key,required this.exercisePlayBloc
-  });
+  const ExercisePlay({super.key, required this.exercisePlayBloc});
 
   final ExercisePlayBloc exercisePlayBloc;
 

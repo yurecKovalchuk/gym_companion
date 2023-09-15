@@ -9,34 +9,37 @@ import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
-   late Exercise exercise;
+  late Exercise exercise;
 
-
-   final ExercisesBloc exerciseBloc = ExercisesBloc(DataSource());
-   final ExerciseCreateBloc exerciseCreateBloc = ExerciseCreateBloc();
-   late final ExercisePlayBloc exercisePlayBloc;
+  final ExercisesBloc exerciseBloc = ExercisesBloc(DataSource());
+  final ExerciseCreateBloc exerciseCreateBloc = ExerciseCreateBloc();
+  late final ExercisePlayBloc exercisePlayBloc;
 
   @override
   Widget build(BuildContext context) {
-
     final exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
     exercisePlayBloc = ExercisePlayBloc(exercise);
 
     return MaterialApp(
       initialRoute: '/exerciseScreen',
       routes: {
-        '/exerciseScreen': (context) =>  ExerciseScreen(exerciseBloc: exerciseBloc,),
-        '/exerciseCreate': (context) =>  ExerciseCreate(exerciseCreateBloc: exerciseCreateBloc,),
-        '/exercisePlay': (context) => ExercisePlay(exercisePlayBloc: exercisePlayBloc,),
+        '/exerciseScreen': (context) => ExerciseScreen(
+              exerciseBloc: exerciseBloc,
+            ),
+        '/exerciseCreate': (context) => ExerciseCreate(
+              exerciseCreateBloc: exerciseCreateBloc,
+            ),
+        '/exercisePlay': (context) => ExercisePlay(
+              exercisePlayBloc: exercisePlayBloc,
+            ),
       },
       localizationsDelegates: const [
         AppLocalizations.delegate,
