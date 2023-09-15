@@ -8,7 +8,10 @@ import 'package:timer_bloc/features/exercise_play/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExercisePlay extends StatefulWidget {
-  const ExercisePlay({super.key, required this.exercisePlayBloc});
+  const ExercisePlay({
+    super.key,
+    required this.exercisePlayBloc,
+  });
 
   final ExercisePlayBloc exercisePlayBloc;
 
@@ -17,7 +20,7 @@ class ExercisePlay extends StatefulWidget {
 }
 
 class _ExercisePlayState extends State<ExercisePlay> {
-  late final ExercisePlayBloc _exercisePlayBloc = widget.exercisePlayBloc;
+  ExercisePlayBloc get _exercisePlayBloc => widget.exercisePlayBloc;
 
   @override
   Widget build(BuildContext context) {
