@@ -10,20 +10,20 @@ import 'package:timer_bloc/models/models.dart';
 class ExercisePlay extends StatefulWidget {
   const ExercisePlay({
     super.key,
+    required this.exercisePlayBloc,
   });
+
+  final ExercisePlayBloc exercisePlayBloc;
 
   @override
   State<ExercisePlay> createState() => _ExercisePlayState();
 }
 
 class _ExercisePlayState extends State<ExercisePlay> {
-  late final ExercisePlayBloc _exercisePlayBloc;
-  late final Exercise exercise;
+  ExercisePlayBloc get _exercisePlayBloc => widget.exercisePlayBloc;
 
   @override
   Widget build(BuildContext context) {
-    final exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
-    _exercisePlayBloc = ExercisePlayBloc(exercise);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
