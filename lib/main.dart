@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:timer_bloc/datasource/datasource.dart';
@@ -11,35 +12,45 @@ import 'package:timer_bloc/models/models.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  late Exercise exercise;
-
-  final ExercisesBloc exerciseBloc = ExercisesBloc(DataSource());
-  final ExerciseCreateBloc exerciseCreateBloc = ExerciseCreateBloc();
-  late final ExercisePlayBloc exercisePlayBloc;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final exercise = ModalRoute.of(context)!.settings.arguments as Exercise;
-    exercisePlayBloc = ExercisePlayBloc(exercise);
-
     return MaterialApp(
-      initialRoute: '/exerciseScreen',
-      routes: {
-        '/exerciseScreen': (context) => ExerciseScreen(
-              exerciseBloc: exerciseBloc,
-            ),
-        '/exerciseCreate': (context) => ExerciseCreate(
-              exerciseCreateBloc: exerciseCreateBloc,
-            ),
-        '/exercisePlay': (context) => ExercisePlay(
-              exercisePlayBloc: exercisePlayBloc,
-            ),
+      initialRoute: '/exercisesScreen',
+      onGenerateRoute: (settings) {
+        late final exercise = settings.arguments as Exercise;
+        switch (settings.name) {
+          case '/exercisesScreen':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => ExercisesBloc(DataSource()),
+                child: const ExerciseScreen(),
+              ),
+            );
+          case '/exerciseCreate':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => ExerciseCreateBloc(),
+                child: const ExerciseCreate(),
+              ),
+            );
+          case '/exercisePlay':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => ExercisePlayBloc(exercise),
+                child: const ExercisePlay(),
+              ),
+            );
+          default:
+            return MaterialPageRoute(
+              builder: (context) => Container(),
+            );
+        }
       },
       localizationsDelegates: const [
         AppLocalizations.delegate,

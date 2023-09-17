@@ -10,17 +10,14 @@ import 'package:timer_bloc/models/models.dart';
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({
     super.key,
-    required this.exerciseBloc,
   });
-
-  final ExercisesBloc exerciseBloc;
 
   @override
   ExerciseScreenState createState() => ExerciseScreenState();
 }
 
 class ExerciseScreenState extends State<ExerciseScreen> {
-  ExercisesBloc get _exerciseBloc => widget.exerciseBloc;
+  ExercisesBloc get _exerciseBloc => BlocProvider.of<ExercisesBloc>(context);
 
   @override
   void initState() {
@@ -87,3 +84,5 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     }
   }
 }
+
+
