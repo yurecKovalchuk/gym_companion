@@ -1,0 +1,23 @@
+{
+  "projectName": "Gym Companion",
+  "saveExercise": "SAVE",
+  "exerciseName": "Exercise Name",
+  "exerciseDescription": "Description",
+  "buttonAddApproach": "ADD APPROACH",
+  "warningTitle": "Warning",
+  "warningContent": "Enter the name of the exercise and the approaches you want to perform",
+  "textButtonClose": "Close",
+  "messageCardApproachesTitle": "No approaches yet",
+  "messageCardApproachesContent": "Please, tab on button and start adding approaches",
+  "seconds": "seconds",
+  "rest": "Rest",
+  "exercise": "Exercise",
+  "popupMenuEdit": "Edit",
+  "popupMenuDelete": "Delete",
+  "duration": "Duration",
+  "add": "Add",
+  "update": "Update",
+  "pause": "Pause",
+  "go": "Go",
+  "articleOf": "of"
+}
