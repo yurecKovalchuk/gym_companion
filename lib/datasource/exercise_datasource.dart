@@ -16,9 +16,7 @@ class DataSource {
     final exercisesJson = prefs.getString('exercises');
     if (exercisesJson != null) {
       final exercisesList = jsonDecode(exercisesJson) as List;
-      final exercises = exercisesList
-          .map<Exercise>((exerciseJson) => Exercise.fromJson(exerciseJson))
-          .toList();
+      final exercises = exercisesList.map<Exercise>((exerciseJson) => Exercise.fromJson(exerciseJson)).toList();
       return exercises;
     }
     return [];

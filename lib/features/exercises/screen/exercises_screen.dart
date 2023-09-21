@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
-
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
 
@@ -84,5 +83,3 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     }
   }
 }
-
-
