@@ -1,12 +1,15 @@
 import 'package:timer_bloc/models/models.dart';
 
 class Exercise {
-  Exercise(
-    this.description, {
+  Exercise({
     required this.name,
     required this.approaches,
-  });
+    this.description = '',
+  }) {
+    id = DateTime.now().microsecondsSinceEpoch;
+  }
 
+  late int id;
   String name;
   List<Approach> approaches;
   String description;
@@ -19,7 +22,15 @@ class Exercise {
     return Exercise(
       name: name ?? this.name,
       approaches: approaches ?? this.approaches,
-      description ?? this.description,
+      description: description ?? this.description,
+    );
+  }
+
+  factory Exercise.initial() {
+    return Exercise(
+      description: '',
+      name: '',
+      approaches: [],
     );
   }
 
@@ -34,9 +45,20 @@ class Exercise {
   Exercise.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'],
-        approaches = (json['approaches'] as List)
-            .map((approachJson) => Approach.fromJson(approachJson))
-            .toList();
+        approaches = (json['approaches'] as List).map((approachJson) => Approach.fromJson(approachJson)).toList();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Exercise &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          description == other.description &&
+          approaches == other.approaches &&
+  id == other.id;
+
+  @override
+  int get hashCode => name.hashCode ^ description.hashCode ^ approaches.hashCode;
 }
 
 class Approach {

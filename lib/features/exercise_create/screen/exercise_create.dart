@@ -17,17 +17,21 @@ class ExerciseCreate extends StatefulWidget {
 }
 
 class _ExerciseCreateState extends State<ExerciseCreate> {
-
   ExerciseCreateBloc get _exerciseCreateBloc => BlocProvider.of<ExerciseCreateBloc>(context);
-
-  final TextEditingController _textEditingControllerName = TextEditingController();
-  final TextEditingController _textEditingControllerDescription = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     final ButtonStyle style = TextButton.styleFrom(
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
+    );
+
+    final TextEditingController textEditingControllerName = TextEditingController(
+      text: _exerciseCreateBloc.state.exercise.name.isNotEmpty ? _exerciseCreateBloc.state.exercise.name : '',
+    );
+    final TextEditingController textEditingControllerDescription = TextEditingController(
+      text: _exerciseCreateBloc.state.exercise.description.isNotEmpty
+          ? _exerciseCreateBloc.state.exercise.description
+          : '',
     );
 
     return Scaffold(
@@ -37,7 +41,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
           TextButton(
             style: style,
             onPressed: () => saveValidation(),
-            child: Text(context.l10n.saveExercise.toString(),),
+            child: Text(
+              context.l10n.saveExercise.toString(),
+            ),
           ),
         ],
       ),
@@ -56,7 +62,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _textEditingControllerName,
+                  controller: textEditingControllerName,
                   maxLength: 24,
                   onChanged: (name) {
                     _exerciseCreateBloc.setExercisesName(
@@ -71,7 +77,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                       child: const Icon(Icons.close),
                       onTap: () {
                         _exerciseCreateBloc.setExercisesName('');
-                        _textEditingControllerName.clear();
+                        textEditingControllerName.clear();
                       },
                     ),
                   ),
@@ -80,7 +86,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                   height: 8,
                 ),
                 TextFormField(
-                  controller: _textEditingControllerDescription,
+                  controller: textEditingControllerDescription,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   maxLength: 164,
@@ -97,7 +103,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                       child: const Icon(Icons.close),
                       onTap: () {
                         _exerciseCreateBloc.setExerciseDescription('');
-                        _textEditingControllerDescription.clear();
+                        textEditingControllerDescription.clear();
                       },
                     ),
                   ),
@@ -173,7 +179,9 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: Text(context.l10n.warningTitle),),
+          title: Center(
+            child: Text(context.l10n.warningTitle),
+          ),
           content: Text(context.l10n.warningContent),
           actions: <Widget>[
             TextButton(

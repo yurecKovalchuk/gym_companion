@@ -4,15 +4,23 @@ import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
-  ExerciseCreateBloc()
+  ExerciseCreateBloc(Exercise? exercise)
       : super(
-          ExerciseCreateState(
-            exercise: Exercise(
-              name: '',
-              approaches: [],
-              '',
-            ),
-          ),
+          exercise == null
+              ? ExerciseCreateState(
+                  exercise: Exercise(
+                    name: '',
+                    approaches: [],
+                    description: '',
+                  ),
+                )
+              : ExerciseCreateState(
+                  exercise: Exercise(
+                    name: exercise.name,
+                    approaches: exercise.approaches,
+                    description: exercise.description,
+                  ),
+                ),
         );
 
   void setExercisesName(String name) {

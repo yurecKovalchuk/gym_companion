@@ -21,4 +21,14 @@ class DataSource {
     }
     return [];
   }
+
+  Future<void> removeExercise(Exercise exercises) async {
+    final prefs = await SharedPreferences.getInstance();
+    final exercisesJson = prefs.getString('exercises');
+    if (exercisesJson != null) {
+      final exercisesList = jsonDecode(exercisesJson);
+      exercisesList.remove(exercises);
+      await prefs.setString('exercises', jsonEncode(exercisesList));
+    }
+  }
 }

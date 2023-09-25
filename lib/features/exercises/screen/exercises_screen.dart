@@ -47,13 +47,39 @@ class ExerciseScreenState extends State<ExerciseScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      exercise.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 22.0),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            exercise.name,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 22.0),
+                          ),
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        itemBuilder: (context) => [
+                          PopupMenuItem<String>(
+                            value: 'edit',
+                            child: Text(context.l10n.popupMenuEdit),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'delete',
+                            child: Text(context.l10n.popupMenuDelete),
+                          ),
+                        ],
+                        onSelected: (value) {
+                          if (value == 'edit') {
+                            onEditExercise(exercise);
+                          } else if (value == 'delete') {
+                            _exerciseBloc.deleteExercise(exercise);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -81,5 +107,11 @@ class ExerciseScreenState extends State<ExerciseScreen> {
         arguments: _exerciseBloc.state.exercises[index],
       );
     }
+  }
+
+  void onEditExercise(Exercise exercise) async {
+    final updateExercise = await Navigator.pushNamed(context, '/exerciseCreate', arguments: exercise);
+
+    _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);
   }
 }

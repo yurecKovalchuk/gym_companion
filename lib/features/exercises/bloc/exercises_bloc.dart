@@ -24,4 +24,21 @@ class ExercisesBloc extends Cubit<ExercisesState> {
     final exercises = await _dataSource.loadExercises();
     emit(state.copyWith(exercises: exercises));
   }
+
+  void updateExercise(Exercise oldExercise, Exercise newExercise) {
+    final indexOldExercise = state.exercises.indexOf(oldExercise);
+    state.exercises.remove(oldExercise);
+    _dataSource.removeExercise(oldExercise);
+    state.copyWith(exercises: state.exercises);
+    state.exercises.insert(indexOldExercise, newExercise);
+    _dataSource.saveExercises(state.exercises);
+
+    emit(state.copyWith(exercises: state.exercises));
+  }
+
+  void deleteExercise(Exercise exercise) {
+    state.exercises.remove(exercise);
+    _dataSource.removeExercise(exercise);
+    emit(state.copyWith(exercises: state.exercises));
+  }
 }
