@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timer_bloc/app/const.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
@@ -63,21 +64,15 @@ class ExerciseScreenState extends State<ExerciseScreen> {
                       PopupMenuButton<String>(
                         itemBuilder: (context) => [
                           PopupMenuItem<String>(
-                            value: 'edit',
+                            value: edit,
                             child: Text(context.l10n.popupMenuEdit),
                           ),
                           PopupMenuItem<String>(
-                            value: 'delete',
+                            value: delete,
                             child: Text(context.l10n.popupMenuDelete),
                           ),
                         ],
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            onEditExercise(exercise);
-                          } else if (value == 'delete') {
-                            _exerciseBloc.deleteExercise(exercise);
-                          }
-                        },
+                        onSelected: (value) => popupMenu(value, exercise),
                       ),
                     ],
                   ),
@@ -92,6 +87,14 @@ class ExerciseScreenState extends State<ExerciseScreen> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void popupMenu(String value, Exercise exercise) {
+    if (value == edit) {
+      onEditExercise(exercise);
+    } else if (value == delete) {
+      _exerciseBloc.deleteExercise(exercise);
+    }
   }
 
   void _navigatorPushToCreateScreen() async {
@@ -111,7 +114,8 @@ class ExerciseScreenState extends State<ExerciseScreen> {
 
   void onEditExercise(Exercise exercise) async {
     final updateExercise = await Navigator.pushNamed(context, '/exerciseCreate', arguments: exercise);
-
-    _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);
+    if (updateExercise != null) {
+      _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);
+    }
   }
 }
