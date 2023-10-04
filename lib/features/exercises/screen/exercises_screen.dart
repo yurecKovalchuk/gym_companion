@@ -72,7 +72,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
                             child: Text(context.l10n.popupMenuDelete),
                           ),
                         ],
-                        onSelected: (value) => popupMenu(value, exercise),
+                        onSelected: (value) => _popupMenu(value, exercise),
                       ),
                     ],
                   ),
@@ -89,9 +89,9 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     );
   }
 
-  void popupMenu(String value, Exercise exercise) {
+  void _popupMenu(String value, Exercise exercise) {
     if (value == edit) {
-      onEditExercise(exercise);
+      _onEditExercise(exercise);
     } else if (value == delete) {
       _exerciseBloc.deleteExercise(exercise);
     }
@@ -112,7 +112,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     }
   }
 
-  void onEditExercise(Exercise exercise) async {
+  void _onEditExercise(Exercise exercise) async {
     final updateExercise = await Navigator.pushNamed(context, '/exerciseCreate', arguments: exercise);
     if (updateExercise != null) {
       _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);

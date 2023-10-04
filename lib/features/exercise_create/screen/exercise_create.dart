@@ -20,11 +20,10 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   ExerciseCreateBloc get _exerciseCreateBloc => BlocProvider.of<ExerciseCreateBloc>(context);
 
   late final TextEditingController _nameEditingController = TextEditingController(
-    text: _exerciseCreateBloc.state.exercise.name.isNotEmpty ? _exerciseCreateBloc.state.exercise.name : '',
+    text: _exerciseCreateBloc.state.exercise.name ?? '',
   );
   late final TextEditingController _descriptionEditingController = TextEditingController(
-    text:
-        _exerciseCreateBloc.state.exercise.description.isNotEmpty ? _exerciseCreateBloc.state.exercise.description : '',
+    text: _exerciseCreateBloc.state.exercise.description ?? '',
   );
 
   @override
@@ -40,7 +39,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
             style: style,
             onPressed: () => saveValidation(),
             child: Text(
-              context.l10n.saveExercise.toString(),
+              context.l10n.saveExercise,
             ),
           ),
         ],
