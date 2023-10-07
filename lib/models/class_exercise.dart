@@ -1,15 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:timer_bloc/models/models.dart';
 
-class Exercise {
+class Exercise extends Equatable {
   Exercise({
+    required this.id,
     required this.name,
     required this.approaches,
     this.description = '',
-  }) {
-    id = DateTime.now().microsecondsSinceEpoch;
-  }
+  });
 
-  late int id;
+  int id;
   String name;
   List<Approach> approaches;
   String description;
@@ -18,8 +18,10 @@ class Exercise {
     String? name,
     List<Approach>? approaches,
     String? description,
+    int? id,
   }) {
     return Exercise(
+      id: id ?? this.id,
       name: name ?? this.name,
       approaches: approaches ?? this.approaches,
       description: description ?? this.description,
@@ -30,69 +32,52 @@ class Exercise {
     return Exercise(
       description: '',
       name: '',
-      approaches: [],
+      approaches: const [],
+      id: DateTime.now().microsecondsSinceEpoch,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'description': description,
-      'approaches': approaches.map((approach) => approach.toJson()).toList(),
+      'approaches': approaches.map((approach) => approach.toMap()).toList(),
     };
   }
 
   Exercise.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
+      : id = json['id'],
+        name = json['name'],
         description = json['description'],
-        approaches = (json['approaches'] as List).map((approachJson) => Approach.fromJson(approachJson)).toList();
+        approaches = (json['approaches'] as List).map((approachJson) => Approach.fromMap(approachJson)).toList();
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Exercise &&
-          runtimeType == other.runtimeType &&
-          name == other.name &&
-          description == other.description &&
-          approaches == other.approaches &&
-  id == other.id;
-
-  @override
-  int get hashCode => name.hashCode ^ description.hashCode ^ approaches.hashCode;
+  List<Object> get props => [id, name, description, approaches];
 }
 
 class Approach {
   Approach(
+    this.id,
     this.value,
     this.type,
-  ) {
-    id = DateTime.now().microsecondsSinceEpoch;
-  }
+  );
 
-  late int id;
+  int id = DateTime.now().microsecondsSinceEpoch;
   int value;
   ApproachType type;
 
   Approach copyWith({
+    int? id,
     int? value,
     ApproachType? type,
   }) {
     return Approach(
+      id ?? this.id,
       value ?? this.value,
       type ?? this.type,
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'value': value,
-      'type': type.name,
-    };
-  }
-
-  Approach.fromJson(Map<String, dynamic> json)
-      : value = json['value'],
-        type = json['type'] == 'exercise' ? ApproachType.exercise : ApproachType.rest;
 
   @override
   bool operator ==(Object other) =>
@@ -105,4 +90,20 @@ class Approach {
 
   @override
   int get hashCode => id.hashCode ^ value.hashCode ^ type.hashCode;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'value': value,
+      'type': type.name,
+    };
+  }
+
+  factory Approach.fromMap(Map<String, dynamic> map) {
+    return Approach(
+      map['id'] as int,
+      map['value'] as int,
+      map['type'] == 'exercise' ? ApproachType.exercise : ApproachType.rest,
+    );
+  }
 }

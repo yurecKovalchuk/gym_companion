@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timer_bloc/app/const.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
+
+const _edit = 'edit';
+const _delete = 'delete';
 
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({
@@ -64,11 +66,11 @@ class ExerciseScreenState extends State<ExerciseScreen> {
                       PopupMenuButton<String>(
                         itemBuilder: (context) => [
                           PopupMenuItem<String>(
-                            value: edit,
+                            value: _edit,
                             child: Text(context.l10n.popupMenuEdit),
                           ),
                           PopupMenuItem<String>(
-                            value: delete,
+                            value: _delete,
                             child: Text(context.l10n.popupMenuDelete),
                           ),
                         ],
@@ -90,9 +92,9 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _popupMenu(String value, Exercise exercise) {
-    if (value == edit) {
+    if (value == _edit) {
       _onEditExercise(exercise);
-    } else if (value == delete) {
+    } else if (value == _delete) {
       _exerciseBloc.deleteExercise(exercise);
     }
   }
