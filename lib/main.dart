@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/exercisesScreen',
       onGenerateRoute: (settings) {
-        late final exercise = settings.arguments as Exercise;
+        late final exercise = settings.arguments as Exercise?;
         switch (settings.name) {
           case '/exercisesScreen':
             return MaterialPageRoute(
@@ -35,14 +35,14 @@ class MyApp extends StatelessWidget {
           case '/exerciseCreate':
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => ExerciseCreateBloc(),
+                create: (context) => ExerciseCreateBloc(exercise),
                 child: const ExerciseCreate(),
               ),
             );
           case '/exercisePlay':
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => ExercisePlayBloc(exercise),
+                create: (context) => ExercisePlayBloc(exercise ?? Exercise.initial()),
                 child: const ExercisePlay(),
               ),
             );

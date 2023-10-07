@@ -4,13 +4,14 @@ import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
-  ExerciseCreateBloc()
+  ExerciseCreateBloc(Exercise? exercise)
       : super(
           ExerciseCreateState(
             exercise: Exercise(
-              name: '',
-              approaches: [],
-              '',
+              name: exercise?.name ?? '',
+              approaches: exercise?.approaches ?? [],
+              description: exercise?.description ?? '',
+              id: exercise?.id ?? DateTime.now().microsecondsSinceEpoch,
             ),
           ),
         );
@@ -25,7 +26,7 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
 
   void setExercisesTime(String time, ApproachType timerType) {
     final value = int.tryParse(time) ?? 0;
-    final timerEntry = Approach(value, timerType);
+    final timerEntry = Approach(DateTime.now().microsecondsSinceEpoch, value, timerType);
     final updatedExercise = state.exercise.copyWith(
       approaches: [...state.exercise.approaches, timerEntry],
     );
