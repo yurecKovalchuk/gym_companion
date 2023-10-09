@@ -9,26 +9,51 @@ import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
+import 'app/const.dart';
+import 'features/auth/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final DataSource dataSource = DataSource(baseUrl);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/exercisesScreen',
+      initialRoute: '/welcomeScreen',
       onGenerateRoute: (settings) {
         late final exercise = settings.arguments as Exercise?;
         switch (settings.name) {
+          case '/welcomeScreen':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => WelcomeBloc(),
+                child: const WelcomeScreen(),
+              ),
+            );
+          case '/signInScreen':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => SignInBloc(dataSource),
+                child: SignInScreen(),
+              ),
+            );
+          case '/signUpScreen':
+            return MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => SignUpBloc(dataSource),
+                child: SignUpScreen(),
+              ),
+            );
           case '/exercisesScreen':
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => ExercisesBloc(DataSource()),
+                create: (context) => ExercisesBloc(dataSource),
                 child: const ExerciseScreen(),
               ),
             );

@@ -2,17 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class Exercise extends Equatable {
-  Exercise({
+  const Exercise({
     required this.id,
     required this.name,
     required this.approaches,
     this.description = '',
   });
 
-  int id;
-  String name;
-  List<Approach> approaches;
-  String description;
+  final int id;
+  final String name;
+  final List<Approach> approaches;
+  final String description;
 
   Exercise copyWith({
     String? name,

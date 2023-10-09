@@ -20,10 +20,10 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   ExerciseCreateBloc get _exerciseCreateBloc => BlocProvider.of<ExerciseCreateBloc>(context);
 
   late final TextEditingController _nameEditingController = TextEditingController(
-    text: _exerciseCreateBloc.state.exercise.name ?? '',
+    text: _exerciseCreateBloc.state.exercise.name,
   );
   late final TextEditingController _descriptionEditingController = TextEditingController(
-    text: _exerciseCreateBloc.state.exercise.description ?? '',
+    text: _exerciseCreateBloc.state.exercise.description,
   );
 
   @override
