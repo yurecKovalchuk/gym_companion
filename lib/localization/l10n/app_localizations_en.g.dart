@@ -66,4 +66,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get articleOf => 'of';
+
+  @override
+  String get titlePrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get textPrivacyPolicy => 'The text of the privacy policy';
+
+  @override
+  String get welcomeTo => 'Welcome to';
+
+  @override
+  String get byContinueYouAgree => 'By continue you agree with our';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get createAccount => 'Create account';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get notCorrectEmail => 'not correct email';
+
+  @override
+  String get notCorrectPassword => 'not correct password';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get doNotHaveAccount => 'Do not have an account?';
 }
