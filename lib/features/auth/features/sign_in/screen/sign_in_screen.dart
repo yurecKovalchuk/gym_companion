@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/app/app.dart';
+import 'package:timer_bloc/localization/localization.dart';
 import '../sign_in.dart';
 
 const kButtonHeight = 64.0;
@@ -23,6 +25,16 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<SignInBloc, SignInState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                _navigatorPushWelcomeScreen(context);
+              },
+            ),
+            title: Text(context.l10n.projectName),
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 32),
             child: Column(
@@ -32,7 +44,7 @@ class SignInScreen extends StatelessWidget {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Login',
+                        text: context.l10n.login,
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -48,17 +60,22 @@ class SignInScreen extends StatelessWidget {
                 TextField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
+                  maxLength: 30,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    labelText: 'E-mail',
+                    labelText: context.l10n.email,
+                    hintText: 'example@example.com',
+                    errorText: state.isEmailValid ? null : context.l10n.notCorrectEmail,
                   ),
+                  onChanged: (email) => bloc.isEmailValid(email),
                 ),
                 const SizedBox(height: 16.0),
                 TextField(
                   controller: _password,
                   obscureText: state.obscureText,
+                  maxLength: 20,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: Icon(state.obscureText ? Icons.visibility : Icons.visibility_off),
@@ -69,8 +86,10 @@ class SignInScreen extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    labelText: 'Password',
+                    labelText: context.l10n.password,
+                    errorText: state.isPasswordValid ? null : context.l10n.notCorrectPassword,
                   ),
+                  onChanged: (password) => bloc.isPasswordValid(password),
                 ),
                 const SizedBox(height: 80.0), // Spacer
                 Padding(
@@ -91,7 +110,7 @@ class SignInScreen extends StatelessWidget {
                         ? const CircularProgressIndicator(
                             color: Colors.white,
                           )
-                        : const Text('Sign In'),
+                        : Text(context.l10n.login),
                   ),
                 ),
                 const SizedBox(
@@ -103,11 +122,11 @@ class SignInScreen extends StatelessWidget {
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Do not have an account? ',
+                          text: '${context.l10n.doNotHaveAccount} ',
                           style: textTheme.titleLarge!.copyWith(),
                         ),
                         TextSpan(
-                          text: 'Sign Up',
+                          text: context.l10n.signUp,
                           style: textTheme.titleLarge!.copyWith(
                             color: colorScheme.primary,
                           ),
@@ -129,15 +148,32 @@ class SignInScreen extends StatelessWidget {
         if (state.status == SignInStatus.success) {
           _navigatorPushToExerciseScreen(context);
         }
+        if (state.status == SignInStatus.error) {
+          final snackBar = SnackBar(content: Text(state.error ?? 'Something happen'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       },
     );
   }
 
   void _navigatorPushToSignUpScreen(BuildContext context) async {
-    await Navigator.pushNamed(context, '/signUpScreen');
+    await Navigator.pushReplacementNamed(
+      context,
+      routSignUpScreen,
+    );
   }
 
   void _navigatorPushToExerciseScreen(BuildContext context) async {
-    await Navigator.pushNamed(context, '/exercisesScreen');
+    await Navigator.pushReplacementNamed(
+      context,
+      routExerciseScreen,
+    );
+  }
+
+  void _navigatorPushWelcomeScreen(BuildContext context) async {
+    await Navigator.pushReplacementNamed(
+      context,
+      routWelcomeScreen,
+    );
   }
 }

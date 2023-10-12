@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
+import '../../../app/app.dart';
 
 const _editOnExercisePopupMenu = 'edit';
 const _deleteOnExercisePopupMenu = 'delete';
@@ -100,7 +101,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _navigatorPushToCreateScreen() async {
-    final result = await Navigator.pushNamed(context, '/exerciseCreate') as Exercise;
+    final result = await Navigator.pushNamed(context, routExerciseCreateScreen) as Exercise;
     _exerciseBloc.addExercise(result);
   }
 
@@ -108,14 +109,14 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     if (_exerciseBloc.state.exercises[index].approaches.isNotEmpty) {
       Navigator.pushNamed(
         context,
-        '/exercisePlay',
+        routExercisePlayScreen,
         arguments: _exerciseBloc.state.exercises[index],
       );
     }
   }
 
   void _onEditExercise(Exercise exercise) async {
-    final updateExercise = await Navigator.pushNamed(context, '/exerciseCreate', arguments: exercise);
+    final updateExercise = await Navigator.pushNamed(context, routExerciseCreateScreen, arguments: exercise);
     if (updateExercise != null) {
       _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);
     }

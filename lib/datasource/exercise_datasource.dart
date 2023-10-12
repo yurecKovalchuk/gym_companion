@@ -5,33 +5,38 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:timer_bloc/models/models.dart';
 
+import '../exceptions/exceptions.dart';
+
 class DataSource {
   DataSource(this.baseUrl);
 
   final String baseUrl;
 
   Future<void> signUpRequest(UserAuthentication userAuthentication) async {
-    try {
-      await http.post(
-        _generateUrl('auth/signup'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(userAuthentication.toJson()),
-      );
-    } catch (e) {
-      throw Exception('Something happened during sign in');
+    final response = await http.post(
+      _generateUrl('auth/signup'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(userAuthentication.toJson()),
+    );
+    final data = jsonDecode(response.body);
+    if (response.statusCode < 300) {
+    } else {
+      throw ValidationException(ErrorResponse.fromJson(data));
     }
   }
 
   Future<SignInResponse> signInRequest(SignInCredentialsDto userAuthentication) async {
-    try {
-      final response = await http.post(
-        _generateUrl('auth/signin'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(userAuthentication.toJson()),
-      );
-      return SignInResponse.fromJson(jsonDecode(response.body));
-    } catch (e) {
-      throw Exception('Something happened during sign in');
+    final response = await http.post(
+      _generateUrl('auth/signin'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(userAuthentication.toJson()),
+    );
+
+    final data = jsonDecode(response.body);
+    if (response.statusCode < 300) {
+      return SignInResponse.fromJson(data);
+    } else {
+      throw ValidationException(ErrorResponse.fromJson(data));
     }
   }
 

@@ -9,7 +9,7 @@ import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
-import 'app/const.dart';
+import 'app/app.dart';
 import 'features/auth/auth.dart';
 
 void main() async {
@@ -25,46 +25,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/welcomeScreen',
+      initialRoute: routWelcomeScreen,
       onGenerateRoute: (settings) {
         late final exercise = settings.arguments as Exercise?;
         switch (settings.name) {
-          case '/welcomeScreen':
+          case routWelcomeScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => WelcomeBloc(),
                 child: const WelcomeScreen(),
               ),
             );
-          case '/signInScreen':
+          case routSignInScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => SignInBloc(dataSource),
                 child: SignInScreen(),
               ),
             );
-          case '/signUpScreen':
+          case routSignUpScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => SignUpBloc(dataSource),
                 child: SignUpScreen(),
               ),
             );
-          case '/exercisesScreen':
+          case routExerciseScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => ExercisesBloc(dataSource),
                 child: const ExerciseScreen(),
               ),
             );
-          case '/exerciseCreate':
+          case routExerciseCreateScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => ExerciseCreateBloc(exercise),
                 child: const ExerciseCreate(),
               ),
             );
-          case '/exercisePlay':
+          case routExercisePlayScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => ExercisePlayBloc(exercise ?? Exercise.initial()),

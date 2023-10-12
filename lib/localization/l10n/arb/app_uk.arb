@@ -19,5 +19,19 @@
   "update": "Оновити",
   "pause": "Пауза",
   "go": "Вперед",
-  "articleOf": " "
+  "articleOf": " ",
+  "titlePrivacyPolicy": "Політика конфіденційності",
+  "textPrivacyPolicy": "Текст політики конфіденційності",
+  "welcomeTo": "Ласкаво просимо в",
+  "byContinueYouAgree": "Продовжуючи, ви погоджуєтеся з нашою",
+  "login": "Вхід",
+  "signUp": "Зареєструватися",
+  "createAccount": "Створити аккаунт",
+  "email": "Електронна адреса",
+  "password": "Пароль",
+  "name": "Ім'я",
+  "notCorrectEmail": "Не корректна електронна адреса",
+  "notCorrectPassword": "Не корректний пароль",
+  "alreadyHaveAccount": "У вас уже є аккаунт?",
+  "doNotHaveAccount": "У вас ще немає аккаунта?"
 }
