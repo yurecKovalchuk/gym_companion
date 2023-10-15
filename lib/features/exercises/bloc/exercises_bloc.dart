@@ -6,38 +6,34 @@ import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExercisesBloc extends Cubit<ExercisesState> {
-  ExercisesBloc(this._dataSource) : super(ExercisesState([]));
+  ExercisesBloc(
+    this._remoteDataSource,
+    this._localDataSource,
+  ) : super(const ExercisesState(
+          [],
+        ));
 
-  final DataSource _dataSource;
-
-  void addExercise(Exercise exercise) {
-    if (exercise.name.isNotEmpty) {
-      state.exercises.add(exercise);
-      emit(
-        state.copyWith(exercises: state.exercises),
-      );
-      _dataSource.saveExercises(state.exercises);
-    }
-  }
+  final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
 
   void loadExercises() async {
-    final exercises = await _dataSource.loadExercises();
-    emit(state.copyWith(exercises: exercises));
+    final exercises = await _remoteDataSource.getExercises();
+    await _localDataSource.saveExercises(exercises);
+    final localExercises = await _localDataSource.loadExercises();
+    emit(state.copyWith(exercises: localExercises));
   }
 
   void updateExercise(Exercise oldExercise, Exercise newExercise) async {
-    final currentList = [...state.exercises];
-    final indexOldExercise = currentList.indexOf(oldExercise);
-    currentList.removeAt(indexOldExercise);
-    currentList.insert(indexOldExercise, newExercise);
-
-    await _dataSource.saveExercises(currentList);
+    await _remoteDataSource.patchExercise(oldExercise.id!, newExercise);
+    await _localDataSource.removeExercise(oldExercise);
 
     loadExercises();
   }
 
   void deleteExercise(Exercise exercise) async {
-    await _dataSource.removeExercise(exercise);
+    await _remoteDataSource.deleteExercise(exercise.id!);
+    await _localDataSource.removeExercise(exercise);
+
     loadExercises();
   }
 }

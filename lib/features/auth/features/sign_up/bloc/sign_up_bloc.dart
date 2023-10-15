@@ -14,7 +14,7 @@ class SignUpBloc extends Cubit<SignUpState> {
           isEmailValid: true,
         ));
 
-  final DataSource _dataSource;
+  final RemoteDataSource _dataSource;
 
   void signUp(String email, String password, String displayName) async {
     if (state.isPasswordValid && state.isEmailValid) {

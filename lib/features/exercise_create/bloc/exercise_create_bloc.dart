@@ -1,20 +1,31 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timer_bloc/datasource/datasource.dart';
 
 import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
-  ExerciseCreateBloc(Exercise? exercise)
-      : super(
+  ExerciseCreateBloc(
+    this._remoteDataSource,
+    Exercise? exercise,
+  ) : super(
           ExerciseCreateState(
             exercise: Exercise(
               name: exercise?.name ?? '',
               approaches: exercise?.approaches ?? [],
               description: exercise?.description ?? '',
-              id: exercise?.id ?? DateTime.now().microsecondsSinceEpoch,
+              id: exercise?.id ?? '',
             ),
           ),
         );
+
+  final RemoteDataSource _remoteDataSource;
+
+  void addExercise(Exercise exercise) async {
+    if (exercise.name.isNotEmpty) {
+      await _remoteDataSource.postExercise(exercise);
+    }
+  }
 
   void setExercisesName(String name) {
     emit(
@@ -26,7 +37,7 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
 
   void setExercisesTime(String time, ApproachType timerType) {
     final value = int.tryParse(time) ?? 0;
-    final timerEntry = Approach(DateTime.now().microsecondsSinceEpoch, value, timerType);
+    final timerEntry = Approach(null, value, timerType);
     final updatedExercise = state.exercise.copyWith(
       approaches: [...state.exercise.approaches, timerEntry],
     );

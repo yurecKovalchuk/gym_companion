@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
+
 import 'package:timer_bloc/models/models.dart';
 
 class Exercise extends Equatable {
   const Exercise({
-    required this.id,
+    this.id,
     required this.name,
     required this.approaches,
     this.description = '',
   });
 
-  final int id;
+  final String? id;
   final String name;
   final List<Approach> approaches;
   final String description;
@@ -18,7 +19,7 @@ class Exercise extends Equatable {
     String? name,
     List<Approach>? approaches,
     String? description,
-    int? id,
+    String? id,
   }) {
     return Exercise(
       id: id ?? this.id,
@@ -29,11 +30,11 @@ class Exercise extends Equatable {
   }
 
   factory Exercise.initial() {
-    return Exercise(
+    return const Exercise(
       description: '',
       name: '',
-      approaches: const [],
-      id: DateTime.now().microsecondsSinceEpoch,
+      approaches: [],
+      id: '',
     );
   }
 
@@ -53,7 +54,7 @@ class Exercise extends Equatable {
         approaches = (json['approaches'] as List).map((approachJson) => Approach.fromMap(approachJson)).toList();
 
   @override
-  List<Object> get props => [id, name, description, approaches];
+  List<Object?> get props => [id, name, description, approaches];
 }
 
 class Approach {
@@ -63,12 +64,12 @@ class Approach {
     this.type,
   );
 
-  int id = DateTime.now().microsecondsSinceEpoch;
+  String? id;
   int value;
   ApproachType type;
 
   Approach copyWith({
-    int? id,
+    String? id,
     int? value,
     ApproachType? type,
   }) {
@@ -93,16 +94,16 @@ class Approach {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'value': value,
+      'id': id.toString(),
+      'value': value.toString(),
       'type': type.name,
     };
   }
 
   factory Approach.fromMap(Map<String, dynamic> map) {
     return Approach(
-      map['id'] as int,
-      map['value'] as int,
+      (map['id']),
+      int.parse(map['value']),
       map['type'] == 'exercise' ? ApproachType.exercise : ApproachType.rest,
     );
   }

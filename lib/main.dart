@@ -20,7 +20,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final DataSource dataSource = DataSource(baseUrl);
+  final RemoteDataSource remoteDataSource = RemoteDataSource(baseUrl);
+  final LocalDataSource localDataSource = LocalDataSource();
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +40,28 @@ class MyApp extends StatelessWidget {
           case routSignInScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => SignInBloc(dataSource),
+                create: (context) => SignInBloc(remoteDataSource),
                 child: SignInScreen(),
               ),
             );
           case routSignUpScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => SignUpBloc(dataSource),
+                create: (context) => SignUpBloc(remoteDataSource),
                 child: SignUpScreen(),
               ),
             );
           case routExerciseScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => ExercisesBloc(dataSource),
+                create: (context) => ExercisesBloc(remoteDataSource, localDataSource),
                 child: const ExerciseScreen(),
               ),
             );
           case routExerciseCreateScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => ExerciseCreateBloc(exercise),
+                create: (context) => ExerciseCreateBloc(remoteDataSource, exercise),
                 child: const ExerciseCreate(),
               ),
             );

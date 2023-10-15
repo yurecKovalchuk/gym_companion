@@ -101,8 +101,8 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _navigatorPushToCreateScreen() async {
-    final result = await Navigator.pushNamed(context, routExerciseCreateScreen) as Exercise;
-    _exerciseBloc.addExercise(result);
+     await Navigator.pushNamed(context, routExerciseCreateScreen);
+      _exerciseBloc.loadExercises();
   }
 
   void _navigatorPushToPlayScreen(int index) {
