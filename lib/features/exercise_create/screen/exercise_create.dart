@@ -196,7 +196,8 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   void saveValidation() {
     if (_exerciseCreateBloc.state.exercise.name.isNotEmpty &&
         _exerciseCreateBloc.state.exercise.approaches.isNotEmpty) {
-      Navigator.pop(context, _exerciseCreateBloc.state.exercise);
+      _exerciseCreateBloc.addExercise(_exerciseCreateBloc.state.exercise);
+      Navigator.pop(context);
     } else {
       _showWarningDialog();
     }

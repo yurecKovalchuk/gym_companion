@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'package:timer_bloc/models/models.dart';
 
 class Exercise extends Equatable {

@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/models/models.dart';
-import '../../../../../exceptions/validation_exception.dart';
+import 'package:timer_bloc/exceptions/exceptions.dart';
 import '../sign_in.dart';
 
 class SignInBloc extends Cubit<SignInState> {
@@ -14,17 +14,17 @@ class SignInBloc extends Cubit<SignInState> {
           isPasswordValid: true,
         ));
 
-  final DataSource _dataSource;
+  final RemoteDataSource _dataSource;
 
-  void getSignIn(String email, String password) async {
+  void signIn(String email, String password) async {
     emit(state.copyWith(status: SignInStatus.loading));
     if (email.isNotEmpty && password.isNotEmpty) {
       try {
-        await _dataSource.signInRequest(SignInCredentialsDto(
+        final response = await _dataSource.signInRequest(SignInCredentialsDto(
           email: email,
           password: password,
         ));
-        //TokenManager.saveToken(SignInResponse().token!);
+        AuthDataSource.saveToken(response.token!);
         emit(state.copyWith(status: SignInStatus.success));
       } on ValidationException catch (e) {
         emit(state.copyWith(status: SignInStatus.error, error: e.response.message.toString()));

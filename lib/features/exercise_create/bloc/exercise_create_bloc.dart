@@ -1,11 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timer_bloc/datasource/datasource.dart';
 
 import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
-  ExerciseCreateBloc(Exercise? exercise)
-      : super(
+  ExerciseCreateBloc(
+    this._remoteDataSource,
+    Exercise? exercise,
+  ) : super(
           ExerciseCreateState(
             exercise: Exercise(
               name: exercise?.name ?? '',
@@ -15,6 +18,14 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
             ),
           ),
         );
+
+  final RemoteDataSource _remoteDataSource;
+
+  void addExercise(Exercise exercise) async {
+    if (exercise.name.isNotEmpty) {
+      await _remoteDataSource.postExercise(exercise);
+    }
+  }
 
   void setExercisesName(String name) {
     emit(

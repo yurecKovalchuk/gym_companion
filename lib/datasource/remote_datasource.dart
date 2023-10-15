@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:timer_bloc/datasource/datasource.dart';
+import 'package:timer_bloc/exceptions/exceptions.dart';
 import 'package:timer_bloc/models/models.dart';
-import '../exceptions/exceptions.dart';
 
-class DataSource {
-  DataSource(this.baseUrl);
 
-  final String baseUrl;
+
+class RemoteDataSource {
+  RemoteDataSource(this._baseUrl);
+
+  final String _baseUrl;
 
   Future<void> signUpRequest(UserAuthentication userAuthentication) async {
     final response = await http.post(
@@ -33,7 +35,7 @@ class DataSource {
 
     final data = jsonDecode(response.body);
     if (response.statusCode < 300) {
-      TokenManager.saveToken(SignInResponse.fromJson(data).token!);
+      AuthDataSource.saveToken(SignInResponse.fromJson(data).token!);
       return SignInResponse.fromJson(data);
     } else {
       throw ValidationException(ErrorResponse.fromJson(data));
@@ -41,7 +43,7 @@ class DataSource {
   }
 
   Future<void> postExercise(Exercise exercise) async {
-    final token = await TokenManager.getToken();
+    final token = await AuthDataSource.getToken();
     final url = _generateUrl('exercises');
     final response = await http.post(
       url,
@@ -60,7 +62,7 @@ class DataSource {
   }
 
   Future<List<Exercise>> getExercises() async {
-    final token = await TokenManager.getToken();
+    final token = await AuthDataSource.getToken();
     final response = await http.get(
       _generateUrl('exercises'),
       headers: {
@@ -80,7 +82,7 @@ class DataSource {
   }
 
   Future<Exercise> getExerciseId(String exerciseId) async {
-    final token = await TokenManager.getToken();
+    final token = await AuthDataSource.getToken();
     final response = await http.get(
       _generateUrl('exercise/$exerciseId'),
       headers: {
@@ -98,7 +100,7 @@ class DataSource {
   }
 
   Future<void> patchExercise(String exerciseId, Exercise updatedExercise) async {
-    final token = await TokenManager.getToken();
+    final token = await AuthDataSource.getToken();
     final response = await http.patch(
       _generateUrl('exercises/$exerciseId'),
       headers: {
@@ -116,7 +118,7 @@ class DataSource {
   }
 
   Future<void> deleteExercise(String exerciseId) async {
-    final token = await TokenManager.getToken();
+    final token = await AuthDataSource.getToken();
     final response = await http.delete(
       _generateUrl('exercises/$exerciseId'),
       headers: {
@@ -132,24 +134,5 @@ class DataSource {
     }
   }
 
-  Uri _generateUrl(String path) => Uri.parse('$baseUrl/$path');
-}
-
-class TokenManager {
-  static const String _tokenKey = 'token';
-
-  static Future<void> saveToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
-  }
-
-  static Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey);
-  }
-
-  static Future<void> removeToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_tokenKey);
-  }
+  Uri _generateUrl(String path) => Uri.parse('$_baseUrl/$path');
 }
