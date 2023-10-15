@@ -11,7 +11,7 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
               name: exercise?.name ?? '',
               approaches: exercise?.approaches ?? [],
               description: exercise?.description ?? '',
-              id: exercise?.id ?? DateTime.now().microsecondsSinceEpoch,
+              id: exercise?.id ?? '',
             ),
           ),
         );
@@ -26,7 +26,7 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
 
   void setExercisesTime(String time, ApproachType timerType) {
     final value = int.tryParse(time) ?? 0;
-    final timerEntry = Approach(DateTime.now().microsecondsSinceEpoch, value, timerType);
+    final timerEntry = Approach(null, value, timerType);
     final updatedExercise = state.exercise.copyWith(
       approaches: [...state.exercise.approaches, timerEntry],
     );

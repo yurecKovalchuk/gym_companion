@@ -24,7 +24,7 @@ class SignInBloc extends Cubit<SignInState> {
           email: email,
           password: password,
         ));
-        TokenManager.saveToken(SignInResponse().token!);
+        //TokenManager.saveToken(SignInResponse().token!);
         emit(state.copyWith(status: SignInStatus.success));
       } on ValidationException catch (e) {
         emit(state.copyWith(status: SignInStatus.error, error: e.response.message.toString()));
