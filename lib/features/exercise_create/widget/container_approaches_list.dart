@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 import 'package:timer_bloc/models/models.dart';
 
+const _editOnApproachPopupMenu = 'edit';
+const _deleteOnApproachPopupMenu = 'delete';
+
 class ContainerApproachesList extends StatelessWidget {
   const ContainerApproachesList({
     super.key,
@@ -96,18 +99,18 @@ class ContainerApproachesList extends StatelessWidget {
                                 PopupMenuButton<String>(
                                   itemBuilder: (context) => [
                                     PopupMenuItem<String>(
-                                      value: 'edit',
+                                      value: _editOnApproachPopupMenu,
                                       child: Text(context.l10n.popupMenuEdit),
                                     ),
                                     PopupMenuItem<String>(
-                                      value: 'delete',
+                                      value: _deleteOnApproachPopupMenu,
                                       child: Text(context.l10n.popupMenuDelete),
                                     ),
                                   ],
                                   onSelected: (value) {
-                                    if (value == 'edit') {
+                                    if (value == _editOnApproachPopupMenu) {
                                       onEditApproach(approaches[index]);
-                                    } else if (value == 'delete') {
+                                    } else if (value == _deleteOnApproachPopupMenu) {
                                       onDeleteApproach(approaches[index]);
                                     }
                                   },

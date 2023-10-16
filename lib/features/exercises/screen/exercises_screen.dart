@@ -5,6 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timer_bloc/localization/l10n/l10n.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
+import '../../../app/app.dart';
+
+const _editOnExercisePopupMenu = 'edit';
+const _deleteOnExercisePopupMenu = 'delete';
 
 class ExerciseScreen extends StatefulWidget {
   const ExerciseScreen({
@@ -47,13 +51,33 @@ class ExerciseScreenState extends State<ExerciseScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      exercise.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 22.0),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            exercise.name,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 22.0),
+                          ),
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        itemBuilder: (context) => [
+                          PopupMenuItem<String>(
+                            value: _editOnExercisePopupMenu,
+                            child: Text(context.l10n.popupMenuEdit),
+                          ),
+                          PopupMenuItem<String>(
+                            value: _deleteOnExercisePopupMenu,
+                            child: Text(context.l10n.popupMenuDelete),
+                          ),
+                        ],
+                        onSelected: (value) => _popupMenu(value, exercise),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -68,18 +92,31 @@ class ExerciseScreenState extends State<ExerciseScreen> {
     );
   }
 
+  void _popupMenu(String value, Exercise exercise) {
+    if (value == _editOnExercisePopupMenu) {
+      _onEditExercise(exercise);
+    } else if (value == _deleteOnExercisePopupMenu) {
+      _exerciseBloc.deleteExercise(exercise);
+    }
+  }
+
   void _navigatorPushToCreateScreen() async {
-    final result = await Navigator.pushNamed(context, '/exerciseCreate') as Exercise;
-    _exerciseBloc.addExercise(result);
+    await Navigator.pushNamed(context, routExerciseCreateScreen);
+    _exerciseBloc.loadExercises();
   }
 
   void _navigatorPushToPlayScreen(int index) {
     if (_exerciseBloc.state.exercises[index].approaches.isNotEmpty) {
       Navigator.pushNamed(
         context,
-        '/exercisePlay',
+        routExercisePlayScreen,
         arguments: _exerciseBloc.state.exercises[index],
       );
     }
+  }
+
+  void _onEditExercise(Exercise exercise) async {
+    await Navigator.pushNamed(context, routExerciseCreateScreen, arguments: exercise);
+    _exerciseBloc.loadExercises();
   }
 }

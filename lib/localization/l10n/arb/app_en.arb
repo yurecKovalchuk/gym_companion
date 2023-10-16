@@ -19,5 +19,19 @@
   "update": "Update",
   "pause": "Pause",
   "go": "Go",
-  "articleOf": "of"
+  "articleOf": "of",
+  "titlePrivacyPolicy": "Privacy Policy",
+  "textPrivacyPolicy": "The text of the privacy policy",
+  "welcomeTo": "Welcome to",
+  "byContinueYouAgree": "By continue you agree with our",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "createAccount": "Create account",
+  "email": "E-mail",
+  "password": "Password",
+  "name": "Name",
+  "notCorrectEmail": "not correct email",
+  "notCorrectPassword": "not correct password",
+  "alreadyHaveAccount": "Already have an account?",
+  "doNotHaveAccount": "Do not have an account?"
 }

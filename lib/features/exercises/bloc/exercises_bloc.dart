@@ -6,22 +6,23 @@ import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
 
 class ExercisesBloc extends Cubit<ExercisesState> {
-  ExercisesBloc(this._dataSource) : super(ExercisesState([]));
+  ExercisesBloc(
+    this._repository,
+  ) : super(const ExercisesState(
+          [],
+        ));
 
-  final DataSource _dataSource;
-
-  void addExercise(Exercise exercise) {
-    if (exercise.name.isNotEmpty) {
-      state.exercises.add(exercise);
-      emit(
-        state.copyWith(exercises: state.exercises),
-      );
-      _dataSource.saveExercises(state.exercises);
-    }
-  }
+  final ExercisesRepository _repository;
 
   void loadExercises() async {
-    final exercises = await _dataSource.loadExercises();
-    emit(state.copyWith(exercises: exercises));
+    await _repository.getExercises();
+    final localExercises = await _repository.getExercises();
+    emit(state.copyWith(exercises: localExercises));
+  }
+
+  void deleteExercise(Exercise exercise) async {
+    await _repository.deleteExercise(exercise);
+
+    loadExercises();
   }
 }

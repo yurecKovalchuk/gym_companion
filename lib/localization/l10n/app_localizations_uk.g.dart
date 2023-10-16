@@ -66,4 +66,46 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get articleOf => ' ';
+
+  @override
+  String get titlePrivacyPolicy => 'Політика конфіденційності';
+
+  @override
+  String get textPrivacyPolicy => 'Текст політики конфіденційності';
+
+  @override
+  String get welcomeTo => 'Ласкаво просимо в';
+
+  @override
+  String get byContinueYouAgree => 'Продовжуючи, ви погоджуєтеся з нашою';
+
+  @override
+  String get login => 'Вхід';
+
+  @override
+  String get signUp => 'Зареєструватися';
+
+  @override
+  String get createAccount => 'Створити аккаунт';
+
+  @override
+  String get email => 'Електронна адреса';
+
+  @override
+  String get password => 'Пароль';
+
+  @override
+  String get name => 'Ім\'я';
+
+  @override
+  String get notCorrectEmail => 'Не корректна електронна адреса';
+
+  @override
+  String get notCorrectPassword => 'Не корректний пароль';
+
+  @override
+  String get alreadyHaveAccount => 'У вас уже є аккаунт?';
+
+  @override
+  String get doNotHaveAccount => 'У вас ще немає аккаунта?';
 }
