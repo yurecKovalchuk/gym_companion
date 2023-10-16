@@ -6,7 +6,7 @@ import 'package:timer_bloc/models/models.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
   ExerciseCreateBloc(
-    this._remoteDataSource,
+    this._repository,
     Exercise? exercise,
   ) : super(
           ExerciseCreateState(
@@ -14,17 +14,21 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
               name: exercise?.name ?? '',
               approaches: exercise?.approaches ?? [],
               description: exercise?.description ?? '',
-              id: exercise?.id ?? '',
+              id: exercise?.id,
             ),
           ),
         );
 
-  final RemoteDataSource _remoteDataSource;
+  final ExercisesRepository _repository;
 
   void addExercise(Exercise exercise) async {
     if (exercise.name.isNotEmpty) {
-      await _remoteDataSource.postExercise(exercise);
+      await _repository.postExercise(exercise);
     }
+  }
+
+  void updateExercise(Exercise newExercise) async {
+    await _repository.pathExerciseId(newExercise);
   }
 
   void setExercisesName(String name) {

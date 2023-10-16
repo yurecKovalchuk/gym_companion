@@ -6,7 +6,7 @@ import 'package:timer_bloc/exceptions/exceptions.dart';
 import '../sign_in.dart';
 
 class SignInBloc extends Cubit<SignInState> {
-  SignInBloc(this._dataSource)
+  SignInBloc(this._repository)
       : super(SignInState(
           status: SignInStatus.initial,
           obscureText: true,
@@ -14,17 +14,17 @@ class SignInBloc extends Cubit<SignInState> {
           isPasswordValid: true,
         ));
 
-  final RemoteDataSource _dataSource;
+  final ExercisesRepository _repository;
 
   void signIn(String email, String password) async {
     emit(state.copyWith(status: SignInStatus.loading));
     if (email.isNotEmpty && password.isNotEmpty) {
       try {
-        final response = await _dataSource.signInRequest(SignInCredentialsDto(
+        final response = await _repository.signIn(SignInCredentialsDto(
           email: email,
           password: password,
         ));
-        AuthDataSource.saveToken(response.token!);
+        _repository.saveToken(response.token!);
         emit(state.copyWith(status: SignInStatus.success));
       } on ValidationException catch (e) {
         emit(state.copyWith(status: SignInStatus.error, error: e.response.message.toString()));

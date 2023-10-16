@@ -101,8 +101,8 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _navigatorPushToCreateScreen() async {
-     await Navigator.pushNamed(context, routExerciseCreateScreen);
-      _exerciseBloc.loadExercises();
+    await Navigator.pushNamed(context, routExerciseCreateScreen);
+    _exerciseBloc.loadExercises();
   }
 
   void _navigatorPushToPlayScreen(int index) {
@@ -116,9 +116,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _onEditExercise(Exercise exercise) async {
-    final updateExercise = await Navigator.pushNamed(context, routExerciseCreateScreen, arguments: exercise);
-    if (updateExercise != null) {
-      _exerciseBloc.updateExercise(exercise, updateExercise as Exercise);
-    }
+    await Navigator.pushNamed(context, routExerciseCreateScreen, arguments: exercise);
+    _exerciseBloc.loadExercises();
   }
 }
