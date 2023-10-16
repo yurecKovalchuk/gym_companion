@@ -6,7 +6,7 @@ import 'package:timer_bloc/models/class_user_authentication.dart';
 import '../sign_up.dart';
 
 class SignUpBloc extends Cubit<SignUpState> {
-  SignUpBloc(this._dataSource)
+  SignUpBloc(this._repository)
       : super(SignUpState(
           status: SignUpStatus.initial,
           obscureText: true,
@@ -14,14 +14,14 @@ class SignUpBloc extends Cubit<SignUpState> {
           isEmailValid: true,
         ));
 
-  final RemoteDataSource _dataSource;
+  final ExercisesRepository _repository;
 
   void signUp(String email, String password, String displayName) async {
     if (state.isPasswordValid && state.isEmailValid) {
       if (email.isNotEmpty && password.isNotEmpty && displayName.isNotEmpty) {
         emit(state.copyWith(status: SignUpStatus.loading));
         try {
-          await _dataSource.signUpRequest(UserAuthentication(
+          await _repository.signUp(UserAuthentication(
             email: email,
             password: password,
             displayName: displayName,

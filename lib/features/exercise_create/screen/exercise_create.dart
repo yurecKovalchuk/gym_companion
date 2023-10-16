@@ -194,9 +194,13 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
   }
 
   void saveValidation() {
-    if (_exerciseCreateBloc.state.exercise.name.isNotEmpty &&
-        _exerciseCreateBloc.state.exercise.approaches.isNotEmpty) {
-      _exerciseCreateBloc.addExercise(_exerciseCreateBloc.state.exercise);
+    final Exercise currentExercise = _exerciseCreateBloc.state.exercise;
+    if (currentExercise.name.isNotEmpty && currentExercise.approaches.isNotEmpty) {
+      if (currentExercise.id == null) {
+        _exerciseCreateBloc.addExercise(currentExercise);
+      } else {
+        _exerciseCreateBloc.updateExercise(currentExercise);
+      }
       Navigator.pop(context);
     } else {
       _showWarningDialog();
