@@ -6,11 +6,13 @@ class ExercisesRepository {
     this.localDataSource,
     this.remoteDataSource,
     this.authDataSource,
+    this.databaseSQL,
   );
 
   AuthDataSource authDataSource;
   LocalDataSource localDataSource;
   RemoteDataSource remoteDataSource;
+  ExerciseDatabaseProvider databaseSQL;
 
   Future<void> signUp(UserAuthentication userAuthentication) async {
     await authDataSource.signUpRequest(userAuthentication);
@@ -33,22 +35,25 @@ class ExercisesRepository {
   }
 
   Future<void> postExercise(Exercise exercise) async {
-    remoteDataSource.postExercise(exercise);
+    await remoteDataSource.postExercise(exercise);
   }
 
   Future<List<Exercise>> getExercises() async {
     final exercises = await remoteDataSource.getExercises();
-    localDataSource.saveExercises(exercises);
-    return localDataSource.loadExercises();
+    await databaseSQL.initDatabase();
+    await databaseSQL.insertExercises(exercises);
+    return databaseSQL.getExercises();
   }
 
   Future<void> pathExerciseId(Exercise updatedExercise) async {
     final exerciseId = updatedExercise.id;
-    await remoteDataSource.patchExercise(exerciseId!, updatedExercise);
+    await databaseSQL.deleteExercise(exerciseId!);
+    await remoteDataSource.patchExercise(exerciseId, updatedExercise);
   }
 
   Future<void> deleteExercise(Exercise exercise) async {
     final exerciseId = exercise.id;
     await remoteDataSource.deleteExercise(exerciseId!);
+    databaseSQL.deleteExercise(exerciseId);
   }
 }

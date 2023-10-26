@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     LocalDataSource(),
     RemoteDataSource(baseUrl),
     AuthDataSource(baseUrl),
+    ExerciseDatabaseProvider(),
   );
 
   @override

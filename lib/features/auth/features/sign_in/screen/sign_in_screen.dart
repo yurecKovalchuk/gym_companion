@@ -98,7 +98,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      bloc.signIn(_email.text, _password.text);
+                      bloc.signIn('yur@gmail.com', 'password123AAA');
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(kButtonHeight),
