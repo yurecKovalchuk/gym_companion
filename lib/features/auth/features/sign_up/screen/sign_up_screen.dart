@@ -1,5 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,6 +25,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocConsumer<SignUpBloc, SignUpState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.background,
             leading: IconButton(
@@ -51,55 +53,58 @@ class SignUpScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
                 const SizedBox(
-                  height: 32,
+                  height: 48,
                 ),
-                TextField(
-                  controller: _displayName,
-                  maxLength: 40,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    labelText: context.l10n.name,
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  maxLength: 30,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                Column(
+                  children: [
+                    TextField(
+                      controller: _displayName,
+                      maxLength: 40,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: context.l10n.name,
                       ),
-                      labelText: context.l10n.email,
-                      hintText: 'example@example.com',
-                      errorText: state.isEmailValid ? null : context.l10n.notCorrectEmail),
-                  onChanged: (email) => bloc.isEmailValid(email),
-                ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  controller: _password,
-                  obscureText: state.obscureText,
-                  maxLength: 20,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(state.obscureText ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () {
-                        state.obscureText ? bloc.hidePassword() : bloc.showPassword();
-                      },
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 16.0),
+                    TextField(
+                      controller: _email,
+                      keyboardType: TextInputType.emailAddress,
+                      maxLength: 30,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: context.l10n.email,
+                          hintText: 'example@example.com',
+                          errorText: state.isEmailValid ? null : context.l10n.notCorrectEmail),
+                      onChanged: (email) => bloc.isEmailValid(email),
                     ),
-                    labelText: context.l10n.password,
-                    errorText: state.isPasswordValid ? null : context.l10n.notCorrectPassword,
-                  ),
-                  onChanged: (password) => bloc.isPasswordValid(password),
+                    const SizedBox(height: 16.0),
+                    TextField(
+                      controller: _password,
+                      obscureText: state.obscureText,
+                      maxLength: 20,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(state.obscureText ? Icons.visibility : Icons.visibility_off),
+                          onPressed: () {
+                            state.obscureText ? bloc.hidePassword() : bloc.showPassword();
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: context.l10n.password,
+                        errorText: state.isPasswordValid ? null : context.l10n.notCorrectPassword,
+                      ),
+                      onChanged: (password) => bloc.isPasswordValid(password),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 80.0), // Spacer
+                const Spacer(), // Spacer
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
