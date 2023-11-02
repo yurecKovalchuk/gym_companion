@@ -9,7 +9,9 @@ import '../../../../../app/app.dart';
 import '../../../auth.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+  SignUpScreen({
+    super.key,
+  });
 
   final TextEditingController _displayName = TextEditingController();
   final TextEditingController _email = TextEditingController();

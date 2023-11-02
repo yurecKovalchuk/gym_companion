@@ -12,7 +12,9 @@ const kButtonHeight = 64.0;
 const kButtonRadius = 16.0;
 
 class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+  SignInScreen({
+    super.key,
+  });
 
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();

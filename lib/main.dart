@@ -20,7 +20,9 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -29,7 +31,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final ExercisesRepository exercisesRepository = ExercisesRepository(
     LocalDataSource(),
-    RemoteDataSource(baseUrl),
+    RemoteDataSource(
+      baseUrl,
+      LocalDataSource(),
+    ),
     AuthDataSource(baseUrl),
     SQLiteDataSource(),
   );

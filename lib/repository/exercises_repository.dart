@@ -25,15 +25,15 @@ class ExercisesRepository {
   }
 
   Future<void> saveToken(String token) async {
-    await LocalDataSource.saveToken(token);
+    await localDataSource.saveToken(token);
   }
 
   Future<String?> getToken() async {
-    return LocalDataSource.getToken();
+    return localDataSource.getToken();
   }
 
   Future<void> removeToken() async {
-    await LocalDataSource.removeToken();
+    await localDataSource.removeToken();
   }
 
   Future<void> postExercise(Exercise exercise) async {
@@ -66,8 +66,8 @@ class ExercisesRepository {
     if (kIsWeb) {
       await remoteDataSource.deleteExercise(exerciseId!);
     } else {
-    await remoteDataSource.deleteExercise(exerciseId!);
-    databaseSQL.deleteExercise(exerciseId);
+      await remoteDataSource.deleteExercise(exerciseId!);
+      databaseSQL.deleteExercise(exerciseId);
     }
   }
 }
