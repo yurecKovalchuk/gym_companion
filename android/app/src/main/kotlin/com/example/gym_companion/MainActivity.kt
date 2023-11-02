@@ -1,4 +1,4 @@
-package com.example.timer_bloc
+package com.example.gym_companion
 
 import io.flutter.embedding.android.FlutterActivity
 
