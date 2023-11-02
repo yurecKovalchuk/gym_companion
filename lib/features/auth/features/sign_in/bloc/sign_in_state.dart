@@ -4,26 +4,26 @@ class SignInState {
     required this.status,
     required this.isEmailValid,
     required this.isPasswordValid,
-    this.error,
+    this.errorMessage,
   });
 
   final bool isEmailValid;
   final bool isPasswordValid;
   final SignInStatus status;
   final bool obscureText;
-  final String? error;
+  final String? errorMessage;
 
   SignInState copyWith({
     SignInStatus? status,
     bool? obscureText,
-    String? error,
+    String? errorMessage,
     bool? isEmailValid,
     bool? isPasswordValid,
   }) {
     return SignInState(
       status: status ?? this.status,
       obscureText: obscureText ?? this.obscureText,
-      error: error ?? this.error,
+      errorMessage: errorMessage ?? this.errorMessage,
       isEmailValid: isEmailValid ?? this.isEmailValid,
       isPasswordValid: isPasswordValid ?? this.isPasswordValid,
     );

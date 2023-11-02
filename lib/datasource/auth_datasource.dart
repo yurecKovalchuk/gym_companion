@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timer_bloc/exceptions/exceptions.dart';
 import 'package:timer_bloc/models/models.dart';
 
@@ -12,7 +11,6 @@ class AuthDataSource {
   );
 
   final String _baseUrl;
-  static const String _tokenKey = 'token';
 
   Future<void> signUpRequest(UserAuthentication userAuthentication) async {
     final response = await http.post(
@@ -40,21 +38,6 @@ class AuthDataSource {
     } else {
       throw ValidationException(ErrorResponse.fromJson(data));
     }
-  }
-
-  static Future<void> saveToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
-  }
-
-  static Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey);
-  }
-
-  static Future<void> removeToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_tokenKey);
   }
 
   Uri _generateUrl(String path) => Uri.parse('$_baseUrl/$path');

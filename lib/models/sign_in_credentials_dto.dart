@@ -1,6 +1,3 @@
-/// email : "string"
-/// password : "string"
-
 class SignInCredentialsDto {
   SignInCredentialsDto({
     String? email,

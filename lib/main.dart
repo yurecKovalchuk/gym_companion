@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:timer_bloc/datasource/datasource.dart';
 
+import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
+import 'package:timer_bloc/repository/repository.dart';
 import 'app/app.dart';
 import 'features/auth/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({
+    super.key,
+  });
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final ExercisesRepository exercisesRepository = ExercisesRepository(
     LocalDataSource(),
-    RemoteDataSource(baseUrl),
+    RemoteDataSource(
+      baseUrl,
+      LocalDataSource(),
+    ),
     AuthDataSource(baseUrl),
+    SQLiteDataSource(),
   );
 
   @override
@@ -36,7 +49,9 @@ class MyApp extends StatelessWidget {
           case routWelcomeScreen:
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => WelcomeBloc(),
+                create: (context) => WelcomeBloc(
+                  exercisesRepository,
+                ),
                 child: const WelcomeScreen(),
               ),
             );

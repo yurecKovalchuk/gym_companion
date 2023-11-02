@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timer_bloc/datasource/datasource.dart';
 
+import 'package:timer_bloc/exceptions/validation_exception.dart';
 import 'package:timer_bloc/features/exercise_create/bloc/bloc.dart';
 import 'package:timer_bloc/models/models.dart';
+import 'package:timer_bloc/repository/repository.dart';
 
 class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
   ExerciseCreateBloc(
@@ -16,19 +17,37 @@ class ExerciseCreateBloc extends Cubit<ExerciseCreateState> {
               description: exercise?.description ?? '',
               id: exercise?.id,
             ),
+            '',
+            ExercisesCreateScreenStatus.initial,
           ),
         );
 
   final ExercisesRepository _repository;
 
   void addExercise(Exercise exercise) async {
-    if (exercise.name.isNotEmpty) {
+    emit(state.copyWith(status: ExercisesCreateScreenStatus.loading));
+    try {
       await _repository.postExercise(exercise);
+      emit(state.copyWith(status: ExercisesCreateScreenStatus.success));
+    } on ValidationException catch (e) {
+      emit(state.copyWith(
+        status: ExercisesCreateScreenStatus.error,
+        errorMessage: e.response.message,
+      ));
     }
   }
 
   void updateExercise(Exercise newExercise) async {
-    await _repository.pathExerciseId(newExercise);
+    emit(state.copyWith(status: ExercisesCreateScreenStatus.loading));
+    try {
+      await _repository.pathExerciseId(newExercise);
+      emit(state.copyWith(status: ExercisesCreateScreenStatus.success));
+    } on ValidationException catch (e) {
+      emit(state.copyWith(
+        status: ExercisesCreateScreenStatus.error,
+        errorMessage: e.response.message,
+      ));
+    }
   }
 
   void setExercisesName(String name) {

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/models/models.dart';
 
@@ -6,11 +8,13 @@ class ExercisesRepository {
     this.localDataSource,
     this.remoteDataSource,
     this.authDataSource,
+    this.databaseSQL,
   );
 
   AuthDataSource authDataSource;
   LocalDataSource localDataSource;
   RemoteDataSource remoteDataSource;
+  SQLiteDataSource databaseSQL;
 
   Future<void> signUp(UserAuthentication userAuthentication) async {
     await authDataSource.signUpRequest(userAuthentication);
@@ -21,34 +25,49 @@ class ExercisesRepository {
   }
 
   Future<void> saveToken(String token) async {
-    await AuthDataSource.saveToken(token);
+    await localDataSource.saveToken(token);
   }
 
   Future<String?> getToken() async {
-    return AuthDataSource.getToken();
+    return localDataSource.getToken();
   }
 
   Future<void> removeToken() async {
-    await AuthDataSource.removeToken();
+    await localDataSource.removeToken();
   }
 
   Future<void> postExercise(Exercise exercise) async {
-    remoteDataSource.postExercise(exercise);
+    await remoteDataSource.postExercise(exercise);
   }
 
   Future<List<Exercise>> getExercises() async {
     final exercises = await remoteDataSource.getExercises();
-    localDataSource.saveExercises(exercises);
-    return localDataSource.loadExercises();
+    if (kIsWeb) {
+      return exercises;
+    } else {
+      await databaseSQL.initDatabase();
+      await databaseSQL.insertExercises(exercises);
+      return databaseSQL.getExercises();
+    }
   }
 
   Future<void> pathExerciseId(Exercise updatedExercise) async {
     final exerciseId = updatedExercise.id;
-    await remoteDataSource.patchExercise(exerciseId!, updatedExercise);
+    if (kIsWeb) {
+      await remoteDataSource.patchExercise(exerciseId!, updatedExercise);
+    } else {
+      await databaseSQL.deleteExercise(exerciseId!);
+      await remoteDataSource.patchExercise(exerciseId, updatedExercise);
+    }
   }
 
   Future<void> deleteExercise(Exercise exercise) async {
     final exerciseId = exercise.id;
-    await remoteDataSource.deleteExercise(exerciseId!);
+    if (kIsWeb) {
+      await remoteDataSource.deleteExercise(exerciseId!);
+    } else {
+      await remoteDataSource.deleteExercise(exerciseId!);
+      databaseSQL.deleteExercise(exerciseId);
+    }
   }
 }
