@@ -1,36 +1,28 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:timer_bloc/models/models.dart';
-
 class LocalDataSource {
-  Future<void> saveExercises(List<Exercise> exercises) async {
+  static const String _tokenKey = 'token';
+
+  static Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final exercisesJson = exercises.map((exercise) => exercise.toJson()).toList();
-    await prefs.setString('exercises', jsonEncode(exercisesJson));
+    await prefs.setString(_tokenKey, token);
   }
 
-  Future<List<Exercise>> loadExercises() async {
+  static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final exercisesJson = prefs.getString('exercises');
-    if (exercisesJson != null) {
-      final exercisesList = jsonDecode(exercisesJson) as List;
-      final exercises = exercisesList.map<Exercise>((exerciseJson) => Exercise.fromJson(exerciseJson)).toList();
-      return exercises;
-    }
-    return [];
+    return prefs.getString(_tokenKey);
   }
 
-  Future<void> removeExercise(Exercise exercise) async {
+  static Future<void> removeToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final exercisesJson = prefs.getString('exercises');
-    if (exercisesJson != null) {
-      final exercisesList = jsonDecode(exercisesJson) as List;
-      List<Exercise> exercises =
-          exercisesList.map<Exercise>((exerciseJson) => Exercise.fromJson(exerciseJson)).toList();
-      exercises.remove(exercise);
-      await prefs.setString('exercises', jsonEncode(exercises));
+    await prefs.remove(_tokenKey);
+  }
+
+  Future<bool> checkIfTokenExists() async {
+    final token = await getToken();
+    if (token != null) {
+      return true;
     }
+    return false;
   }
 }

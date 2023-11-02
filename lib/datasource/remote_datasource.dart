@@ -6,8 +6,6 @@ import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/exceptions/exceptions.dart';
 import 'package:timer_bloc/models/models.dart';
 
-
-
 class RemoteDataSource {
   RemoteDataSource(this._baseUrl);
 
@@ -35,7 +33,7 @@ class RemoteDataSource {
 
     final data = jsonDecode(response.body);
     if (response.statusCode < 300) {
-      AuthDataSource.saveToken(SignInResponse.fromJson(data).token!);
+      LocalDataSource.saveToken(SignInResponse.fromJson(data).token!);
       return SignInResponse.fromJson(data);
     } else {
       throw ValidationException(ErrorResponse.fromJson(data));
@@ -43,7 +41,7 @@ class RemoteDataSource {
   }
 
   Future<void> postExercise(Exercise exercise) async {
-    final token = await AuthDataSource.getToken();
+    final token = await LocalDataSource.getToken();
     final url = _generateUrl('exercises');
     final response = await http.post(
       url,
@@ -62,7 +60,7 @@ class RemoteDataSource {
   }
 
   Future<List<Exercise>> getExercises() async {
-    final token = await AuthDataSource.getToken();
+    final token = await LocalDataSource.getToken();
     final response = await http.get(
       _generateUrl('exercises'),
       headers: {
@@ -82,7 +80,7 @@ class RemoteDataSource {
   }
 
   Future<Exercise> getExerciseId(String exerciseId) async {
-    final token = await AuthDataSource.getToken();
+    final token = await LocalDataSource.getToken();
     final response = await http.get(
       _generateUrl('exercise/$exerciseId'),
       headers: {
@@ -100,7 +98,7 @@ class RemoteDataSource {
   }
 
   Future<void> patchExercise(String exerciseId, Exercise updatedExercise) async {
-    final token = await AuthDataSource.getToken();
+    final token = await LocalDataSource.getToken();
     final response = await http.patch(
       _generateUrl('exercises/$exerciseId'),
       headers: {
@@ -118,7 +116,7 @@ class RemoteDataSource {
   }
 
   Future<void> deleteExercise(String exerciseId) async {
-    final token = await AuthDataSource.getToken();
+    final token = await LocalDataSource.getToken();
     final response = await http.delete(
       _generateUrl('exercises/$exerciseId'),
       headers: {

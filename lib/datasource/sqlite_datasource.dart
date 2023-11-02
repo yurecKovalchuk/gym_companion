@@ -1,10 +1,11 @@
 import 'dart:async';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:timer_bloc/models/models.dart';
 
-class ExerciseDatabaseProvider {
+class SQLiteDataSource {
   late Database _database;
 
   Future<Database> get database async {
@@ -107,7 +108,7 @@ class ExerciseDatabaseProvider {
         final approaches = approachMaps.map((approachMap) {
           return Approach(
             approachMap['id'],
-            (approachMap['value']),
+            int.parse(approachMap['value']),
             approachMap['type'] == 'exercise' ? ApproachType.exercise : ApproachType.rest,
           );
         }).toList();
