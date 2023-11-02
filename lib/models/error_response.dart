@@ -5,13 +5,15 @@ class ErrorResponse {
     this.statusCode,
   );
 
-  final List<String?> message;
+  final dynamic message;
   final String? error;
   final int? statusCode;
 
   factory ErrorResponse.fromJson(Map<String, dynamic> json) {
+    final dynamic rawMessage = json['message'];
+
     return ErrorResponse(
-      List<String>.from(json['message']),
+      (rawMessage is List) ? List<String>.from(rawMessage) : rawMessage,
       json['error'],
       json['statusCode'],
     );
