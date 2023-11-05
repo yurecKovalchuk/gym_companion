@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/localization/l10n/l10n.dart';
+
+import 'package:timer_bloc/features/drawer/drawer.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
-import '../../../app/app.dart';
+import 'package:timer_bloc/app/app.dart';
 
 const _editOnExercisePopupMenu = 'edit';
 const _deleteOnExercisePopupMenu = 'delete';
@@ -39,6 +41,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
           backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(context.l10n.projectName),
         ),
+        drawer: const DrawerScreen(),
         body: BlocBuilder(
             bloc: _exerciseBloc,
             builder: (context, state) {
