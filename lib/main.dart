@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:timer_bloc/datasource/datasource.dart';
+import 'package:timer_bloc/features/drawer/drawer.dart';
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
@@ -75,12 +76,18 @@ class _MyAppState extends State<MyApp> {
             );
           case routExerciseScreen:
             return MaterialPageRoute(
-              builder: (context) => BlocProvider(
-                create: (context) => ExercisesBloc(
-                  exercisesRepository,
+              builder: (context) => MultiBlocProvider(providers: [
+                BlocProvider<ExercisesBloc>(
+                  create: (context) => ExercisesBloc(
+                    exercisesRepository,
+                  ),
                 ),
-                child: const ExerciseScreen(),
-              ),
+                BlocProvider<DrawerBloc>(
+                  create: (context) => DrawerBloc(
+                    exercisesRepository,
+                  ),
+                )
+              ], child: const ExerciseScreen()),
             );
           case routExerciseCreateScreen:
             return MaterialPageRoute(
