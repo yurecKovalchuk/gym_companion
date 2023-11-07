@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:timer_bloc/domain/domain.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'package:timer_bloc/exceptions/exceptions.dart';
-import 'package:timer_bloc/repository/repository.dart';
 import '../sign_in.dart';
 
 class SignInBloc extends Cubit<SignInState> {
