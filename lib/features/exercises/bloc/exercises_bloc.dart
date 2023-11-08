@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/exceptions/validation_exception.dart';
-
+import 'package:timer_bloc/domain/domain.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/models/models.dart';
-import 'package:timer_bloc/repository/repository.dart';
 
 class ExercisesBloc extends Cubit<ExercisesState> {
   ExercisesBloc(

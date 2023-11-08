@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:timer_bloc/repository/repository.dart';
+import 'package:timer_bloc/domain/domain.dart';
 import '../welcome.dart';
 
 class WelcomeBloc extends Cubit<WelcomeState> {
@@ -17,7 +17,7 @@ class WelcomeBloc extends Cubit<WelcomeState> {
 
   void checkToken() async {
     emit(state.copyWith(status: WelcomeScreenStatus.loading));
-    final result = await exercisesRepository.localDataSource.checkIfTokenExists();
+    final result = await exercisesRepository.checkIfTokenExists();
     if (result == true) {
       emit(state.copyWith(status: WelcomeScreenStatus.hasToken));
     }

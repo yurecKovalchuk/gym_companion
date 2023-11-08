@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:timer_bloc/data/data.dart';
 
 import 'package:timer_bloc/datasource/datasource.dart';
+import 'package:timer_bloc/domain/domain.dart';
 import 'package:timer_bloc/features/drawer/drawer.dart';
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
 import 'package:timer_bloc/features/exercise_play/exercise_play.dart';
 import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
-import 'package:timer_bloc/repository/repository.dart';
 import 'app/app.dart';
 import 'features/auth/auth.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final ExercisesRepository exercisesRepository = ExercisesRepository(
+  final ExercisesRepository exercisesRepository = ExercisesRepositoryImpl(
     LocalDataSource(),
     RemoteDataSource(
       baseUrl,
