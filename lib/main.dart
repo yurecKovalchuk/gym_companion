@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: myAppTheme,
       initialRoute: routWelcomeScreen,
       onGenerateRoute: (settings) {
         late final exercise = settings.arguments as Exercise?;

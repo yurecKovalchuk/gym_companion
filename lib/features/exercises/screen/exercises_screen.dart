@@ -103,6 +103,7 @@ class ExerciseScreenState extends State<ExerciseScreen> {
               }
             }),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.background,
           onPressed: () => _navigatorPushToCreateScreen(),
           child: const Icon(Icons.add),
         ),

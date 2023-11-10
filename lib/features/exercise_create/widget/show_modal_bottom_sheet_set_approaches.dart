@@ -93,7 +93,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                         child: Card(
                           margin: EdgeInsets.zero,
                           elevation: selectedType == ApproachType.exercise ? 2 : 4,
-                          shadowColor: selectedType == ApproachType.exercise ? Colors.red : Colors.grey,
+                          shadowColor: selectedType == ApproachType.exercise ? Colors.green : Colors.grey,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(0),
@@ -120,7 +120,7 @@ class _ShowModalBottomSheetSetApproachesState extends State<ShowModalBottomSheet
                         child: Card(
                           margin: EdgeInsets.zero,
                           elevation: selectedType == ApproachType.rest ? 2 : 4,
-                          shadowColor: selectedType == ApproachType.rest ? Colors.green : Colors.grey,
+                          shadowColor: selectedType == ApproachType.rest ? Colors.red : Colors.grey,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(0),

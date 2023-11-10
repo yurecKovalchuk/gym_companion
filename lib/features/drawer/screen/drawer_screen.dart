@@ -20,14 +20,14 @@ class DrawerScreen extends StatelessWidget {
         return Drawer(
           child: ListView(
             children: [
-              const DrawerHeader(
+              DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Theme.of(context).colorScheme.background,
                 ),
                 child: Text(
                   'Side Menu',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontSize: 24,
                   ),
                 ),
