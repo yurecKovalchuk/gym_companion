@@ -133,7 +133,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
                       padding: const EdgeInsets.only(left: 0.0, right: 0.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          elevation: 4,
+                          backgroundColor: Theme.of(context).colorScheme.background,
                         ),
                         onPressed: () => _showAddTaskDialog(),
                         child: Text(context.l10n.buttonAddApproach),
