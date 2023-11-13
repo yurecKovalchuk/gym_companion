@@ -2,17 +2,20 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'package:injectable/injectable.dart';
+
 import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/exceptions/exceptions.dart';
 import 'package:timer_bloc/models/models.dart';
 
+@injectable
 class RemoteDataSource {
   RemoteDataSource(
-    this._baseUrl,
+    @Named('baseUrl') this._baseUrl,
     this.localDataSource,
   );
 
-  final String _baseUrl;
+  final Uri _baseUrl;
 
   LocalDataSource localDataSource;
 

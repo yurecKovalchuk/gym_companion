@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:timer_bloc/data/data.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/domain/domain.dart';
 import 'package:timer_bloc/features/drawer/drawer.dart';
 import 'package:timer_bloc/features/exercise_create/exercise_create.dart';
@@ -14,32 +13,29 @@ import 'package:timer_bloc/features/exercises/exercises.dart';
 import 'package:timer_bloc/localization/localization.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'app/app.dart';
+import 'di/injection.dart';
 import 'features/auth/auth.dart';
 
 void main() async {
+  configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(MyApp(di: GetIt.instance));
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({
     super.key,
+    required this.di,
   });
+
+  final GetIt di;
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final ExercisesRepository exercisesRepository = ExercisesRepositoryImpl(
-    LocalDataSource(),
-    RemoteDataSource(
-      baseUrl,
-      LocalDataSource(),
-    ),
-    AuthDataSource(baseUrl),
-    SQLiteDataSource(),
-  );
+  get di => widget.di;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => WelcomeBloc(
-                  exercisesRepository,
+                  di<ExercisesRepository>(),
                 ),
                 child: const WelcomeScreen(),
               ),
@@ -62,7 +58,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => SignInBloc(
-                  exercisesRepository,
+                  di<ExercisesRepository>(),
                 ),
                 child: SignInScreen(),
               ),
@@ -71,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => SignUpBloc(
-                  exercisesRepository,
+                  di<ExercisesRepository>(),
                 ),
                 child: SignUpScreen(),
               ),
@@ -81,12 +77,12 @@ class _MyAppState extends State<MyApp> {
               builder: (context) => MultiBlocProvider(providers: [
                 BlocProvider<ExercisesBloc>(
                   create: (context) => ExercisesBloc(
-                    exercisesRepository,
+                    di<ExercisesRepository>(),
                   ),
                 ),
                 BlocProvider<DrawerBloc>(
                   create: (context) => DrawerBloc(
-                    exercisesRepository,
+                    di<ExercisesRepository>(),
                   ),
                 )
               ], child: const ExerciseScreen()),
@@ -95,7 +91,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialPageRoute(
               builder: (context) => BlocProvider(
                 create: (context) => ExerciseCreateBloc(
-                  exercisesRepository,
+                  di<ExercisesRepository>(),
                   exercise,
                 ),
                 child: const ExerciseCreate(),
