@@ -1,5 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter/gestures.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/app/app.dart';
@@ -10,7 +12,9 @@ const kButtonHeight = 64.0;
 const kButtonRadius = 16.0;
 
 class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+  SignInScreen({
+    super.key,
+  });
 
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -25,6 +29,7 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<SignInBloc, SignInState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.background,
             leading: IconButton(
@@ -39,6 +44,7 @@ class SignInScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 46, vertical: 32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 RichText(
                   text: TextSpan(
@@ -52,53 +58,58 @@ class SignInScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
                 const SizedBox(
-                  height: 32,
+                  height: 48,
                 ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  maxLength: 30,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Column(
+                  children: [
+                    TextField(
+                      controller: _email,
+                      keyboardType: TextInputType.emailAddress,
+                      maxLength: 30,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: context.l10n.email,
+                        hintText: 'example@example.com',
+                        errorText: state.isEmailValid ? null : context.l10n.notCorrectEmail,
+                      ),
+                      onChanged: (email) => bloc.isEmailValid(email),
                     ),
-                    labelText: context.l10n.email,
-                    hintText: 'example@example.com',
-                    errorText: state.isEmailValid ? null : context.l10n.notCorrectEmail,
-                  ),
-                  onChanged: (email) => bloc.isEmailValid(email),
+                    const SizedBox(height: 16.0),
+                    TextField(
+                      controller: _password,
+                      obscureText: state.obscureText,
+                      maxLength: 20,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(state.obscureText ? Icons.visibility : Icons.visibility_off),
+                          onPressed: () {
+                            state.obscureText ? bloc.hidePassword() : bloc.showPassword();
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: context.l10n.password,
+                        errorText: state.isPasswordValid ? null : context.l10n.notCorrectPassword,
+                      ),
+                      onChanged: (password) => bloc.isPasswordValid(password),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  controller: _password,
-                  obscureText: state.obscureText,
-                  maxLength: 20,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(state.obscureText ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () {
-                        state.obscureText ? bloc.hidePassword() : bloc.showPassword();
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    labelText: context.l10n.password,
-                    errorText: state.isPasswordValid ? null : context.l10n.notCorrectPassword,
-                  ),
-                  onChanged: (password) => bloc.isPasswordValid(password),
-                ),
-                const SizedBox(height: 80.0), // Spacer
+                const Spacer(), // Spacer
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      bloc.signIn(_email.text, _password.text);
+                      bloc.signIn(
+                        _email.text,
+                        _password.text,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(kButtonHeight),
@@ -149,7 +160,7 @@ class SignInScreen extends StatelessWidget {
           _navigatorPushToExerciseScreen(context);
         }
         if (state.status == SignInStatus.error) {
-          final snackBar = SnackBar(content: Text(state.error ?? 'Something happen'));
+          final snackBar = SnackBar(content: Text(state.errorMessage ?? 'Something happen'));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },

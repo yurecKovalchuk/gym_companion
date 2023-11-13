@@ -96,7 +96,7 @@ class Approach {
     return {
       'id': id.toString(),
       'value': value.toString(),
-      'type': type.name,
+      'type': type.name.toString(),
     };
   }
 

@@ -50,88 +50,118 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
           top: 16.0,
           right: 16.0,
         ),
-        child: BlocBuilder<ExerciseCreateBloc, ExerciseCreateState>(
-          bloc: _exerciseCreateBloc,
+        child: BlocConsumer<ExerciseCreateBloc, ExerciseCreateState>(
           builder: (context, state) {
-            return Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _nameEditingController,
-                  maxLength: 24,
-                  onChanged: (name) {
-                    _exerciseCreateBloc.setExercisesName(
-                      name,
-                    );
-                  },
-                  decoration: InputDecoration(
-                    focusedBorder: const UnderlineInputBorder(),
-                    labelText: context.l10n.exerciseName,
-                    suffixIconColor: Theme.of(context).colorScheme.primary,
-                    suffixIcon: InkWell(
-                      child: const Icon(Icons.close),
-                      onTap: () {
-                        _exerciseCreateBloc.setExercisesName('');
-                        _nameEditingController.clear();
-                      },
-                    ),
+            if (state.status == ExercisesCreateScreenStatus.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state.status == ExercisesCreateScreenStatus.error) {
+              return Center(
+                  child: Text(
+                state.errorMessage.toString(),
+              ));
+            } else {
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: _descriptionEditingController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  maxLength: 164,
-                  onChanged: (description) {
-                    _exerciseCreateBloc.setExerciseDescription(
-                      description,
-                    );
-                  },
-                  decoration: InputDecoration(
-                    focusedBorder: const UnderlineInputBorder(),
-                    labelText: context.l10n.exerciseDescription,
-                    suffixIconColor: Theme.of(context).colorScheme.primary,
-                    suffixIcon: InkWell(
-                      child: const Icon(Icons.close),
-                      onTap: () {
-                        _exerciseCreateBloc.setExerciseDescription('');
-                        _descriptionEditingController.clear();
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                ContainerApproachesList(
-                  approaches: state.exercise.approaches,
-                  onDeleteApproach: (Approach approach) => _exerciseCreateBloc.deleteApproach(approach),
-                  onEditApproach: (Approach approach) => _showAddTaskDialog(approach),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 4,
+                  TextFormField(
+                    controller: _nameEditingController,
+                    maxLength: 24,
+                    onChanged: (name) {
+                      _exerciseCreateBloc.setExercisesName(
+                        name,
+                      );
+                    },
+                    decoration: InputDecoration(
+                      focusedBorder: const UnderlineInputBorder(),
+                      labelText: context.l10n.exerciseName,
+                      suffixIconColor: Theme.of(context).colorScheme.primary,
+                      suffixIcon: InkWell(
+                        child: const Icon(Icons.close),
+                        onTap: () {
+                          _exerciseCreateBloc.setExercisesName('');
+                          _nameEditingController.clear();
+                        },
                       ),
-                      onPressed: () => _showAddTaskDialog(),
-                      child: Text(context.l10n.buttonAddApproach),
                     ),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    controller: _descriptionEditingController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    maxLength: 164,
+                    onChanged: (description) {
+                      _exerciseCreateBloc.setExerciseDescription(
+                        description,
+                      );
+                    },
+                    decoration: InputDecoration(
+                      focusedBorder: const UnderlineInputBorder(),
+                      labelText: context.l10n.exerciseDescription,
+                      suffixIconColor: Theme.of(context).colorScheme.primary,
+                      suffixIcon: InkWell(
+                        child: const Icon(Icons.close),
+                        onTap: () {
+                          _exerciseCreateBloc.setExerciseDescription('');
+                          _descriptionEditingController.clear();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ContainerApproachesList(
+                    approaches: state.exercise.approaches,
+                    onDeleteApproach: (Approach approach) => _exerciseCreateBloc.deleteApproach(approach),
+                    onEditApproach: (Approach approach) => _showAddTaskDialog(approach),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.background,
+                        ),
+                        onPressed: () => _showAddTaskDialog(),
+                        child: Text(context.l10n.buttonAddApproach),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+          listener: (context, state) {
+            if (state.status == ExercisesCreateScreenStatus.success) {
+              Navigator.pop(context);
+            }
+            if (state.status == ExercisesCreateScreenStatus.loading) {
+              const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ],
-            );
+              );
+            }
+            if (state.status == ExercisesCreateScreenStatus.error) {
+              Scaffold(
+                body: Center(
+                  child: Text(state.errorMessage.toString()),
+                ),
+              );
+            }
           },
         ),
       ),
@@ -193,7 +223,7 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
     );
   }
 
-  void saveValidation() {
+  void saveValidation() async {
     final Exercise currentExercise = _exerciseCreateBloc.state.exercise;
     if (currentExercise.name.isNotEmpty && currentExercise.approaches.isNotEmpty) {
       if (currentExercise.id == null) {
@@ -201,7 +231,6 @@ class _ExerciseCreateState extends State<ExerciseCreate> {
       } else {
         _exerciseCreateBloc.updateExercise(currentExercise);
       }
-      Navigator.pop(context);
     } else {
       _showWarningDialog();
     }

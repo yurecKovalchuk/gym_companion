@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:timer_bloc/datasource/datasource.dart';
+import 'package:timer_bloc/domain/domain.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'package:timer_bloc/exceptions/exceptions.dart';
 import '../sign_in.dart';
@@ -27,11 +27,11 @@ class SignInBloc extends Cubit<SignInState> {
         _repository.saveToken(response.token!);
         emit(state.copyWith(status: SignInStatus.success));
       } on ValidationException catch (e) {
-        emit(state.copyWith(status: SignInStatus.error, error: e.response.message.toString()));
+        emit(state.copyWith(status: SignInStatus.error, errorMessage: e.response.message.toString()));
       } catch (e) {
         emit(state.copyWith(
           status: SignInStatus.error,
-          error: e.toString(),
+          errorMessage: e.toString(),
         ));
       }
     }

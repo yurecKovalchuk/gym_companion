@@ -18,14 +18,21 @@ dependencies:
   shared_preferences: ^2.2.1
   equatable: ^2.0.5
   http: ^0.13.6
+  sqflite: ^2.0.0
+  path: ^1.8.0
+  get_it: ^7.2.0
+  injectable: ^2.3.2
+
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_native_splash: any
+  injectable_generator:
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
 
 flutter:
   generate: true

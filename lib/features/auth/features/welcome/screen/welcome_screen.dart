@@ -1,13 +1,30 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter/gestures.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:timer_bloc/localization/localization.dart';
 import '../../../../../app/app.dart';
 import '../../../auth.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({
+    super.key,
+  });
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  WelcomeBloc get _bloc => BlocProvider.of<WelcomeBloc>(context);
+
+  @override
+  void initState() {
+    _bloc.checkToken();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +32,10 @@ class WelcomeScreen extends StatelessWidget {
       onWillPop: () async {
         return false;
       },
-      child: Scaffold(
-        body: BlocBuilder<WelcomeBloc, WelcomeState>(
-          builder: (context, state) {
-            return Padding(
+      child: BlocConsumer<WelcomeBloc, WelcomeState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: Padding(
               padding: const EdgeInsets.all(32.0),
               child: Column(
                 children: [
@@ -110,9 +127,22 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          );
+        },
+        listener: (context, state) {
+          if (state.status == WelcomeScreenStatus.loading) {
+            const Center(child: CircularProgressIndicator());
+          }
+          if (state.status == WelcomeScreenStatus.hasToken) {
+            _navigatorPushToExerciseScreen(context);
+          }
+          if (state.status == WelcomeScreenStatus.error) {
+            const Center(
+              child: Text('Something is wrong'),
             );
-          },
-        ),
+          }
+        },
       ),
     );
   }
@@ -123,5 +153,12 @@ class WelcomeScreen extends StatelessWidget {
 
   void _navigatorPushToSignUpScreen(BuildContext context) async {
     await Navigator.pushNamed(context, routSignUpScreen);
+  }
+
+  void _navigatorPushToExerciseScreen(BuildContext context) async {
+    await Navigator.pushReplacementNamed(
+      context,
+      routExerciseScreen,
+    );
   }
 }
