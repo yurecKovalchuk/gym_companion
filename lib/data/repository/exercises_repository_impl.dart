@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'package:injectable/injectable.dart';
+
 import 'package:timer_bloc/datasource/datasource.dart';
 import 'package:timer_bloc/models/models.dart';
 import 'package:timer_bloc/domain/domain.dart';
 
+@Injectable(as: ExercisesRepository)
 class ExercisesRepositoryImpl implements ExercisesRepository {
   ExercisesRepositoryImpl(
     this._localDataSource,

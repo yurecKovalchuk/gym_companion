@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:timer_bloc/models/models.dart';
 
+@injectable
 class SQLiteDataSource {
   late Database _database;
 
