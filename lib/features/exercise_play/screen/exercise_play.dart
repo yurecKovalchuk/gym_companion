@@ -34,119 +34,110 @@ class _ExercisePlayState extends State<ExercisePlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          _exercisePlayBloc.state.exercise.name,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 22),
-        ),
-      ),
-      body: BlocBuilder(
+    return BlocBuilder(
         bloc: _exercisePlayBloc,
         builder: (context, state) {
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: _exercisePlayBloc.state.exercise.approaches.length,
-                      itemBuilder: (context, index) {
-                        final timer = _exercisePlayBloc.state.exercise.approaches[index];
-                        if (_exercisePlayBloc.state.isActiveExercise &&
-                            index == _exercisePlayBloc.state.approachesIndex) {
-                          scrollToActiveIndex(index);
-                        }
-                        return Container(
-                          height: itemTimerHeight,
-                          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                          decoration: BoxDecoration(
-                            color: _generateSlotColorByState(index, timer),
-                            borderRadius: BorderRadius.circular(8.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: SizedBox(
-                                  child: ListTile(
-                                    title: RichText(
-                                      textAlign: TextAlign.left,
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: timer.type == ApproachType.rest
-                                                  ? context.l10n.rest
-                                                  : context.l10n.exercise,
-                                              style: Theme.of(context).textTheme.headlineMedium),
-                                          const TextSpan(text: '\n'),
-                                          TextSpan(
-                                            text: '/${timer.value.toString()} ${context.l10n.seconds}',
-                                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                                  color: Colors.black.withOpacity(0.5),
-                                                ),
-                                          ),
-                                        ],
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.background,
+              title: Text(
+                _exercisePlayBloc.state.exercise.name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22),
+              ),
+            ),
+            body: Stack(
+              children: [
+                Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: _exercisePlayBloc.state.exercise.approaches.length,
+                        itemBuilder: (context, index) {
+                          final timer = _exercisePlayBloc.state.exercise.approaches[index];
+                          if (_exercisePlayBloc.state.isActiveExercise &&
+                              index == _exercisePlayBloc.state.approachesIndex) {
+                            scrollToActiveIndex(index);
+                          }
+                          return Container(
+                            height: itemTimerHeight,
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            decoration: BoxDecoration(
+                              color: _generateSlotColorByState(index, timer),
+                              borderRadius: BorderRadius.circular(8.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 2.0,
+                                  blurRadius: 5.0,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    child: ListTile(
+                                      title: RichText(
+                                        textAlign: TextAlign.left,
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: timer.type == ApproachType.rest
+                                                    ? context.l10n.rest
+                                                    : context.l10n.exercise,
+                                                style: Theme.of(context).textTheme.headlineMedium),
+                                            const TextSpan(text: '\n'),
+                                            TextSpan(
+                                              text: '${timer.value.toString()} ${context.l10n.seconds}',
+                                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                                    color: Colors.black.withOpacity(0.5),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              (_exercisePlayBloc.state.isActiveExercise &&
-                                      index == _exercisePlayBloc.state.approachesIndex)
-                                  ? TimerWidget(
-                                      duration: DurationConverter.intToTimeLeft(
-                                        _exercisePlayBloc.state.approachLeftTime == 0
-                                            ? timer.value
-                                            : _exercisePlayBloc.state.approachLeftTime,
-                                      ),
-                                      onTimerFinish: () {
-                                        _exercisePlayBloc.stopExerciseTimer();
-                                      },
-                                      onTimerActive: _exercisePlayBloc.state.isActiveExercise,
-                                    )
-                                  : const SizedBox()
-                            ],
-                          ),
-                        );
-                      },
+                                (_exercisePlayBloc.state.isActiveExercise &&
+                                        index == _exercisePlayBloc.state.approachesIndex)
+                                    ? TimerWidget(
+                                        duration: DurationConverter.intToTimeLeft(
+                                          _exercisePlayBloc.state.approachLeftTime == 0
+                                              ? timer.value
+                                              : _exercisePlayBloc.state.approachLeftTime,
+                                        ),
+                                        onTimerFinish: () {
+                                          _exercisePlayBloc.stopExerciseTimer();
+                                        },
+                                        onTimerActive: _exercisePlayBloc.state.isActiveExercise,
+                                      )
+                                    : const SizedBox()
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                bottom: 16.0,
-                right: 16.0,
-                child: ElevatedButton(
-                  onPressed: () {
-                    _exercisePlayBloc.state.isActiveExercise
-                        ? _exercisePlayBloc.stopExerciseTimer()
-                        : _exercisePlayBloc.playExercise();
-                  },
-                  child: Text(
-                    _exercisePlayBloc.state.isActiveExercise ? context.l10n.pause : context.l10n.go,
-                  ),
+                  ],
                 ),
+              ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.background,
+              onPressed: () => _exercisePlayBloc.state.isActiveExercise
+                  ? _exercisePlayBloc.stopExerciseTimer()
+                  : _exercisePlayBloc.playExercise(),
+              child: Icon(
+                _exercisePlayBloc.state.isActiveExercise ? Icons.pause : Icons.play_arrow,
               ),
-            ],
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 
   Color _generateSlotColorByState(int index, Approach timer) =>
