@@ -22,6 +22,7 @@ dependencies:
   path: ^1.8.0
   get_it: ^7.2.0
   injectable: ^2.3.2
+  visibility_detector: ^0.4.0+2
 
 
   cupertino_icons: ^1.0.2

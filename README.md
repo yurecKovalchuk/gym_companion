@@ -30,7 +30,7 @@ The Gym Companion app employs the following programming approaches:
   divided into layers, separating concerns such as data retrieval from different sources (e.g.,
   local database, remote server). This promotes a clean and structured approach to data management.
 
-# Project Structure:
+_# Project Structure:
 
 The Gym Companion app follows a structured architecture, organizing code into distinct layers for
 clarity and maintainability. Here's an overview of the primary layers:
@@ -69,7 +69,7 @@ clarity and maintainability. Here's an overview of the primary layers:
   responsible for a specific aspect of the application. This modular approach enhances code
   readability, maintainability, and testability, ensuring a robust and scalable architecture for
   the
-  Gym Companion app.
+  Gym Companion app._
 
 ## How to Use
 
